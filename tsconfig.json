@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "jsx": "react",
+    "target": "es2015",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false,
+    "preserveConstEnums": true,
+    "noEmit": true,
+    "types": ["react", "react-native", "jest"],
+    "baseUrl": ".",
+    "paths": {
+      "src/*": ["./src/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@reducers/*": ["./src/reducers/*"],
+      "@actions/*": ["./src/actions/*"],
+      "@components/*": ["./src/components/*"],
+      "@elements/*": ["./src/elements/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@i18n/*": ["./src/utils/i18n/*"],
+      "@assets/*": ["./src/assets/*"]
+    }
+  },
+  "types": ["react", "react-native", "jest"],
+  "exclude": ["android", "App.js", "ios", "build", "node_modules"],
+  "compileOnSave": false
+}

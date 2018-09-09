@@ -1,0 +1,19 @@
+{
+  "extends": ["tslint:latest", "tslint-config-airbnb", "tslint-react", "tslint-config-prettier"],
+  "linterOptions": {
+    "exclude": ["node_modules", "android", "ios"]
+  },
+  "rules": {
+    "no-empty-interface": false,
+    "object-literal-sort-keys": false,
+    "import-name": false,
+    "interface-name": false,
+    "ban-types": false,
+    "variable-name": false,
+    "no-implicit-dependencies": false,
+    "no-submodule-imports": false,
+    "no-var-requires": false,
+    "no-else-after-return": false,
+    "prefer-array-literal": false
+  }
+}
