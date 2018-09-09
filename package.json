@@ -4,19 +4,102 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "clean": "cd android && gradlew clean",
+    "server": "cd mock-api && npm start",
+    "test": "yarn jest && tslint src/**/*.ts",
+    "watch:test": "yarn jest --watch",
+    "watch": "npm run build -- -w",
+    "ios": "react-native run-ios",
+    "android": "npm run clean && react-native run-android",
+    "tsc": "tsc",
+    "build": "npm run clean && npm run tsc --",
+    "lint": "tslint src/**/*.ts",
+    "jest": "node node_modules/jest/bin/jest.js"
   },
   "dependencies": {
-    "react": "16.4.1",
-    "react-native": "0.56.0"
+    "axios": "^0.18.0",
+    "immer": "^1.5.0",
+    "lodash": "4.17.4",
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-native-camera-kit": "^6.2.6",
+    "react-native-config": "^0.11.5",
+    "react-native-drawer": "^2.5.0",
+    "react-native-i18n": "^2.0.15",
+    "react-native-image-crop-picker": "^0.21.1",
+    "react-native-image-progress": "^1.1.1",
+    "react-native-progress": "^3.5.0",
+    "react-native-size-matters": "^0.1.2",
+    "react-native-typescript-transformer": "^1.2.10",
+    "react-navigation": "^2.11.2",
+    "react-redux": "5.0.6",
+    "redux": "3.7.2",
+    "redux-axios-middleware": "^4.0.0",
+    "redux-form": "^7.4.2",
+    "redux-persist": "^5.10.0",
+    "redux-thunk": "2.2.0"
+  },
+  "rnpm": {
+    "assets": [
+      "./assets/fonts/"
+    ]
   },
   "devDependencies": {
-    "babel-jest": "23.4.2",
-    "babel-preset-react-native": "5",
-    "jest": "23.5.0",
-    "react-test-renderer": "16.4.1"
+    "@types/jest": "^20.0.8",
+    "@types/react": "^16.0.5",
+    "@types/react-native": "^0.47.7",
+    "@types/react-native-vector-icons": "^4.3.1",
+    "@types/react-test-renderer": "^16.0.2",
+    "@types/react-navigation": "^2.0.16",
+    "babel-eslint": "8.1.0",
+    "babel-jest": "22.0.4",
+    "babel-preset-react-native": "^3.0.1",
+    "babel-preset-react-native-stage-0": "^1.0.1",
+    "native-base": "^2.7.2",
+    "react-test-renderer": "^16.2.0",
+    "reactotron-react-native": "^2.1.0",
+    "reactotron-redux": "^2.1.0",
+    "ts-jest": "22.0.0",
+    "tslint": "^5.8.0",
+    "tslint-config-airbnb": "^5.9.2",
+    "tslint-config-prettier": "^1.14.0",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.0.1"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "src/(.*)": "<rootDir>/src/$1",
+      "@screens/(.*)": "<rootDir>/src/screens/$1",
+      "@reducers/(.*)": "<rootDir>/src/reducers/$1",
+      "@actions/(.*)": "<rootDir>/src/actions/$1",
+      "@components/(.*)": "<rootDir>/src/components/$1",
+      "@elements/(.*)": "<rootDir>/src/elements/$1",
+      "@constants/(.*)": "<rootDir>/src/constants/$1",
+      "@utils/(.*)": "<rootDir>/src/utils/$1",
+      "@i18n/(.*)": "<rootDir>/src/utils/i18n/$1"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "transform": {
+      "^.+\\.(js)$": "<rootDir>/node_modules/babel-jest",
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|lottie-react-native|expo|react-native-maps|react-native-svg|react-native-branch|native-base-shoutem-theme|react-native-easy-grid|react-native-drawer|react-native-vector-icons|react-native-keyboard-aware-scroll-view|react-navigation|native-base|@expo|react-native-scrollable-tab-view)/)"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/artifacts/"
+    ]
   }
 }
