@@ -1,4 +1,4 @@
-import env from '@utils/env';
+import env from '@utils/env.json';
 import Reactotron from 'reactotron-react-native';
 import { reactotronRedux } from 'reactotron-redux';
 

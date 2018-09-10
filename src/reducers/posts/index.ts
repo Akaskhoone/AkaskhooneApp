@@ -6,6 +6,7 @@ export default combineReducers({
 });
 
 export const selectors = {
-  hasFeedPosts: state => state.feed.posts.length !== 0,
+  hasFeedPosts: state =>
+    state.feed.posts && state.feed.posts.length && state.feed.posts.length !== 0,
   hasFeedNext: state => !!state.feed.next
 };

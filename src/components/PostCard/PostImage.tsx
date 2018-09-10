@@ -1,8 +1,8 @@
 import AutoHeightImageWithProgress from '@elements/AutoHeightImageWithProgress';
 import Button from '@elements/DoubleTapableButton';
+import env from '@utils/env.json';
 import React, { Component } from 'react';
 import { Dimensions, View } from 'react-native';
-import env from '@utils/env';
 const { width: windowWidth } = Dimensions.get('window');
 
 interface Props {
@@ -13,8 +13,7 @@ export default class PostImage extends Component<Props> {
   public render() {
     return (
       <Button onPress={this.props.onPress}>
-        <View
-          style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <AutoHeightImageWithProgress
             source={`${env.ASSETS_URL}/${this.props.imageUrl}`}
             width={windowWidth}

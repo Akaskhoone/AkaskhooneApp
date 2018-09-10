@@ -1,6 +1,6 @@
 import { auth } from '@constants/actionTypes';
+import env from '@utils/env.json';
 import { produce } from 'immer';
-import env from '@utils/env';
 import Reactotron from 'reactotron-react-native';
 
 const profileInitialState = {
@@ -25,9 +25,7 @@ export default produce((draftState = profileInitialState, action) => {
       draftState.name = successData.username;
       draftState.bio = successData.bio;
       draftState.username = successData.username;
-      draftState.image = successData.image
-        ? `${env.ASSETS_URL}/${successData.image}`
-        : undefined;
+      draftState.image = successData.image ? `${env.ASSETS_URL}/${successData.image}` : undefined;
       draftState.email = successData.email;
       draftState.followers = successData.followers;
       draftState.followings = successData.followings;

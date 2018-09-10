@@ -1,6 +1,6 @@
 import { refreshToken } from '@actions/loginActions';
+import env from '@utils/env.json';
 import axios from 'axios';
-import env from '@utils/env';
 import Reactotron from 'reactotron-react-native';
 
 const apiUrl = env.API_URL;
@@ -10,9 +10,7 @@ export const client = axios.create({
 
 const extractAuthorizationHeader = getState => {
   Reactotron.log('Token:', getState().auth.tokens.access);
-  return getState().auth.tokens.access
-    ? `Bearer ${getState().auth.tokens.access}`
-    : undefined;
+  return getState().auth.tokens.access ? `Bearer ${getState().auth.tokens.access}` : undefined;
 };
 
 export const interceptors = {

@@ -1,6 +1,6 @@
 import { auth } from '@constants/actionTypes';
+import env from '@utils/env.json';
 import { produce } from 'immer';
-import env from '@utils/env';
 import Reactotron from 'reactotron-react-native';
 import { getReduxAxiosPreviousAction } from 'src/utils/helpers';
 
@@ -49,9 +49,7 @@ export default produce((draftState = initialState, action) => {
 });
 
 export const selectors = {
-  isFetchingProfile: (state, username) =>
-    state[username] && state[username].loading,
-  getProfile: (state, username) =>
-    (state[username] && state[username].data) || profileInitialState,
+  isFetchingProfile: (state, username) => state[username] && state[username].loading,
+  getProfile: (state, username) => (state[username] && state[username].data) || profileInitialState,
   isFollowed: (state, username) => state[username] && state[username].isFollowed
 };
