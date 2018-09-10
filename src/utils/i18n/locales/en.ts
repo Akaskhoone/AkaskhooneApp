@@ -74,5 +74,8 @@ export default {
   12: 'Twelve',
   answer: 'Answer',
   statusForNotFollowedUser: 'Follow',
-  statusForFollowedUser: 'Following'
+  statusForFollowedUser: 'Following',
+  location: 'location',
+  tag: 'add tag',
+  sendPost: 'sent post'
 };

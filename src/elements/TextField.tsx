@@ -1,7 +1,7 @@
 import I18n from '@utils/i18n';
 import { connectStyle, Input, InputGroup, Text } from 'native-base';
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { TextStyle, View } from 'react-native';
 
 interface Props {
   input: any;
@@ -11,6 +11,7 @@ interface Props {
   placeholder: string;
   disabled?: boolean;
   style: any;
+  inputStyle: TextStyle;
 }
 
 class TextField extends Component<Props> {
@@ -26,6 +27,7 @@ class TextField extends Component<Props> {
       meta,
       placeholder,
       disabled,
+      inputStyle,
       ...otherProps
     } = this.props;
     const isInvalidAndDirty = meta.invalid && meta.dirty;
@@ -45,9 +47,12 @@ class TextField extends Component<Props> {
             value={input.value}
             placeholder={placeholder || I18n.t(name)}
             disabled={disabled}
-            style={{
-              textAlign: isRtl ? 'right' : 'left'
-            }}
+            style={[
+              {
+                textAlign: isRtl ? 'right' : 'left'
+              },
+              inputStyle
+            ]}
             {...otherProps}
           />
         </InputGroup>

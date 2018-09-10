@@ -84,7 +84,7 @@ export default class ProfileComponent extends Component<Props> {
   }
 
   private loadProfile = () => {
-    return this.props.loadProfile(this.props.username).catch(this.loadProfile);
+    return this.props.loadProfile(this.props.username);
   };
 }
 
