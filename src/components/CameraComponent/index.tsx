@@ -1,6 +1,6 @@
 import { Button, View } from 'native-base';
 import React, { Component } from 'react';
-import { Image, StyleSheet, ViewStyle } from 'react-native';
+import { Image, PermissionsAndroid, StyleSheet, ViewStyle } from 'react-native';
 import { CameraKitCamera } from 'react-native-camera-kit';
 import ImagePicker from 'react-native-image-crop-picker';
 import Reactotron from 'reactotron-react-native';
@@ -12,6 +12,22 @@ interface Props {
 
 export default class CameraComponent extends Component<Props> {
   public camera = undefined;
+
+  public state = {
+    permission: false
+  };
+
+  public componentWillMount() {
+    PermissionsAndroid.requestMultiple([
+      PermissionsAndroid.PERMISSIONS.CAMERA,
+      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    ]).then(() => {
+      this.setState({
+        permission: true
+      });
+    });
+  }
 
   public render() {
     if (this.props.value) {
@@ -33,20 +49,22 @@ export default class CameraComponent extends Component<Props> {
         <View style={[styles.container, this.props.style]}>
           <Button style={styles.button} onPress={this.openCamera} />
 
-          <CameraKitCamera
-            ref={cam => (this.camera = cam)}
-            style={{
-              flex: 1,
-              backgroundColor: 'white'
-            }}
-            cameraOptions={{
-              flashMode: 'auto',
-              focusMode: 'on',
-              zoomMode: 'on',
-              ratioOverlay: '1:1',
-              ratioOverlayColor: '#00000077'
-            }}
-          />
+          {this.state.permission && (
+            <CameraKitCamera
+              ref={cam => (this.camera = cam)}
+              style={{
+                flex: 1,
+                backgroundColor: 'white'
+              }}
+              cameraOptions={{
+                flashMode: 'auto',
+                focusMode: 'on',
+                zoomMode: 'on',
+                ratioOverlay: '1:1',
+                ratioOverlayColor: '#00000077'
+              }}
+            />
+          )}
         </View>
       );
     }
