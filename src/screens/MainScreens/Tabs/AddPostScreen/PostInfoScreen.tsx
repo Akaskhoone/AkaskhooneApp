@@ -2,12 +2,13 @@ import AddCaptionComponent from '@components/AddCaptionComponent';
 import I18n from '@utils/i18n';
 import { Body, Button, Container, Content, Header, Icon, Left, Right, Title } from 'native-base';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 interface Props {
   uri: string;
   [propName: string]: any;
 }
 
-export default class PostInfoScreen extends Component<Props> {
+class PostInfoScreen extends Component<Props> {
   public render() {
     return (
       <Container>
@@ -25,12 +26,14 @@ export default class PostInfoScreen extends Component<Props> {
           </Right>
         </Header>
         <Content>
-          <AddCaptionComponent uir={this.props.uir} />
+          <AddCaptionComponent uri={this.props.uri} />
         </Content>
       </Container>
     );
   }
 }
 const mapStateToProp = state => ({
-  uri: state.selectPicture.uri
+  uri: state.selectPicture.imageUri
 });
+
+export default connect(mapStateToProp)(PostInfoScreen);
