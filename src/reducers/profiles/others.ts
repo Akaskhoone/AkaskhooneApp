@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 import env from '@utils/env.json';
 import { produce } from 'immer';
 import Reactotron from 'reactotron-react-native';
@@ -22,10 +22,10 @@ const profileInitialState = {
 
 export default produce((draftState = initialState, action) => {
   switch (action.type) {
-    case auth.OTHERS_PROFILE:
+    case types.OTHERS_PROFILE:
       draftState[action.payload.username] = profileInitialState;
       return draftState;
-    case auth.OTHERS_PROFILE_LOAD_SUCCESS:
+    case types.OTHERS_PROFILE_LOAD_SUCCESS:
       const previousAction = getReduxAxiosPreviousAction(action);
       const successData = action.payload.data;
       const username = previousAction.payload.username;
@@ -41,7 +41,7 @@ export default produce((draftState = initialState, action) => {
       draftState[username].data.bio = successData.bio;
       draftState[username].data.name = successData.name;
       return draftState;
-    case auth.OTHERS_PROFILE_LOAD_FAILED:
+    case types.OTHERS_PROFILE_LOAD_FAILED:
       return draftState;
     default:
       return draftState;

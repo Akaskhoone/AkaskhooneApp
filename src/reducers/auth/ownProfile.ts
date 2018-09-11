@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 import env from '@utils/env.json';
 import { produce } from 'immer';
 import Reactotron from 'reactotron-react-native';
@@ -16,10 +16,10 @@ const profileInitialState = {
 
 export default produce((draftState = profileInitialState, action) => {
   switch (action.type) {
-    case auth.OWN_PROFILE:
+    case types.OWN_PROFILE:
       draftState.loading = true;
       return draftState;
-    case auth.OWN_PROFILE_LOAD_SUCCESS:
+    case types.OWN_PROFILE_LOAD_SUCCESS:
       const successData = action.payload.data;
       draftState.loading = false;
       draftState.name = successData.username;
@@ -31,7 +31,7 @@ export default produce((draftState = profileInitialState, action) => {
       draftState.followings = successData.followings;
       draftState.name = successData.name;
       return draftState;
-    case auth.CHANGEINFO_SUCCESS:
+    case types.CHANGEINFO_SUCCESS:
       Reactotron.log('Change info Res:', action);
       const changeInfoData = action.payload.data;
       draftState.loading = false;
@@ -45,7 +45,7 @@ export default produce((draftState = profileInitialState, action) => {
       draftState.bio = changeInfoData.bio;
       draftState.name = changeInfoData.name;
       return draftState;
-    case auth.LOGOUT:
+    case types.LOGOUT:
       return profileInitialState;
     default:
       return draftState;

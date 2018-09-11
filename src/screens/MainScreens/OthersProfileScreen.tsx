@@ -50,7 +50,7 @@ class OthersProfileScreen extends Component<Props> {
           isOthers={true}
           loadProfile={this.loadOthersProfile}
         />
-        <ProfileTabs />
+        {/* <ProfileTabs /> */}
       </Container>
     );
   }

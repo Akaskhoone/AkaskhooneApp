@@ -1,11 +1,11 @@
 import rootReducer from '@reducers/index';
 import { client, interceptors } from '@utils/client';
 import Reactotron from 'reactotron-react-native';
-import { applyMiddleware, createStore } from 'redux';
-import axiosMiddleware from 'redux-axios-middleware';
+import { applyMiddleware } from 'redux';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
+import axiosMiddleware from './libs/reduxAxiosMiddleware';
 
 const persistedReducer = persistReducer({ storage, key: 'root', whitelist: ['auth'] }, rootReducer);
 

@@ -1,6 +1,8 @@
-import { combineReducers } from '../../../node_modules/redux';
+import { combineReducers } from 'redux';
+import ownProfileReducer from './ownProfile';
 import tokensReducer from './tokens';
 
 export default combineReducers({
-  tokens: tokensReducer
+  tokens: tokensReducer,
+  ownProfile: ownProfileReducer
 });

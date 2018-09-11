@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 
 export const createPost = (image, caption: string) => dispatch => {
   const formData: any = new FormData();
@@ -6,7 +6,7 @@ export const createPost = (image, caption: string) => dispatch => {
   formData.append('image', { uri: image.uri, name: 'image.jpg', type: 'multipart/form-data' });
 
   return dispatch({
-    types: [auth.CREATEPOST, auth.CREATEPOST_SUCCESS],
+    types: [types.CREATEPOST, types.CREATEPOST_SUCCESS],
     payload: {
       request: {
         url: '/social/posts/',
@@ -21,6 +21,6 @@ export const createPost = (image, caption: string) => dispatch => {
 };
 
 export const setPostImage = imageUri => ({
-  type: auth.SET_POST_IMAGE,
+  type: types.SET_POST_IMAGE,
   payload: { imageUri }
 });

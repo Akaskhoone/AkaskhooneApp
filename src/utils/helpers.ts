@@ -40,17 +40,16 @@ export const extractErrors = (res, errorNames: string[]) => {
 };
 
 export function generateSelector(childSelector, getChildState) {
-  return Object.keys(childSelector).reduce(
-    (prev, next) => ({
+  return Object.keys(childSelector).reduce((prev, next) => {
+    return {
       ...prev,
       [next]: (state, ...props) => childSelector[next](getChildState(state), ...props)
-    }),
-    {}
-  );
+    };
+  }, {});
 }
 
 export function getReduxAxiosPreviousAction(action) {
-  return action.meta.previousAction;
+  return action.meta && action.meta.previousAction;
 }
 
 const dateParser = dateString => {

@@ -1,30 +1,30 @@
 import { generateSelector } from '@utils/helpers';
+import Reactotron from 'reactotron-react-native';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
+import reducerGenerator, { selectors as generalSelectors } from 'src/libs/reducerGenerator';
 import authReducer from './auth';
-import commentsReducer, { selectors as commentsSelectors } from './comments';
-import postsReducer, { selectors as postsSelectors } from './posts';
-import profilesReducer, { selectors as profilesSelectors } from './profiles';
 import selectPictureReducer from './selectPicture';
 
-function mainReducer(state = {}, action) {
-  return state;
-}
-
 export default combineReducers({
-  main: mainReducer,
   form: formReducer,
   auth: authReducer,
   selectPicture: selectPictureReducer,
-  posts: postsReducer,
-  profiles: profilesReducer,
-  comments: commentsReducer
+  posts: reducerGenerator('posts'),
+  profiles: reducerGenerator('profiles'),
+  comments: reducerGenerator('comments')
 });
 
 export const selectors = {
   isLoggedIn: state => !!state.auth.tokens.refresh,
-  profileLoaded: state => !!state.profiles.own.email && !!state.profiles.own.username,
-  ...generateSelector(postsSelectors, state => state.posts),
-  ...generateSelector(commentsSelectors, state => state.comments),
-  ...generateSelector(profilesSelectors, state => state.profiles)
-} as any;
+  profileLoaded: state => !!state.auth.ownProfile.email && !!state.auth.ownProfile.username,
+  posts: generateSelector(generalSelectors, state => state.posts),
+  comments: generateSelector(generalSelectors, state => state.comments),
+  profiles: generateSelector(generalSelectors, state => state.profiles)
+} as {
+  isLoggedIn: any;
+  profileLoaded: any;
+  posts: typeof generalSelectors;
+  comments: typeof generalSelectors;
+  profiles: typeof generalSelectors;
+};

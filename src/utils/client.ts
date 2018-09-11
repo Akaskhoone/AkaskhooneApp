@@ -25,18 +25,28 @@ export const interceptors = {
   ],
   response: [
     {
+      success: (_, res) => {
+        if (res.data === 'unexpected end of stream') {
+          return axios(res.config);
+        }
+        return res;
+      },
       error: ({ dispatch, getState }, res) => {
         if (
           res.response &&
           res.response.status === 401 &&
+          res.response.data &&
           res.response.data.error &&
-          res.response.data.error.errorCode === 'TOKENEXP'
+          res.response.data.error.token[0] === 'Invalid'
         ) {
           return dispatch(refreshToken()).then(() => {
             const authHeader = extractAuthorizationHeader(getState);
             res.config.headers.authorization = authHeader || '';
             return axios(res.config);
           });
+        }
+        if (res.response && res.response.data === 'unexpected end of stream') {
+          return axios(res.config);
         }
         return Promise.reject(res);
       }

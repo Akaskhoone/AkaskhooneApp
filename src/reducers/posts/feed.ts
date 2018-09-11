@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 import { produce } from 'immer';
 
 const initialState = {
@@ -12,15 +12,15 @@ const initialState = {
 
 export default produce((draftState = initialState, action) => {
   switch (action.type) {
-    case auth.FEED_LOAD:
+    case types.FEED_LOAD:
       draftState.loading = true;
       return draftState;
-    case auth.FEED_LOAD_SUCCESS:
+    case types.FEED_LOAD_SUCCESS:
       draftState.posts = action.payload.data.posts;
       draftState.next = action.payload.data.next;
       draftState.loading = false;
       return draftState;
-    case auth.FEED_LOAD_FAIL:
+    case types.FEED_LOAD_FAIL:
       draftState.loading = false;
       return draftState;
 
@@ -36,15 +36,15 @@ export default produce((draftState = initialState, action) => {
     //   draftState.refreshing = false;
     //   return draftState;
 
-    case auth.FEED_LOADMORE:
+    case types.FEED_LOADMORE:
       draftState.loadingMore = true;
       return draftState;
-    case auth.FEED_LOADMORE_SUCCESS:
+    case types.FEED_LOADMORE_SUCCESS:
       draftState.posts.push(...action.payload.data.posts);
       draftState.next = action.payload.data.next;
       draftState.loadingMore = false;
       return draftState;
-    case auth.FEED_LOADMORE_FAIL:
+    case types.FEED_LOADMORE_FAIL:
       draftState.loadingMore = false;
       return draftState;
 

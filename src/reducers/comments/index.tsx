@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 import { produce } from 'immer';
 import { getReduxAxiosPreviousAction } from 'src/utils/helpers';
 
@@ -10,19 +10,19 @@ const commentInitialState = {
 };
 export default produce((draftState, action) => {
   switch (action.type) {
-    case auth.COMMENTS_LOAD:
+    case types.COMMENTS_LOAD:
       draftState[action.payload.postId] = commentInitialState;
       return draftState;
-    case auth.COMMENTS_LOAD_SUCCESS:
+    case types.COMMENTS_LOAD_SUCCESS:
       const previousAction = getReduxAxiosPreviousAction(action);
       draftState[previousAction.payload.postId].comments.push(action.payload.data.comments);
       draftState[previousAction.payload.postId].next = action.payload.data.next;
       draftState[previousAction.payload.postId].loading = false;
       return draftState;
-    case auth.COMMENTS_LOAD_FAIL:
+    case types.COMMENTS_LOAD_FAIL:
       draftState[getReduxAxiosPreviousAction(action).payload.postId].loading = false;
       return draftState;
-    case auth.COMMENTS_RESET:
+    case types.COMMENTS_RESET:
       draftState[action.payload.postId] = commentInitialState;
       return draftState;
     default:

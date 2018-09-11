@@ -50,7 +50,7 @@ class ProfileScreen extends Component<Props> {
           loading={this.props.loading}
           loadProfile={this.props.loadOwnProfile}
         />
-        <ProfileTabs />
+        {/* <ProfileTabs /> */}
       </Container>
     );
   }
@@ -59,8 +59,8 @@ class ProfileScreen extends Component<Props> {
 
 const mapStateToProp = state => {
   return {
-    username: state.profiles.own.username,
-    data: state.profiles.own
+    username: state.auth.ownProfile.username,
+    data: state.auth.ownProfile
   };
 };
 const mapDispatchToProps = () => dispatch => ({
