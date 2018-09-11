@@ -1,6 +1,5 @@
-import { types } from '@constants/actionTypes';
-import { produce } from 'immer';
 import Reactotron from 'reactotron-react-native';
+import types from './actionTypes';
 
 /* action after returning from actionExtractor should be in the following format:
 //    {
@@ -23,42 +22,67 @@ export default (name, actionExtractor = a => a) => {
     next: null,
     previous: null
   };
-  const paginationsReducer = produce((draftState, action) => {
+  const paginationsReducer = (draftState, action) => {
     if (action.pagination) {
       const data = action.payload.data;
       Reactotron.log('Pagination Action', action);
       switch (action.type) {
         case types.DATA_LOAD:
-          draftState[action.pagination] = paginationInitialState;
-          return draftState;
-        case types.DATA_LOAD_SUCCESS:
-          draftState[action.pagination] = {
-            data: data.posts.map(p => p.post_id),
-            next: data.next,
-            loading: false
+          return {
+            ...draftState,
+            [action.pagination]: paginationInitialState
           };
-          return draftState;
+        case types.DATA_LOAD_SUCCESS:
+          return {
+            ...draftState,
+            [action.pagination]: {
+              data: data.posts.map(p => p.post_id),
+              next: data.next,
+              loading: false
+            }
+          };
         case types.DATA_LOAD_FAIL:
-          draftState[action.pagination].loading = false;
-          return draftState;
+          return {
+            ...draftState,
+            [action.pagination]: {
+              ...draftState[action.pagination],
+              loading: false
+            }
+          };
 
         case types.DATA_LOAD_MORE:
           draftState[action.pagination].loadingMore = true;
-          return draftState;
+          return {
+            ...draftState,
+            [action.pagination]: {
+              ...draftState[action.pagination],
+              loadingMore: true
+            }
+          };
         case types.DATA_LOAD_MORE_SUCCESS:
-          draftState[action.pagination].data.push(...data.posts.map(p => p.post_id));
-          draftState[action.pagination].next = data.next;
-          draftState[action.pagination].loadingMore = false;
-          return draftState;
+          return {
+            ...draftState,
+            [action.pagination]: {
+              ...draftState[action.pagination],
+              data: [...draftState[action.pagination].data, ...data.posts.map(p => p.post_id)],
+              next: data.next,
+              loadingMore: false
+            }
+          };
         case types.DATA_LOAD_MORE_FAIL:
-          draftState[action.pagination].loadingMore = false;
-          return draftState;
+          return {
+            ...draftState,
+            [action.pagination]: {
+              ...draftState[action.pagination],
+              loadingMore: false
+            }
+          };
       }
     }
     return draftState;
-  });
+  };
 
-  const dataReducer = produce((draftState, action) => {
+  const dataReducer = (draftState, action) => {
     switch (action.type) {
       case types.DATA_LOAD_SUCCESS:
       case types.DATA_LOAD_MORE_SUCCESS:
@@ -72,7 +96,7 @@ export default (name, actionExtractor = a => a) => {
       default:
         return draftState;
     }
-  });
+  };
 
   return (state = initialState, action) => {
     if (action.dataType === name) {
@@ -103,9 +127,5 @@ export const selectors = {
     hasData: () =>
       !!state.paginations[paginationName] && state.paginations[paginationName].data.length > 0
   }),
-  getData: (state, dataId) => {
-    Reactotron.log('Data id', dataId);
-    Reactotron.log('State.data', state.data);
-    return state.data[dataId] || null;
-  }
+  getData: (state, dataId) => state.data[dataId] || null
 };

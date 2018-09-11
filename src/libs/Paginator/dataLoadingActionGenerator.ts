@@ -1,5 +1,5 @@
-import { types } from '@constants/actionTypes';
 import { selectors } from '@reducers/index';
+import types from './actionTypes';
 
 /*
 // sample action: 

@@ -1,5 +1,4 @@
-import actionGenerator from '@actions/dataLoadingActionGenerator';
-import { load, loadMore } from '@actions/postsActions';
+import { getActionsFor } from '@libs/Paginator';
 import I18n from '@utils/i18n';
 import { Toast } from 'native-base';
 import React from 'react';
@@ -43,7 +42,7 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => {
-  const postActions = actionGenerator('posts');
+  const postActions = getActionsFor('posts');
   const feedPagination = postActions.createPagination('feed', '/social/home/');
   return {
     load: () =>
