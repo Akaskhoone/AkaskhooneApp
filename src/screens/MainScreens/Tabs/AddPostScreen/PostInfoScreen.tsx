@@ -27,7 +27,7 @@ interface Props {
 class PostInfoScreen extends Component<Props> {
   public render() {
     return (
-      <Container>
+      <Container style={{ flex: 1 }}>
         <Header>
           <Left>
             <Button transparent={true} />
@@ -36,17 +36,18 @@ class PostInfoScreen extends Component<Props> {
             <Title>{I18n.t('postInfoHeaderText')}</Title>
           </Body>
           <Right>
-            <Button transparent={true}>
+            <Button transparent={true} onPress={this.goBack}>
               <Icon type="Feather" name="arrow-right" />
             </Button>
           </Right>
         </Header>
-        <Content contentContainerStyle={{ flex: 1 }}>
+        <Content contentContainerStyle={{ flexGrow: 1 }} enableResetScrollToCoords={true}>
           <AddCaptionComponent uri={this.props.uri} onSubmit={this.submitSentPost} />
         </Content>
       </Container>
     );
   }
+  private goBack = () => this.props.navigation.goBack();
   private navigateTo = name => this.props.navigation.navigate(name);
   private submitSentPost = vals => {
     return this.props.sendPost(vals, this.props.uri).then(() => {

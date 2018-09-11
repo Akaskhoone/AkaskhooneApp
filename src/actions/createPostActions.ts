@@ -2,13 +2,13 @@ import { auth } from '@constants/actionTypes';
 
 export const createPost = (
   des: string,
-  tags: string,
+  tags: string[],
   location: string,
   imageUri: string
 ) => dispatch => {
   const formData: any = new FormData();
   formData.append('des', des || '');
-  formData.append('tags', tags || '');
+  formData.append('tags', (tags && tags.join(' ')) || '');
   formData.append('location', location || '');
   formData.append('image', { uri: imageUri, name: 'image.jpg', type: 'multipart/form-data' });
   return dispatch({

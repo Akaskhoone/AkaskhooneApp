@@ -4471,6 +4471,10 @@ react-native-tag-input@^0.0.21:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-tags@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-tags/-/react-native-tags-1.4.0.tgz#73fbd04e21452814d99a62815214c25e42945805"
+
 react-native-typescript-transformer@^1.2.10:
   version "1.2.10"
   resolved "https://registry.yarnpkg.com/react-native-typescript-transformer/-/react-native-typescript-transformer-1.2.10.tgz#6f76c1449028cdeafa184b533301ecd547367ed1"

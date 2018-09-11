@@ -4,7 +4,7 @@ import I18n from '@utils/i18n';
 import { Button, Form, Text, Thumbnail, View } from 'native-base';
 import React, { Component } from 'react';
 import { Image, TouchableOpacity } from 'react-native';
-import TagInput from 'react-native-tag-input';
+import tags from 'react-native-tags';
 import { Field, reduxForm } from 'redux-form';
 interface Props {
   uri: string;
@@ -18,8 +18,7 @@ class AddCaptionComponent extends Component<Props> {
           style={{
             flexDirection: 'row-reverse',
             marginHorizontal: 15,
-            marginTop: 15,
-            height: 100
+            marginTop: 15
           }}>
           <Thumbnail
             source={{ uri: this.props.uri }}
@@ -38,21 +37,15 @@ class AddCaptionComponent extends Component<Props> {
         </View>
         <View style={{ marginTop: 25, flex: 1 }}>
           <Field component={TextField} name="location" />
-          <Field component={TextField} name="tag" />
-          <View
-            style={{
-              justifyContent: 'flex-end',
-              flex: 1,
-              marginHorizontal: 15,
-              marginBottom: 20
-            }}>
-            <Button
-              block={true}
-              style={{ alignItems: 'center', borderRadius: 10 }}
-              onPress={this.props.handleSubmit}>
-              <Text>{I18n.t('sendPost')}</Text>
-            </Button>
-          </View>
+          <Field component={TagField} name="tags" />
+        </View>
+        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+          <Button
+            block={true}
+            style={{ alignItems: 'center', borderRadius: 10 }}
+            onPress={this.props.handleSubmit}>
+            <Text>{I18n.t('sendPost')}</Text>
+          </Button>
         </View>
       </View>
     );
