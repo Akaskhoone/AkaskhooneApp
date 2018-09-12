@@ -24,20 +24,20 @@ export default (name, actionExtractor = a => a) => {
   };
   const paginationsReducer = (draftState, action) => {
     if (action.pagination) {
-      const data = action.payload.data;
       Reactotron.log('Pagination Action', action);
       switch (action.type) {
         case types.DATA_LOAD:
           return {
             ...draftState,
-            [action.pagination]: paginationInitialState
+            [action.pagination]: draftState[action.pagination] || paginationInitialState
           };
         case types.DATA_LOAD_SUCCESS:
           return {
             ...draftState,
             [action.pagination]: {
-              data: data.posts.map(p => p.post_id),
-              next: data.next,
+              ...draftState[action.pagination],
+              data: action.payload.data.result,
+              next: action.payload.data.next,
               loading: false
             }
           };
@@ -51,7 +51,6 @@ export default (name, actionExtractor = a => a) => {
           };
 
         case types.DATA_LOAD_MORE:
-          draftState[action.pagination].loadingMore = true;
           return {
             ...draftState,
             [action.pagination]: {
@@ -64,8 +63,8 @@ export default (name, actionExtractor = a => a) => {
             ...draftState,
             [action.pagination]: {
               ...draftState[action.pagination],
-              data: [...draftState[action.pagination].data, ...data.posts.map(p => p.post_id)],
-              next: data.next,
+              data: [...draftState[action.pagination].data, ...action.payload.data.result],
+              next: action.payload.data.next,
               loadingMore: false
             }
           };
@@ -86,12 +85,10 @@ export default (name, actionExtractor = a => a) => {
     switch (action.type) {
       case types.DATA_LOAD_SUCCESS:
       case types.DATA_LOAD_MORE_SUCCESS:
+        Reactotron.log('Data Add Action', action);
         return {
           ...draftState,
-          ...action.payload.data.posts.reduce(
-            (posts, post) => ({ ...posts, [post.post_id]: post }),
-            {}
-          )
+          ...action.payload.data.entities[name]
         };
       default:
         return draftState;

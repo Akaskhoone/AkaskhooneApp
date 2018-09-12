@@ -1,3 +1,4 @@
+import { normalize } from 'normalizr';
 import Reactotron from 'reactotron-react-native';
 import I18n from 'src/utils/i18n';
 
@@ -50,6 +51,19 @@ export function generateSelector(childSelector, getChildState) {
 
 export function getReduxAxiosPreviousAction(action) {
   return action.meta && action.meta.previousAction;
+}
+
+export function applyNormalizeOnAction(action, normalizrSchema) {
+  const data = action.payload && action.payload.data && action.payload.data.posts;
+  const normalizedData = normalize(data || [], normalizrSchema);
+  const transformedAction = {
+    ...action,
+    payload: {
+      ...action.payload,
+      data: { ...action.payload.data, ...normalizedData }
+    }
+  };
+  return transformedAction;
 }
 
 const dateParser = dateString => {

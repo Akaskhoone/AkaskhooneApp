@@ -1,26 +1,44 @@
-interface User {
+export interface ProfileDTO {
   username: string;
   name: string;
-  profileImage: string;
-  bio: string;
-  private: boolean;
-  followStatus: 'followed' | 'notfollowed' | 'requested';
-}
-interface Post {
-  post_id: string;
-  creator: {
-    username: string;
-    name: string;
-    image: string;
-  };
+  bio?: string;
   image: string;
+  followings?: number;
+  followers?: number;
+  private?: boolean;
+  isFollowed?: boolean;
 }
-interface Board {
-  board_id: string;
+
+export interface PostDTO {
+  postId: string;
+  des?: string;
+  tags?: [TagDTO];
+  creator?: ProfileDTO;
+  image: string;
+  likesCount?: number;
+  commentsCount?: number;
+}
+
+export interface CommentDTO {
+  commentId: string;
+  postId: string;
+  text: string;
+  creator: ProfileDTO;
+}
+
+export interface BoardDTO {
+  boardId: string;
   name: string;
-  count: number;
-  posts: Array<{ post_id: string; image: string }>;
+  postsCount: number;
+  posts?: [PostDTO];
 }
-interface Props {
-  bookmark: Board;
+
+export interface TagDTO {
+  name: string;
+}
+
+export interface PaginationableDTO<T> {
+  data: [T];
+  next: string;
+  previous?: string;
 }

@@ -1,5 +1,6 @@
 import { generateReducerFor, paginatorSelectors } from '@libs/Paginator';
-import { generateSelector } from '@utils/helpers';
+import { applyNormalizeOnAction, generateSelector } from '@utils/helpers';
+import { comment, post, profile } from '@utils/schemas';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 import authReducer from './auth';
@@ -9,9 +10,9 @@ export default combineReducers({
   form: formReducer,
   auth: authReducer,
   selectPicture: selectPictureReducer,
-  posts: generateReducerFor('posts'),
-  profiles: generateReducerFor('profiles'),
-  comments: generateReducerFor('comments')
+  posts: generateReducerFor('posts', action => applyNormalizeOnAction(action, [post])),
+  profiles: generateReducerFor('profiles', action => applyNormalizeOnAction(action, [profile])),
+  comments: generateReducerFor('comments', action => applyNormalizeOnAction(action, [comment]))
 });
 
 export const selectors = {

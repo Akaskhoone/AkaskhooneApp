@@ -26,7 +26,7 @@ export const interceptors = {
   response: [
     {
       success: (_, res) => {
-        if (res.data === 'unexpected end of stream') {
+        if (res.response && res.response.data === 'unexpected end of stream') {
           return axios(res.config);
         }
         return res;
