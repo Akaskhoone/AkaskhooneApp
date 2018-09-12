@@ -1,11 +1,11 @@
 import DefaultHomeComponent from '@components/DefaultHomeComponent';
-import Feed from '@components/Feed';
 import PostCard from '@components/PostCard';
 import MyIcon from '@elements/Icon';
 import Paginator from '@libs/Paginator';
 import I18n from '@utils/i18n';
 import { Body, Button, Container, Header, Left, Right, Title } from 'native-base';
 import React, { Component } from 'react';
+import { View } from 'react-native';
 
 interface Props {
   hasFeedPosts: boolean;
@@ -40,19 +40,17 @@ class HomeScreen extends Component<Props> {
           type="posts"
           url="/social/home/"
           renderItem={this.renderItem}
-          keyExtractor={this.keyExtractor}
         />
       </Container>
     );
   }
 
-  private keyExtractor = a => a;
   private renderItem = ({ item }) => {
     return (
       <PostCard
         dataId={item}
-        onImagePress={this.navigateTo('post', item)}
-        onProfilePress={this.navigateTo('othersProfile', item)}
+        onImagePress={this.navigateTo('post', { item })}
+        onProfilePress={this.navigateTo('othersProfile', { item })}
       />
     );
   };

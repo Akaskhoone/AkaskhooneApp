@@ -16,11 +16,11 @@ export default class Posts extends Component<Props> {
       <Paginator
         type="posts"
         name={`${username}_posts`}
-        url={`/social/posts?username=${username}`}
+        url={`/social/posts/?username=${username}`}
         renderItem={this.renderItem}
         defaultComponent={this.renderDefaultComponent}
         numColumns={2}
-        contentContainerStyle={{ alignItems: 'center' }}
+        contentContainerStyle={{ marginLeft: 5 }}
       />
     );
   }

@@ -12,12 +12,12 @@ export default ({ location, creator, date, profileUrl, showProfile }) => (
       </View>
     </TouchableOpacity>
     <View style={{ flex: 1 }} />
-    {location && (
+    {location ? (
       <Button transparent={true} iconLeft={true} dark={true}>
         <Text style={{ fontWeight: 'bold' }}>{location}</Text>
         <MyIcon name="location" size={15} />
       </Button>
-    )}
+    ) : null}
     <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center' }} onPress={showProfile}>
       <View style={{ marginRight: 10, marginLeft: 15, alignItems: 'flex-end' }}>
         <Text style={{ fontWeight: 'bold' }}>{creator}</Text>

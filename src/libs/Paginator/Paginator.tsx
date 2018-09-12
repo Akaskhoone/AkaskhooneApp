@@ -5,7 +5,6 @@ import { Spinner, Toast } from 'native-base';
 import React, { Component, ReactElement } from 'react';
 import { FlatList, ListRenderItemInfo, RefreshControl, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import Reactotron from 'reactotron-react-native';
 
 interface Props {
   defaultComponent: any;
@@ -20,13 +19,10 @@ export class Paginator extends Component<Props> {
   public componentDidMount() {
     this.props.load();
   }
-  public componentDidUpdate() {
-    this.props.load();
-  }
   public render() {
     const DefaultComponent = this.props.defaultComponent;
 
-    const keyExtractor = a => a;
+    const keyExtractor = a => `${a}`;
 
     if (this.props.hasData) {
       return (
