@@ -2,7 +2,7 @@ import { getActionsFor } from '@libs/Paginator';
 import { selectors } from '@reducers/index';
 import I18n from '@utils/i18n';
 import { Spinner, Toast } from 'native-base';
-import React, { ReactElement } from 'react';
+import React, { Component, ReactElement } from 'react';
 import { FlatList, ListRenderItemInfo, RefreshControl, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
@@ -16,42 +16,56 @@ interface Props {
   [propName: string]: any;
 }
 
-export const Paginator = (props: Props) => {
-  const DefaultComponent = props.defaultComponent;
+export class Paginator extends Component<Props> {
+  public componentDidMount() {
+    this.props.load();
+  }
+  public componentDidUpdate() {
+    this.props.load();
+  }
+  public render() {
+    const DefaultComponent = this.props.defaultComponent;
 
-  const renderFooter = () => {
-    return props.loadingMore ? <Spinner /> : null;
+    const keyExtractor = a => a;
+
+    if (this.props.hasData) {
+      return (
+        <FlatList
+          {...this.props}
+          data={this.props.data}
+          renderItem={this.props.renderItem}
+          refreshControl={
+            <RefreshControl refreshing={this.props.loading} onRefresh={this.props.load} />
+          }
+          onEndReached={this.loadMore}
+          onEndReachedThreshold={0.6}
+          ListFooterComponent={this.renderFooter}
+          keyExtractor={keyExtractor}
+        />
+      );
+    }
+    return (
+      <ScrollView
+        contentContainerStyle={{ flex: 1 }}
+        refreshControl={
+          <RefreshControl onRefresh={this.props.load} refreshing={this.props.loading} />
+        }>
+        <DefaultComponent />
+      </ScrollView>
+    );
+  }
+
+  private renderFooter = () => {
+    return this.props.loadingMore ? <Spinner /> : null;
   };
-  const loadMore = () => {
-    if (props.hasNext && !props.loadingMore) {
-      return props.loadMore();
+
+  private loadMore = () => {
+    if (this.props.hasNext && !this.props.loadingMore) {
+      return this.props.loadMore();
     }
     return;
   };
-  const keyExtractor = a => a;
-
-  if (props.hasData) {
-    return (
-      <FlatList
-        {...props}
-        data={props.data}
-        renderItem={props.renderItem}
-        refreshControl={<RefreshControl refreshing={props.loading} onRefresh={props.load} />}
-        onEndReached={loadMore}
-        onEndReachedThreshold={0.6}
-        ListFooterComponent={renderFooter}
-        keyExtractor={keyExtractor}
-      />
-    );
-  }
-  return (
-    <ScrollView
-      contentContainerStyle={{ flex: 1 }}
-      refreshControl={<RefreshControl onRefresh={props.load} refreshing={props.loading} />}>
-      <DefaultComponent />
-    </ScrollView>
-  );
-};
+}
 
 const mapStateToProps = (state, ownProps: Props) => {
   const dataType = ownProps.type;
@@ -65,6 +79,7 @@ const mapStateToProps = (state, ownProps: Props) => {
     hasData: pagination.hasData()
   };
 };
+
 const mapDispatchToProps = (dispatch, ownProps: Props) => {
   const dataType = ownProps.type;
   const paginationName = ownProps.name;
@@ -79,7 +94,7 @@ const mapDispatchToProps = (dispatch, ownProps: Props) => {
   };
 };
 
-export default connect<{}, {}, Props>(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Paginator);
