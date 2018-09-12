@@ -74,5 +74,7 @@ export default {
   12: 'دوازده',
   answer: 'پاسخ',
   statusForNotFollowedUser: 'دنبال کن',
-  statusForFollowedUser: 'دنبال شده'
+  statusForFollowedUser: 'دنبال شده',
+  submit: 'ثبت',
+  return: 'بازگشت'
 };
