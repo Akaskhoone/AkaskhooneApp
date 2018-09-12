@@ -118,11 +118,11 @@ export const selectors = {
       !!state.paginations[paginationName] && state.paginations[paginationName].next,
     hasNext: () => !!state.paginations[paginationName] && !!state.paginations[paginationName].next,
     isLoadingMore: () =>
-      !!state.paginations[paginationName] && state.paginations[paginationName].loadingMore,
+      !!state.paginations[paginationName] && !!state.paginations[paginationName].loadingMore,
     isLoading: () =>
-      !!state.paginations[paginationName] && state.paginations[paginationName].loading,
+      !!state.paginations[paginationName] && !!state.paginations[paginationName].loading,
     hasData: () =>
-      !!state.paginations[paginationName] && state.paginations[paginationName].data.length > 0
+      !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
   }),
   getData: (state, dataId) => state.data[dataId] || null
 };

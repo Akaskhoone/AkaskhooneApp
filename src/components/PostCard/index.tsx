@@ -9,6 +9,7 @@ import Image from './PostImage';
 
 interface Props {
   post: any;
+  dataId: number;
   onImagePress: any;
   onProfilePress: any;
 }

@@ -1,9 +1,11 @@
 import DefaultHomeComponent from '@components/DefaultHomeComponent';
 import Feed from '@components/Feed';
+import PostCard from '@components/PostCard';
 import MyIcon from '@elements/Icon';
+import Paginator from '@libs/Paginator';
+import I18n from '@utils/i18n';
 import { Body, Button, Container, Header, Left, Right, Title } from 'native-base';
 import React, { Component } from 'react';
-import I18n from 'src/utils/i18n';
 
 interface Props {
   hasFeedPosts: boolean;
@@ -27,16 +29,34 @@ class HomeScreen extends Component<Props> {
             <Button disabled={true} transparent={true} />
           </Right>
         </Header>
-        <Feed
+        {/* <Feed
           defaultComponent={DefaultHomeComponent}
           showSinglePost={this.navigateTo('post')}
           showProfile={this.navigateTo('othersProfile')}
+        /> */}
+        <Paginator
+          defaultComponent={DefaultHomeComponent}
+          name="feed"
+          type="posts"
+          url="/social/home/"
+          renderItem={this.renderItem}
+          keyExtractor={this.keyExtractor}
         />
       </Container>
     );
   }
 
-  private navigateTo = name => params => this.props.navigation.navigate(name, params);
+  private keyExtractor = a => a;
+  private renderItem = ({ item }) => {
+    return (
+      <PostCard
+        dataId={item}
+        onImagePress={this.navigateTo('post', item)}
+        onProfilePress={this.navigateTo('othersProfile', item)}
+      />
+    );
+  };
+  private navigateTo = (name, params) => () => this.props.navigation.navigate(name, params);
 }
 
 export default HomeScreen;

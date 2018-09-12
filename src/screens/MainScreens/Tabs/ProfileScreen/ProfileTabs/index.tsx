@@ -8,23 +8,17 @@ import Posts from './Posts';
 const { width } = Dimensions.get('window');
 
 interface Props {
-  bookmarks: any;
-  posts: any;
+  username: string;
+  navigateToPost: any;
 }
 export default class ProfileScreen extends Component<Props> {
   public render() {
     return (
       <View style={{ flex: 1 }}>
         <Tabs locked={true}>
-          <Tab heading={I18n.t('bookmarks')}>
-            <Content>
-              <FlatList data={this.props.bookmarks} renderItem={this.renderBookmark} />
-            </Content>
-          </Tab>
+          <Tab heading={I18n.t('bookmarks')} />
           <Tab heading={I18n.t('photos')}>
-            <Content>
-              <FlatList data={this.props.posts} renderItem={this.renderPost} />
-            </Content>
+            <Posts username={this.props.username} navigateToPost={this.props.navigateToPost} />
           </Tab>
         </Tabs>
       </View>
