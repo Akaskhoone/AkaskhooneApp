@@ -1,4 +1,4 @@
-import { connectStyle, View } from 'native-base';
+import { connectStyle, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import Tags from 'react-native-tags';
 import I18n from 'src/utils/i18n';
@@ -30,15 +30,16 @@ class TagField extends Component<Props> {
     const shouldShowError = meta.error && meta.submitFailed;
     return (
       <View style={{ flex: 1 }}>
+        <Text style={{ marginRight: 8, color: 'gray' }}>تگ ها</Text>
         <Tags
           onChangeTags={this.props.input.onChange}
           initialTags={this.props.input.value || []}
           containerStyle={{ justifyContent: 'center' }}
-          inputStyle={{ backgroundColor: 'white' }}
+          inputStyle={this.props.style}
         />
       </View>
     );
   }
 }
 
-export default connectStyle('akaskhoone.TagField', {})(TagField);
+export default connectStyle('Nativebase.Input', {})(TagField);

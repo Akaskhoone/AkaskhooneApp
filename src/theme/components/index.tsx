@@ -36,6 +36,7 @@ import tabTheme from './Tab';
 import tabBarTheme from './TabBar';
 import tabContainerTheme from './TabContainer';
 import tabHeadingTheme from './TabHeading';
+import tagField from './TagField';
 import textTheme from './Text';
 import textAreaTheme from './Textarea';
 import textField from './TextField';
@@ -47,6 +48,9 @@ import viewTheme from './View';
 export default (variables = variable) => {
   const theme = {
     variables,
+    'Akaskhoone.TagField': {
+      ...tagField()
+    },
     'Akaskhoone.TextField': {
       ...textField()
     },
