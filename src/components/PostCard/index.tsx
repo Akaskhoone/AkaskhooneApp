@@ -8,14 +8,13 @@ import Header from './PostHeader';
 import Image from './PostImage';
 
 interface Props {
-  post: any;
-  dataId: number;
+  data: any;
   onImagePress: any;
   onProfilePress: any;
 }
 export class PostCard extends Component<Props> {
   public render() {
-    const post = this.props.post;
+    const post = this.props.data;
     return (
       <Card>
         <CardItem>
@@ -44,11 +43,4 @@ export class PostCard extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const postId = ownProps.dataId;
-  return {
-    post: selectors.posts.getData(state, postId)
-  };
-};
-
-export default connect(mapStateToProps)(PostCard);
+export default PostCard;
