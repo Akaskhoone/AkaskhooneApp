@@ -1,11 +1,11 @@
-import { auth } from "@constants/actionTypes";
+import { types } from '@constants/actionTypes';
 
 export const load = () => ({
-  types: [auth.FEED_LOAD, auth.FEED_LOAD_SUCCESS, auth.FEED_LOAD_FAIL],
+  types: [types.FEED_LOAD, types.FEED_LOAD_SUCCESS, types.FEED_LOAD_FAIL],
   payload: {
     request: {
-      url: "/social/home/",
-      method: "GET"
+      url: '/social/home/',
+      method: 'GET'
     }
   }
 });
@@ -13,11 +13,11 @@ export const load = () => ({
 export const loadMore = () => (dispatch, getState) => {
   const nextLink = getState().posts.feed.next;
   return dispatch({
-    types: [auth.FEED_LOADMORE, auth.FEED_LOADMORE_SUCCESS, auth.FEED_LOADMORE_FAIL],
+    types: [types.FEED_LOADMORE, types.FEED_LOADMORE_SUCCESS, types.FEED_LOADMORE_FAIL],
     payload: {
       request: {
         url: nextLink,
-        method: "GET"
+        method: 'GET'
       }
     }
   });

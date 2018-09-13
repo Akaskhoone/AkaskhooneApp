@@ -77,5 +77,6 @@ export default {
   statusForFollowedUser: 'دنبال شده',
   location: 'موقعیت',
   tag: 'اضافه کردن تگ',
-  sendPost: 'ارسال پست'
+  sendPost: 'ارسال پست',
+  noPosts: 'پستی موجود نیست'
 };

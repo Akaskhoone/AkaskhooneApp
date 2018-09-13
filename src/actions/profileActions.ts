@@ -1,9 +1,13 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 export const loadOthersProfile = username => dispatch => {
   const usernameQuery = `?username=${username}`;
   const url = `accounts/profile/${usernameQuery}`;
   return dispatch({
-    types: [auth.OTHERS_PROFILE, auth.OTHERS_PROFILE_LOAD_SUCCESS, auth.OTHERS_PROFILE_LOAD_FAILED],
+    types: [
+      types.OTHERS_PROFILE,
+      types.OTHERS_PROFILE_LOAD_SUCCESS,
+      types.OTHERS_PROFILE_LOAD_FAILED
+    ],
     payload: {
       username,
       request: {
@@ -15,7 +19,7 @@ export const loadOthersProfile = username => dispatch => {
 };
 
 export const loadOwnProfile = () => ({
-  types: [auth.OWN_PROFILE, auth.OWN_PROFILE_LOAD_SUCCESS, auth.OWN_PROFILE_LOAD_FAILED],
+  types: [types.OWN_PROFILE, types.OWN_PROFILE_LOAD_SUCCESS, types.OWN_PROFILE_LOAD_FAILED],
   payload: {
     request: {
       url: 'accounts/profile/',

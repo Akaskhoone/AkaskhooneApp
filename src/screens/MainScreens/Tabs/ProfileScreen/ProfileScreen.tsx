@@ -50,17 +50,21 @@ class ProfileScreen extends Component<Props> {
           loading={this.props.loading}
           loadProfile={this.props.loadOwnProfile}
         />
-        <ProfileTabs />
+        <ProfileTabs
+          username={this.props.username}
+          navigateToPost={this.navigateToWithParams('post')}
+        />
       </Container>
     );
   }
   private navigateTo = name => () => this.props.navigation.navigate(name);
+  private navigateToWithParams = name => params => this.props.navigation.navigate(name, params);
 }
 
 const mapStateToProp = state => {
   return {
-    username: state.profiles.own.username,
-    data: state.profiles.own
+    username: state.auth.ownProfile.username,
+    data: state.auth.ownProfile
   };
 };
 const mapDispatchToProps = () => dispatch => ({

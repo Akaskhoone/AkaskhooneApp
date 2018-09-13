@@ -77,5 +77,6 @@ export default {
   statusForFollowedUser: 'Following',
   location: 'location',
   tag: 'add tag',
-  sendPost: 'sent post'
+  sendPost: 'sent post',
+  noPosts: 'No posts available!'
 };
