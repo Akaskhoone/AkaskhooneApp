@@ -23,8 +23,8 @@ export default (name, actionExtractor = a => a) => {
     previous: null
   };
   const paginationsReducer = (draftState, action) => {
-    if (action.pagination) {
-      Reactotron.log('Pagination Action', action);
+    if (action.dataType === name && action.pagination) {
+      Reactotron.log('Pagination Action', action, ' In ', name);
       switch (action.type) {
         case types.DATA_LOAD:
           return {
@@ -85,7 +85,7 @@ export default (name, actionExtractor = a => a) => {
     switch (action.type) {
       case types.DATA_LOAD_SUCCESS:
       case types.DATA_LOAD_MORE_SUCCESS:
-        Reactotron.log('Data Add Action', action);
+        Reactotron.log('Data Add Action', action, ' In ', name);
         return {
           ...draftState,
           ...action.payload.data.entities[name]
@@ -96,7 +96,7 @@ export default (name, actionExtractor = a => a) => {
   };
 
   return (state = initialState, action) => {
-    if (action.dataType === name) {
+    if (action.dataType) {
       return {
         paginations: paginationsReducer(state.paginations, actionExtractor(action)),
         data: dataReducer(state.data, actionExtractor(action))
