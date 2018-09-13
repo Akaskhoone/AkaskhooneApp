@@ -50,10 +50,7 @@ class ProfileScreen extends Component<Props> {
           loading={this.props.loading}
           loadProfile={this.props.loadOwnProfile}
         />
-        <ProfileTabs
-          username={this.props.username}
-          navigateToPost={this.navigateToWithParams('post')}
-        />
+        <ProfileTabs username={this.props.username} />
       </Container>
     );
   }

@@ -8,9 +8,13 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-interface Props {
+interface OwnProps {
   navigation: any;
+  username: string;
+}
+interface StateProps {
   loading: boolean;
+  isFollowed: boolean;
   data: {
     name: string;
     bio: string;
@@ -19,10 +23,9 @@ interface Props {
     image: string;
     username: string;
   };
-  isFollowed: boolean;
-  username: string;
-  loadOthersProfile: Function;
 }
+interface DispatchProps {}
+type Props = OwnProps & StateProps & DispatchProps;
 class OthersProfileScreen extends Component<Props> {
   public render() {
     return (
@@ -48,7 +51,6 @@ class OthersProfileScreen extends Component<Props> {
           loading={this.props.loading}
           username={this.props.username}
           isOthers={true}
-          loadProfile={this.loadOthersProfile}
         />
         {/* <ProfileTabs /> */}
       </Container>
@@ -57,25 +59,22 @@ class OthersProfileScreen extends Component<Props> {
   private goBack = () => {
     this.props.navigation.goBack();
   };
-  private loadOthersProfile = () => {
-    const username = this.props.navigation.state.params.username;
-    return this.props.loadOthersProfile(username);
-  };
 }
 
-const mapStateToProps = (state, props) => {
-  const username = props.navigation.state.params.username;
+const mapStateToProps = (state, props: OwnProps): StateProps => {
+  const username = props.navigation.getParam('usrename');
   return {
-    loading: selectors.isFetchingProfile(state, username),
-    data: selectors.getProfile(state, username),
-    isFollowed: selectors.isFollowed(state, username)
+    loading: false,
+    data: {
+      name: 'Eddie',
+      bio: 'Hi',
+      followers: 1,
+      followings: 2,
+      image: 'string',
+      username: 'Eddie'
+    },
+    isFollowed: false
   };
 };
-const mapDispatchToProps = dispatch => ({
-  loadOthersProfile: username => dispatch(loadOthersProfile(username))
-});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(OthersProfileScreen);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps)(OthersProfileScreen);

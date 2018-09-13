@@ -11,10 +11,9 @@ interface Props {
 }
 export class PostScreen extends Component<Props> {
   public render() {
-    Reactotron.log(this.props.navigation.getParam('item'));
-    const post = this.props.navigation.getParam('item');
+    const postId = this.props.navigation.getParam('postId');
     return (
-      <Container>
+      <Container style={{ flex: 1 }}>
         <Header>
           <Left>
             <Button transparent={true} />
@@ -26,7 +25,7 @@ export class PostScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <SinglePost postId={post} />
+        <SinglePost postId={postId} />
       </Container>
     );
   }

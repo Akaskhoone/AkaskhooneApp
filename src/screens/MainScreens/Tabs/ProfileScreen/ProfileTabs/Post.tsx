@@ -1,4 +1,5 @@
 import env from '@utils/env.json';
+import NavigationService from '@utils/NavigationService';
 import React, { Component } from 'react';
 import { Dimensions, Image, Text, TouchableHighlight, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -6,13 +7,15 @@ import { selectors } from 'src/reducers';
 
 const { width } = Dimensions.get('window');
 
-interface Props {
+interface StateProps {
   post: any;
-  item: string;
+}
+interface OwnProps {
+  postId: string;
   columnNum: number;
   index: number;
-  onPress: any;
 }
+type Props = OwnProps & StateProps;
 export class Post extends Component<Props> {
   public render() {
     const imageMargin = 5;
@@ -27,7 +30,7 @@ export class Post extends Component<Props> {
           alignSelf: 'stretch',
           backgroundColor: 'gray'
         }}
-        onPress={this.props.onPress}>
+        onPress={this.navigateToPost}>
         <Image
           source={{ uri: `${env.ASSETS_URL}/${this.props.post.image}` }}
           style={{ width: imageSize, height: imageSize }}
@@ -35,9 +38,12 @@ export class Post extends Component<Props> {
       </TouchableHighlight>
     );
   }
+  private navigateToPost = () => {
+    NavigationService.navigate('post', { postId: this.props.postId });
+  };
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  post: selectors.posts.getData(state, ownProps.dataId)
+const mapStateToProps = (state, ownProps): StateProps => ({
+  post: selectors.posts.getData(state, ownProps.postId)
 });
-export default connect(mapStateToProps)(Post);
+export default connect<StateProps, {}, OwnProps>(mapStateToProps)(Post);

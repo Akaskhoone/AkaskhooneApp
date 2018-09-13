@@ -18,7 +18,7 @@ interface Props {
   username: string;
   isOthers?: boolean;
   isFollowed?: boolean;
-  loadProfile: Function;
+  // loadProfile: Function;
   [propName: string]: any;
 }
 
