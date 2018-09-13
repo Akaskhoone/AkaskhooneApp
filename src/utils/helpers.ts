@@ -57,10 +57,8 @@ export function getReduxAxiosPreviousAction(action) {
 export function applyNormalizeOnAction(action) {
   let normalizrSchema;
   const dataType = action.dataType;
-  Reactotron.log('Action in apply normalize', action);
   switch (dataType) {
     case 'posts':
-      Reactotron.log('Data type is ', dataType);
       normalizrSchema = [post];
       break;
     case 'profiles':
@@ -83,7 +81,6 @@ export function applyNormalizeOnAction(action) {
   const responseBody = action.payload && action.payload.data && action.payload.data;
   const data = responseBody && responseBody.data;
   const normalizedData = normalize(data || [], normalizrSchema);
-  Reactotron.log('NormalizedData', normalizedData);
   const transformedAction = {
     ...action,
     payload: {

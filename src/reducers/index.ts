@@ -10,9 +10,9 @@ export default combineReducers({
   form: formReducer,
   auth: authReducer,
   selectPicture: selectPictureReducer,
-  posts: generateReducerFor('posts', action => applyNormalizeOnAction(action, [post])),
-  profiles: generateReducerFor('profiles', action => applyNormalizeOnAction(action, [profile])),
-  comments: generateReducerFor('comments', action => applyNormalizeOnAction(action, [comment]))
+  posts: generateReducerFor('posts', action => applyNormalizeOnAction(action)),
+  profiles: generateReducerFor('profiles', action => applyNormalizeOnAction(action)),
+  comments: generateReducerFor('comments', action => applyNormalizeOnAction(action))
 });
 
 export const selectors = {
