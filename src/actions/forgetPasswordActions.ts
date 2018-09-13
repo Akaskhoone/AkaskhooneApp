@@ -5,7 +5,7 @@ export const forgetPasswordSubmited = (email: string) => dispatch => {
       types: [auth.FORGETPASSWORD, auth.FORGETPASSWORD_SUCCESS, auth.FORGETPASSWORD_FAIL],
       payload: {
         request: {
-          url: '/accounts/resetpass/',
+          url: '/accounts/resetpassword/',
           method: 'post',
           data: {
             email
