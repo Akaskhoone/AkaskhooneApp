@@ -7,7 +7,7 @@ import { persistor, store } from 'src/store';
 import getTheme from './theme/components';
 import commonColor from './theme/variables/commonColor';
 
-// console.disableYellowBox = ['Warning: isMounted'];
+console.disableYellowBox = ['Warning: isMounted'];
 
 export default class App extends Component {
   public render() {

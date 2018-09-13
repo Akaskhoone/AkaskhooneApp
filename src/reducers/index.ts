@@ -12,7 +12,8 @@ export default combineReducers({
   selectPicture: selectPictureReducer,
   posts: generateReducerFor('posts', action => applyNormalizeOnAction(action)),
   profiles: generateReducerFor('profiles', action => applyNormalizeOnAction(action)),
-  comments: generateReducerFor('comments', action => applyNormalizeOnAction(action))
+  comments: generateReducerFor('comments', action => applyNormalizeOnAction(action)),
+  tags: generateReducerFor('tags', action => applyNormalizeOnAction(action))
 });
 
 export const selectors = {
@@ -20,11 +21,13 @@ export const selectors = {
   profileLoaded: state => !!state.auth.ownProfile.email && !!state.auth.ownProfile.username,
   posts: generateSelector(paginatorSelectors, state => state.posts),
   comments: generateSelector(paginatorSelectors, state => state.comments),
-  profiles: generateSelector(paginatorSelectors, state => state.profiles)
+  profiles: generateSelector(paginatorSelectors, state => state.profiles),
+  tags: generateSelector(paginatorSelectors, state => state.tags)
 } as {
   isLoggedIn: any;
   profileLoaded: any;
   posts: typeof paginatorSelectors;
   comments: typeof paginatorSelectors;
   profiles: typeof paginatorSelectors;
+  tags: typeof paginatorSelectors;
 };
