@@ -15,13 +15,14 @@ import {
 } from 'native-base';
 import React, { Component } from 'react';
 import { scale } from 'react-native-size-matters';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { SubmissionError } from 'redux-form';
 import { extractErrors } from 'src/utils/helpers';
 
 interface Props {
-  navigation: any;
+  navigation: NavigationScreenProp<any, any>;
   changeInfo: Function;
   username: string;
   email: string;

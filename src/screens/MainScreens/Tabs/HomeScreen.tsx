@@ -6,10 +6,11 @@ import I18n from '@utils/i18n';
 import { Body, Button, Container, Header, Left, Right, Title } from 'native-base';
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
   hasFeedPosts: boolean;
-  navigation: any;
+  navigation: NavigationScreenProp<any, any>;
 }
 class HomeScreen extends Component<Props> {
   public render() {
@@ -29,11 +30,6 @@ class HomeScreen extends Component<Props> {
             <Button disabled={true} transparent={true} />
           </Right>
         </Header>
-        {/* <Feed
-          defaultComponent={DefaultHomeComponent}
-          showSinglePost={this.navigateTo('post')}
-          showProfile={this.navigateTo('othersProfile')}
-        /> */}
         <Paginator
           defaultComponent={DefaultHomeComponent}
           name="feed"

@@ -5,32 +5,37 @@ export interface ProfileDTO {
   image: string;
   followings?: number;
   followers?: number;
-  private?: boolean;
-  isFollowed?: boolean;
+  is_followed?: boolean;
+  is_private?: boolean;
+  posts_count?: number;
+  boards_count?: number;
 }
 
 export interface PostDTO {
-  postId: string;
-  des?: string;
-  tags?: [TagDTO];
-  creator?: ProfileDTO;
+  id: string;
   image: string;
-  likesCount?: number;
-  commentsCount?: number;
+  des?: string;
+  tags?: [string]; // TagDTO
+  creator?: string; // ProfileDTO
+  location?: string;
+  date?: string;
+  likes_count?: number;
+  comments_count?: number;
 }
 
 export interface CommentDTO {
-  commentId: string;
-  postId: string;
+  id: string;
+  post_id: string;
   text: string;
-  creator: ProfileDTO;
+  date: string;
+  creator: string; // ProfileDTO
 }
 
 export interface BoardDTO {
-  boardId: string;
+  id: string;
   name: string;
-  postsCount: number;
-  posts?: [PostDTO];
+  posts_count: number;
+  data: [string]; // PostDTO
 }
 
 export interface TagDTO {

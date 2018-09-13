@@ -5,7 +5,7 @@ import { Circle } from 'react-native-progress';
 import Reactotron from 'reactotron-react-native';
 
 interface Props {
-  source: string;
+  uri: string;
   width: number;
 }
 
@@ -14,7 +14,7 @@ export class AutoHeightImageWithProgress extends Component<Props> {
     height: undefined
   };
   private imageStyle = {};
-  private source = undefined;
+  private uri = undefined;
   private width = undefined;
 
   constructor(props) {
@@ -27,7 +27,7 @@ export class AutoHeightImageWithProgress extends Component<Props> {
   }
 
   public componentWillReceiveProps(nextProps) {
-    if (nextProps.width !== this.width || nextProps.source !== this.source) {
+    if (nextProps.width !== this.width || nextProps.uri !== this.uri) {
       this.init(nextProps);
       this.updateImageHeight();
     }
@@ -36,7 +36,7 @@ export class AutoHeightImageWithProgress extends Component<Props> {
   public render() {
     return (
       <ProgressImage
-        source={{ uri: this.source }}
+        source={{ uri: this.uri }}
         indicator={Circle}
         indicatorProps={{ showsText: true }}
         style={this.imageStyle}
@@ -45,7 +45,7 @@ export class AutoHeightImageWithProgress extends Component<Props> {
   }
 
   private updateImageHeight() {
-    Image.getSize(this.source, this.onReceiveSizeSuccess, this.onReceiveSizeFail);
+    Image.getSize(this.uri, this.onReceiveSizeSuccess, this.onReceiveSizeFail);
   }
   private onReceiveSizeSuccess = (width, height) => {
     this.imageStyle = {
@@ -59,7 +59,7 @@ export class AutoHeightImageWithProgress extends Component<Props> {
   };
 
   private init = props => {
-    this.source = props.source;
+    this.uri = props.uri;
     this.width = props.width;
     this.imageStyle = { width: this.width, height: 200 };
   };

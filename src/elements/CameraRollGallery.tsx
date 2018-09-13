@@ -135,9 +135,9 @@ export class CameraRollGallery extends Component<Props, State> {
       <ImageItem
         imageMargin={this.props.imageMargin}
         imagesPerRow={this.props.imagesPerRow}
-        item={item}
+        item={item.node.image}
         selected={isSelected}
-        onClick={this.selectImage}
+        onPress={this.selectImage}
         index={index}
       />
     );

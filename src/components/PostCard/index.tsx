@@ -1,18 +1,22 @@
 import { Card, CardItem } from 'native-base';
 import React, { Component } from 'react';
+// import Image from './PostImage';
+import { Dimensions, Image, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { selectors } from 'src/reducers';
+import { PostDTO } from 'src/utils/interfaces';
 import NavigationService from 'src/utils/NavigationService';
 import Caption from './PostCaption';
 import Footer from './PostFooter';
 import Header from './PostHeader';
-import Image from './PostImage';
+
+const windowWidth = Dimensions.get('window').width;
 
 interface OwnProps {
   postId: string;
 }
 interface StateProps {
-  post: any;
+  post: PostDTO;
 }
 interface DispatchProps {}
 type Props = OwnProps & StateProps & DispatchProps;
@@ -23,16 +27,13 @@ export class PostCard extends Component<Props> {
     return (
       <Card>
         <CardItem>
-          <Header
-            location={post.location}
-            creator={post.creator}
-            date={post.date}
-            profileUrl={post.profileUrl}
-            showProfile={this.navigateToProfile}
-          />
+          <Header location={post.location} date={post.date} creatorUsername={post.creator} />
         </CardItem>
         <CardItem cardBody={true}>
-          <Image imageUrl={post.image} onPress={this.navigateToPost} />
+          {/* <Image imageUrl={post.image} onPress={this.navigateToPost} /> */}
+          <TouchableWithoutFeedback onPress={this.navigateToPost}>
+            <Image source={{ uri: post.image, width: windowWidth, height: windowWidth }} />
+          </TouchableWithoutFeedback>
         </CardItem>
         <CardItem>
           <Caption
@@ -41,14 +42,11 @@ export class PostCard extends Component<Props> {
           />
         </CardItem>
         <CardItem>
-          <Footer likes={post.likes} comments={post.comments} liked={post.liked} />
+          <Footer likesCount={post.likes_count} commentsCount={post.comments_count} />
         </CardItem>
       </Card>
     );
   }
-  private navigateToProfile = () => {
-    NavigationService.navigate('profile', { profileId: this.props.post.creator });
-  };
   private navigateToPost = () => {
     NavigationService.navigate('post', { postId: this.props.postId });
   };

@@ -1,3 +1,4 @@
+import deepmerge from 'deepmerge';
 import Reactotron from 'reactotron-react-native';
 import types from './actionTypes';
 
@@ -86,10 +87,7 @@ export default (name, actionExtractor = a => a) => {
       case types.DATA_LOAD_SUCCESS:
       case types.DATA_LOAD_MORE_SUCCESS:
         Reactotron.log('Data Add Action', action, ' In ', name);
-        return {
-          ...draftState,
-          ...action.payload.data.entities[name]
-        };
+        return deepmerge(draftState, action.payload.data.entities[name] || {});
       default:
         return draftState;
     }
@@ -124,5 +122,10 @@ export const selectors = {
     hasData: () =>
       !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
   }),
-  getData: (state, dataId) => state.data[dataId] || null
+  getData: (state, dataId) => state.data[dataId] || {},
+  dataLoaded: (state, dataId) => !!state.data[dataId]
+};
+
+export type Selector<T> = typeof selectors & {
+  getData: (state: any, dataId: any) => T;
 };

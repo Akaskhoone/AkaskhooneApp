@@ -3,16 +3,16 @@ import { Button, Left, Right, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default ({ likes, comments, liked }) => (
+export default ({ likesCount, commentsCount }) => (
   <View style={{ flex: 1, flexDirection: 'row' }}>
     <Left>
       <TouchableOpacity style={styles.button}>
         <MyIcon name="like" size={25} />
-        <Text style={{ fontSize: 12 }}>{likes}</Text>
+        <Text style={{ fontSize: 12 }}>{likesCount}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <MyIcon name="comment" size={25} />
-        <Text style={{ fontSize: 12 }}>{comments}</Text>
+        <Text style={{ fontSize: 12 }}>{commentsCount}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
         <MyIcon name="share" size={25} />

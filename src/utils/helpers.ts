@@ -59,27 +59,35 @@ export function applyNormalizeOnAction(action) {
   const dataType = action.dataType;
   switch (dataType) {
     case 'posts':
-      normalizrSchema = [post];
+      normalizrSchema = post;
       break;
     case 'profiles':
-      normalizrSchema = [profile];
+      normalizrSchema = profile;
       break;
     case 'borads':
-      normalizrSchema = [board];
+      normalizrSchema = board;
       break;
     case 'tags':
-      normalizrSchema = [tag];
+      normalizrSchema = tag;
       break;
     case 'comments':
-      normalizrSchema = [comment];
+      normalizrSchema = comment;
       break;
     default:
       Reactotron.log('Data type is not supported');
       return action;
   }
 
-  const responseBody = action.payload && action.payload.data && action.payload.data;
-  const data = responseBody && responseBody.data;
+  const responseBody = action.payload && action.payload.data;
+  let data = responseBody && responseBody.data;
+
+  const dataIsArray = data && Array.isArray(data);
+  if (dataIsArray) {
+    normalizrSchema = [normalizrSchema];
+  } else {
+    data = responseBody;
+  }
+
   const normalizedData = normalize(data || [], normalizrSchema);
   const transformedAction = {
     ...action,

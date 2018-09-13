@@ -66,7 +66,7 @@ export class Paginator extends Component<Props> {
     } else {
       return (
         <ScrollView
-          contentContainerStyle={{ flex: 1 }}
+          contentContainerStyle={{ flexGrow: 1 }}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}>
           <DefaultComponent />
         </ScrollView>
