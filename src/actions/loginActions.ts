@@ -25,7 +25,7 @@ export const refreshToken = () => (dispatch, getState) => {
         url: 'accounts/refresh/',
         method: 'post',
         data: {
-          refresh: getState().auth.tokens.refresh
+          refresh: getState().auth.refreshToken
         }
       }
     }

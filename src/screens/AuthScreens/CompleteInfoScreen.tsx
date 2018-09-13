@@ -4,6 +4,7 @@ import { Container, Content, Text } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { destroy, SubmissionError } from 'redux-form';
@@ -12,12 +13,18 @@ import { extractErrors } from 'src/utils/helpers';
 har prop inja nabashe ham mishe moqe render kardan pass dada b shart vojode propName : any
 age kolan interface nabashe har propi mishe pass dad*/
 
-interface Props {
+interface OwnProps {
   completeInfo: Function;
-  navigation: any;
+  navigation: NavigationScreenProp<any, any>;
   email: string;
   destroySignup: Function;
 }
+interface StateProps {}
+interface DispatchProps {
+  completeInfo: ({ email, password, username, name, bio, image }) => any;
+  destroySignup: () => any;
+}
+type Props = OwnProps & StateProps & DispatchProps;
 export class CompleteInfoScreen extends Component<Props> {
   public render() {
     return (
@@ -61,7 +68,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch): DispatchProps => ({
   completeInfo: vals =>
     dispatch(
       completeInfoCompleted(
@@ -76,7 +83,7 @@ const mapDispatchToProps = dispatch => ({
   destroySignup: () => dispatch(destroy('signup'))
 });
 
-export default connect(
+export default connect<StateProps, DispatchProps, OwnProps>(
   null,
   mapDispatchToProps
 )(CompleteInfoScreen);

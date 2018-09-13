@@ -1,33 +1,15 @@
-import { loadOthersProfile } from '@actions/profileActions';
 import ProfileComponent from '@components/ProfileComponent';
 import MyIcon from '@elements/Icon';
-import { selectors } from '@reducers/index';
-import ProfileTabs from '@screens/MainScreens/Tabs/ProfileScreen/ProfileTabs';
-import { Body, Button, Container, Content, Header, Icon, Left, Right } from 'native-base';
+import { Body, Button, Container, Header, Icon, Left, Right } from 'native-base';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { connect } from 'react-redux';
+import { NavigationScreenProp } from 'react-navigation';
 
-interface OwnProps {
-  navigation: any;
-  username: string;
+interface Props {
+  navigation: NavigationScreenProp<any, any>;
 }
-interface StateProps {
-  loading: boolean;
-  isFollowed: boolean;
-  data: {
-    name: string;
-    bio: string;
-    followers: number;
-    followings: number;
-    image: string;
-    username: string;
-  };
-}
-interface DispatchProps {}
-type Props = OwnProps & StateProps & DispatchProps;
-class OthersProfileScreen extends Component<Props> {
+export default class OthersProfileScreen extends Component<Props> {
   public render() {
+    const username = this.props.navigation.getParam('username');
     return (
       <Container>
         <Header>
@@ -45,13 +27,7 @@ class OthersProfileScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <ProfileComponent
-          data={this.props.data}
-          isFollowed={this.props.isFollowed}
-          loading={this.props.loading}
-          username={this.props.username}
-          isOthers={true}
-        />
+        <ProfileComponent username={username} isOthers={true} />
         {/* <ProfileTabs /> */}
       </Container>
     );
@@ -60,21 +36,3 @@ class OthersProfileScreen extends Component<Props> {
     this.props.navigation.goBack();
   };
 }
-
-const mapStateToProps = (state, props: OwnProps): StateProps => {
-  const username = props.navigation.getParam('usrename');
-  return {
-    loading: false,
-    data: {
-      name: 'Eddie',
-      bio: 'Hi',
-      followers: 1,
-      followings: 2,
-      image: 'string',
-      username: 'Eddie'
-    },
-    isFollowed: false
-  };
-};
-
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps)(OthersProfileScreen);

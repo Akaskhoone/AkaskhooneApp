@@ -1,7 +1,10 @@
 import actionTypes from './actionTypes';
 import getActionsFor from './dataLoadingActionGenerator';
 import Paginator from './Paginator';
-import generateReducerFor, { selectors as paginatorSelectors } from './reducerGenerator';
+import generateReducerFor, {
+  Selector as SelectorInterface,
+  selectors as paginatorSelectors
+} from './reducerGenerator';
 
 export default Paginator;
-export { generateReducerFor, getActionsFor, paginatorSelectors, actionTypes };
+export { generateReducerFor, getActionsFor, paginatorSelectors, SelectorInterface, actionTypes };

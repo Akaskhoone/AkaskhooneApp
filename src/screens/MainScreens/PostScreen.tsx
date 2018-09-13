@@ -1,13 +1,11 @@
-import PostCard from '@components/PostCard';
 import SinglePost from '@components/SinglePost';
 import MyIcon from '@elements/Icon';
-import { Body, Button, Container, Content, Header, Left, Right, Title } from 'native-base';
+import { Body, Button, Container, Header, Left, Right } from 'native-base';
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import Reactotron from 'reactotron-react-native';
+import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
-  navigation: any;
+  navigation: NavigationScreenProp<any, any>;
 }
 export class PostScreen extends Component<Props> {
   public render() {

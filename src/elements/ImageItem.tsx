@@ -4,29 +4,44 @@ import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'rea
 
 interface Props {
   item: any;
-  selected: boolean;
-  onClick: Function;
-  imageMargin: number;
+  index: number;
+  onPress: Function;
   imagesPerRow: number;
+  imageMargin?: number;
+  selected?: boolean;
   containerWidth?: number;
   selectedMarker?: any;
-  index: number;
+  imageExtractor?: (item: any) => { uri: string; [propName: string]: any };
 }
-class ImageItem extends Component<Props> {
-  private imageSize = undefined;
 
+class ImageItem extends Component<Props> {
+  public static defaultProps: Partial<Props> = {
+    containerWidth: Dimensions.get('window').width,
+    selected: false,
+    imageMargin: 5,
+    imageExtractor: item => ({
+      uri: item.uri
+    }),
+    selectedMarker: (
+      <View style={{ width: 20, height: 20, position: 'absolute', top: 10, right: 10 }}>
+        <Text>
+          <Icon name="checkbox" />
+        </Text>
+      </View>
+    )
+  };
+
+  private imageSize = undefined;
   constructor(props) {
     super(props);
   }
 
   public componentWillMount() {
-    const { width: windowWidth } = Dimensions.get('window');
     const { imageMargin, imagesPerRow, containerWidth } = this.props;
-    const width = containerWidth || windowWidth;
-    this.imageSize = (width - (imagesPerRow + 1) * imageMargin) / imagesPerRow;
+    this.imageSize = (containerWidth - (imagesPerRow + 1) * imageMargin) / imagesPerRow;
   }
   public render() {
-    const { item, selected, selectedMarker, imageMargin, index } = this.props;
+    const { item, selected, selectedMarker, imageMargin, index, imagesPerRow } = this.props;
 
     const marker = selectedMarker ? (
       selectedMarker
@@ -38,32 +53,32 @@ class ImageItem extends Component<Props> {
       </View>
     );
 
-    const image = item.node.image;
+    const image = this.props.imageExtractor(item);
+    const isMostLeft = index % imagesPerRow === 0;
     return (
       <TouchableOpacity
         style={{
           marginBottom: imageMargin,
-          marginRight: index % 3 !== 2 ? imageMargin : 0,
+          marginLeft: !isMostLeft ? imageMargin : 0,
           alignSelf: 'stretch'
         }}
-        onPress={this.handleClick(image)}>
-        <Image
-          source={{ uri: image.uri }}
-          style={{ height: this.imageSize, width: this.imageSize }}
-        />
+        onPress={this.handleClick(item)}>
+        <Image source={image} style={{ height: this.imageSize, width: this.imageSize }} />
         {selected ? marker : null}
       </TouchableOpacity>
     );
   }
 
   public handleClick = item => () => {
-    this.props.onClick(item);
+    this.props.onPress(item);
   };
 }
 
 const styles = StyleSheet.create({
   marker: {
     position: 'absolute',
+    width: 20,
+    height: 20,
     top: 5,
     right: 5,
     backgroundColor: 'transparent'

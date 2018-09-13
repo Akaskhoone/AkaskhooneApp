@@ -5,11 +5,12 @@ import I18n from '@utils/i18n';
 import { Body, Button, Container, Content, Header, Icon, Left, Right, Text } from 'native-base';
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 
 interface Props {
   isSelected: boolean;
-  navigation: any;
+  navigation: NavigationScreenProp<any, any>;
   setPostImage: Function;
   imageUri: string;
   [propName: string]: any;

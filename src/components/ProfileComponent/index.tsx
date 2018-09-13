@@ -1,48 +1,49 @@
+import { getActionsFor } from '@libs/Paginator';
+import { selectors } from '@reducers/index';
+import I18n from '@utils/i18n';
+import { ProfileDTO } from '@utils/interfaces';
 import { Button, Spinner, Text, Thumbnail } from 'native-base';
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
+import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
-import I18n from 'src/utils/i18n';
 
-interface Props {
-  loading: boolean;
-  data: {
-    name: string;
-    bio: string;
-    followers: number;
-    followings: number;
-    image: string;
-    username: string;
-  };
+interface OwnProps {
   username: string;
   isOthers?: boolean;
-  isFollowed?: boolean;
-  // loadProfile: Function;
-  [propName: string]: any;
 }
+interface StateProps {
+  profile: ProfileDTO;
+  profileLoaded: boolean;
+}
+interface DispatchProps {
+  loadProfile: () => any;
+}
+type Props = OwnProps & StateProps & DispatchProps;
 
-export default class ProfileComponent extends Component<Props> {
+class ProfileComponent extends Component<Props> {
   constructor(props) {
     super(props);
   }
 
+  public componentDidMount() {
+    this.props.loadProfile();
+  }
+
   public render() {
-    const {
-      loading,
-      isOthers,
-      isFollowed,
-      data: { image, name, bio, followers, followings }
-    } = this.props;
+    const { isOthers, profile, profileLoaded } = this.props;
+    if (!profileLoaded) return <Spinner />;
+
+    const { bio, image, followers, followings, is_followed, is_private, name } = profile;
     Reactotron.log('Profile Image URI', image);
-    if (loading) return <Spinner />;
     return (
       <View style={styles.wholeView}>
         <View>
           <Thumbnail
             large={true}
             source={{
-              uri: image || 'https://via.placeholder.com/500x500'
+              uri: image
             }}
           />
         </View>
@@ -50,8 +51,10 @@ export default class ProfileComponent extends Component<Props> {
           {/*props functional 'this nmikhad*/}
           <Text style={styles.nameText}>{name}</Text>
           <View style={styles.numOfFriends}>
-            <Text style={styles.following}>{I18n.t('numOfFollowers', { num: followers })}</Text>
-            <Text>{I18n.t('numOfFollowings', { num: followings })}</Text>
+            <Text style={styles.following}>
+              {I18n.t('numOfFollowers', { num: followers || 0 })}
+            </Text>
+            <Text>{I18n.t('numOfFollowings', { num: followings || 0 })}</Text>
           </View>
           <View>
             <Text numberOfLines={isOthers ? 5 : 2} style={styles.bio}>
@@ -61,15 +64,13 @@ export default class ProfileComponent extends Component<Props> {
           {isOthers ? (
             <View style={{ flexDirection: 'row' }}>
               <Button
-                primary={!isFollowed}
-                transparent={isFollowed}
-                bordered={isFollowed}
+                primary={!is_followed}
+                transparent={is_followed}
+                bordered={is_followed}
                 block={true}
                 style={{ width: '50%', borderRadius: 10 }}>
                 <Text style={{ fontSize: 15 }}>
-                  {isFollowed
-                    ? I18n.t('statusForFollowedUser')
-                    : I18n.t('statusForNotFollowedUser')}
+                  {is_followed ? I18n.t('followed') : I18n.t('notFollowed')}
                 </Text>
               </Button>
             </View>
@@ -78,14 +79,6 @@ export default class ProfileComponent extends Component<Props> {
       </View>
     );
   }
-
-  public componentDidMount() {
-    this.loadProfile();
-  }
-
-  private loadProfile = () => {
-    return this.props.loadProfile(this.props.username);
-  };
 }
 
 const styles = StyleSheet.create({
@@ -117,3 +110,20 @@ const styles = StyleSheet.create({
     paddingBottom: 3
   }
 });
+
+const mapStateToProps = (state, ownProps: OwnProps): StateProps => ({
+  profile: selectors.profiles.getData(state, ownProps.username),
+  profileLoaded: selectors.profiles.dataLoaded(state, ownProps.username)
+});
+const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
+  const profileActions = getActionsFor('profiles');
+  const profileEndpoint = profileActions.createEndpoint('/accounts/profile/');
+  const username = ownProps.username;
+  return {
+    loadProfile: () => dispatch(profileEndpoint.loadItem(`?username=${username}`))
+  };
+};
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfileComponent);

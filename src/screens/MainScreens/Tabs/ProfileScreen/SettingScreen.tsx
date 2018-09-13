@@ -15,14 +15,18 @@ import {
 } from 'native-base';
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import I18n from 'src/utils/i18n';
 
-interface Props {
-  navigation: any;
-  [propName: string]: any;
+interface OwnProps {
+  navigation: NavigationScreenProp<any, any>;
 }
-
+interface StateProps {}
+interface DispatchProps {
+  logout: () => any;
+}
+type Props = OwnProps & StateProps & DispatchProps;
 class SettingScreen extends Component<Props> {
   public render() {
     return (
@@ -72,11 +76,11 @@ class SettingScreen extends Component<Props> {
   private goBack = () => this.props.navigation.goBack();
 }
 
-const mapDispatchToState = dispatch => ({
+const mapDispatchToProps = (dispatch): DispatchProps => ({
   logout: () => dispatch(logout())
 });
 
-export default connect(
+export default connect<StateProps, DispatchProps, OwnProps>(
   null,
-  mapDispatchToState
+  mapDispatchToProps
 )(SettingScreen);

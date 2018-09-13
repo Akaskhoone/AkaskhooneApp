@@ -7,7 +7,10 @@ import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 import axiosMiddleware from './libs/reduxAxiosMiddleware';
 
-const persistedReducer = persistReducer({ storage, key: 'root', whitelist: ['auth'] }, rootReducer);
+const persistedReducer = persistReducer(
+  { storage, key: 'root', whitelist: ['auth', 'posts', 'comments', 'profiles', 'tags', 'boards'] },
+  rootReducer
+);
 
 export const store = (Reactotron as any).createStore(
   persistedReducer,

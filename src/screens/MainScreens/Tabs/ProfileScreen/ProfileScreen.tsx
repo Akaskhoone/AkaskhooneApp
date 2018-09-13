@@ -1,26 +1,21 @@
 import { loadOwnProfile } from '@actions/profileActions';
 import ProfileComponent from '@components/ProfileComponent';
+import ProfileTabs from '@components/ProfileTabs';
 import MyIcon from '@elements/Icon';
 import { Body, Button, Container, Header, Left, Right, Text, Title } from 'native-base';
 import React, { Component } from 'react';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import I18n from 'src/utils/i18n';
-import ProfileTabs from './ProfileTabs';
 
-interface Props {
-  username: string;
-  navigation: any;
-  loading: boolean;
-  loadOwnProfile: Function;
-  data: {
-    name: string;
-    followers: number;
-    followings: number;
-    bio: string;
-    image: string;
-    username: string;
-  };
+interface OwnProps {
+  navigation: NavigationScreenProp<any, any>;
 }
+interface StateProps {
+  username: string;
+}
+interface DispatchProps {}
+type Props = OwnProps & StateProps & DispatchProps;
 
 class ProfileScreen extends Component<Props> {
   public render() {
@@ -44,12 +39,7 @@ class ProfileScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <ProfileComponent
-          username={this.props.username}
-          data={this.props.data}
-          loading={this.props.loading}
-          loadProfile={this.props.loadOwnProfile}
-        />
+        <ProfileComponent username={this.props.username} />
         <ProfileTabs username={this.props.username} />
       </Container>
     );
@@ -58,17 +48,14 @@ class ProfileScreen extends Component<Props> {
   private navigateToWithParams = name => params => this.props.navigation.navigate(name, params);
 }
 
-const mapStateToProp = state => {
-  return {
-    username: state.auth.ownProfile.username,
-    data: state.auth.ownProfile
-  };
-};
-const mapDispatchToProps = () => dispatch => ({
+const mapStateToProp = (state): StateProps => ({
+  username: state.auth.username
+});
+const mapDispatchToProps = (dispatch): DispatchProps => ({
   loadOwnProfile: () => dispatch(loadOwnProfile())
 });
 
-export default connect(
+export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProp,
   mapDispatchToProps
 )(ProfileScreen);

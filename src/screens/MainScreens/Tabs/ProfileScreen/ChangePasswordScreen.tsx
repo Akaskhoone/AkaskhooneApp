@@ -13,6 +13,7 @@ import {
   Toast
 } from 'native-base';
 import React, { Component } from 'react';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { SubmissionError } from 'redux-form';
@@ -20,7 +21,7 @@ import { extractErrors } from 'src/utils/helpers';
 import I18n from 'src/utils/i18n';
 
 interface Props {
-  navigation: any;
+  navigation: NavigationScreenProp<any, any>;
   changePassword: Function;
   password: string;
 }

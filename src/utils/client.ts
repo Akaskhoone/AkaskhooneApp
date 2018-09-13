@@ -9,8 +9,9 @@ export const client = axios.create({
 });
 
 const extractAuthorizationHeader = getState => {
-  Reactotron.log('Token:', getState().auth.tokens.access);
-  return getState().auth.tokens.access ? `Bearer ${getState().auth.tokens.access}` : undefined;
+  const accessToken = getState().auth.accessToken;
+  Reactotron.log('Token:', accessToken);
+  return accessToken ? `Bearer ${accessToken}` : undefined;
 };
 
 export const interceptors = {
