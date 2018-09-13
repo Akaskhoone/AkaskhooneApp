@@ -5,6 +5,7 @@ import { Spinner, Toast } from 'native-base';
 import React, { Component, ReactElement } from 'react';
 import { FlatList, ListRenderItemInfo, RefreshControl, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import Reactotron from 'reactotron-react-native';
 
 interface Props {
   defaultComponent: any;
@@ -17,22 +18,22 @@ interface Props {
 
 export class Paginator extends Component<Props> {
   public componentDidMount() {
-    this.props.load();
+    this.props.dispatch.load();
   }
   public render() {
+    Reactotron.log('Paginator Props', this.props);
+    const { state, dispatch, name, type, url, ...otherProps } = this.props;
     const DefaultComponent = this.props.defaultComponent;
 
     const keyExtractor = a => `${a}`;
 
-    if (this.props.hasData) {
+    if (state.hasData) {
       return (
         <FlatList
-          {...this.props}
-          data={this.props.data}
-          renderItem={this.props.renderItem}
-          refreshControl={
-            <RefreshControl refreshing={this.props.loading} onRefresh={this.props.load} />
-          }
+          {...otherProps}
+          data={state.data}
+          renderItem={this.renderItem}
+          refreshControl={<RefreshControl refreshing={state.loading} onRefresh={dispatch.load} />}
           onEndReached={this.loadMore}
           onEndReachedThreshold={0.6}
           ListFooterComponent={this.renderFooter}
@@ -43,21 +44,25 @@ export class Paginator extends Component<Props> {
     return (
       <ScrollView
         contentContainerStyle={{ flex: 1 }}
-        refreshControl={
-          <RefreshControl onRefresh={this.props.load} refreshing={this.props.loading} />
-        }>
+        refreshControl={<RefreshControl onRefresh={dispatch.load} refreshing={state.loading} />}>
         <DefaultComponent />
       </ScrollView>
     );
   }
 
   private renderFooter = () => {
-    return this.props.loadingMore ? <Spinner /> : null;
+    return this.props.state.loadingMore ? <Spinner /> : null;
   };
-
+  private renderItem = renderItemInfo => {
+    Reactotron.log('Render item info', renderItemInfo);
+    return this.props.renderItem({
+      ...renderItemInfo,
+      item: this.props.state.getItem(renderItemInfo.item)
+    });
+  };
   private loadMore = () => {
-    if (this.props.hasNext && !this.props.loadingMore) {
-      return this.props.loadMore();
+    if (this.props.state.hasNext && !this.props.state.loadingMore) {
+      return this.props.dispatch.loadMore();
     }
     return;
   };
@@ -66,13 +71,17 @@ export class Paginator extends Component<Props> {
 const mapStateToProps = (state, ownProps: Props) => {
   const dataType = ownProps.type;
   const paginationName = ownProps.name;
-  const pagination = selectors[dataType].pagination(state, paginationName);
+  const dataSelectors = selectors[dataType];
+  const pagination = dataSelectors.pagination(state, paginationName);
   return {
-    data: pagination.getData(),
-    loading: pagination.isLoading(),
-    loadingMore: pagination.isLoadingMore(),
-    hasNext: pagination.hasNext(),
-    hasData: pagination.hasData()
+    state: {
+      getItem: dataId => dataSelectors.getData(state, dataId),
+      data: pagination.getData(),
+      loading: pagination.isLoading(),
+      loadingMore: pagination.isLoadingMore(),
+      hasNext: pagination.hasNext(),
+      hasData: pagination.hasData()
+    }
   };
 };
 
@@ -83,10 +92,14 @@ const mapDispatchToProps = (dispatch, ownProps: Props) => {
   const postActions = getActionsFor(dataType);
   const feedPagination = postActions.createPagination(paginationName, paginationEndpoint);
   return {
-    load: () =>
-      dispatch(feedPagination.load()).catch(() => Toast.show({ text: I18n.t('unknownError') })),
-    loadMore: () =>
-      dispatch(feedPagination.loadMore()).catch(() => Toast.show({ text: I18n.t('unknownError') }))
+    dispatch: {
+      load: () =>
+        dispatch(feedPagination.load()).catch(() => Toast.show({ text: I18n.t('unknownError') })),
+      loadMore: () =>
+        dispatch(feedPagination.loadMore()).catch(() =>
+          Toast.show({ text: I18n.t('unknownError') })
+        )
+    }
   };
 };
 

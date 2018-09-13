@@ -26,7 +26,7 @@ export class PostScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <SinglePost postId={post} />
+        <SinglePost post={post} />
       </Container>
     );
   }

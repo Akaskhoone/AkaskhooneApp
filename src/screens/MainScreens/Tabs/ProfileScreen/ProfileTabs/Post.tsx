@@ -8,7 +8,6 @@ const { width } = Dimensions.get('window');
 
 interface Props {
   post: any;
-  item: string;
   columnNum: number;
   index: number;
   onPress: any;
@@ -37,7 +36,4 @@ export class Post extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  post: selectors.posts.getData(state, ownProps.dataId)
-});
-export default connect(mapStateToProps)(Post);
+export default Post;

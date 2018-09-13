@@ -38,7 +38,7 @@ export default class Posts extends Component<Props> {
     </View>
   );
   private renderItem = ({ item, index }) => (
-    <Post dataId={item} index={index} columnNum={2} onPress={this.handlePress({ item })} />
+    <Post post={item} index={index} columnNum={2} onPress={this.handlePress({ item })} />
   );
   private handlePress = item => () => {
     this.props.navigateToPost(item);

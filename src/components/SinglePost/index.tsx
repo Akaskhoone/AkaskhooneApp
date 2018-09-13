@@ -8,7 +8,7 @@ import Comment from './CommentCard';
 import CommentTextInput from './CommentTextInput';
 
 interface Props {
-  postId: any;
+  post: any;
   comments: [any];
   loading: boolean;
   hasNext: boolean;
@@ -26,23 +26,16 @@ export class SinglePost extends Component<Props> {
           renderItem={this.renderItem}
           ListFooterComponent={this.renderFooter}
           onEndReachedThreshold={0.4}
-          onEndReached={this.loadMoreHandler}
         />
       </View>
     );
   }
-  private loadMoreHandler = () => {
-    if (this.props.hasNext && !this.props.loading) {
-      return this.props.load(this.props.postId.post_id);
-    }
-    return;
-  };
   private renderHeader = () => {
     return (
       <PostCard
         onImagePress={this.handleImagePress}
         onProfilePress={this.handleProfilePress}
-        dataId={this.props.postId}
+        data={this.props.post}
       />
     );
   };
@@ -70,18 +63,5 @@ const mapStateToProps = (state, props) => ({
   comments: [],
   hasNext: false
 });
-const mapDispatchToProps = dispatch => ({
-  load: () => {
-    // return dispatch(loadAction(id)).catch(e => {
-    //   Toast.show({ text: I18n.t('unknownError') });
-    // }),
-  },
-  reset: id => {
-    // return dispatch(resetAction(id))
-  }
-});
 
-export default connect<{}, {}>(
-  mapStateToProps,
-  mapDispatchToProps
-)(SinglePost);
+export default connect<{}, {}>(mapStateToProps)(SinglePost);
