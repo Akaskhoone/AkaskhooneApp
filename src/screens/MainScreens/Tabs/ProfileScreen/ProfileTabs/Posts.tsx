@@ -7,7 +7,6 @@ import Post from './Post';
 
 interface Props {
   username: any;
-  navigateToPost: any;
 }
 export default class Posts extends Component<Props> {
   public render() {
@@ -37,10 +36,5 @@ export default class Posts extends Component<Props> {
       </Text>
     </View>
   );
-  private renderItem = ({ item, index }) => (
-    <Post post={item} index={index} columnNum={2} onPress={this.handlePress({ item })} />
-  );
-  private handlePress = item => () => {
-    this.props.navigateToPost(item);
-  };
+  private renderItem = ({ item, index }) => <Post postId={item} index={index} columnNum={2} />;
 }

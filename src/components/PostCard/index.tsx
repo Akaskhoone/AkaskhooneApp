@@ -2,19 +2,24 @@ import { Card, CardItem } from 'native-base';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { selectors } from 'src/reducers';
+import NavigationService from 'src/utils/NavigationService';
 import Caption from './PostCaption';
 import Footer from './PostFooter';
 import Header from './PostHeader';
 import Image from './PostImage';
 
-interface Props {
-  data: any;
-  onImagePress: any;
-  onProfilePress: any;
+interface OwnProps {
+  postId: string;
 }
+interface StateProps {
+  post: any;
+}
+interface DispatchProps {}
+type Props = OwnProps & StateProps & DispatchProps;
+
 export class PostCard extends Component<Props> {
   public render() {
-    const post = this.props.data;
+    const post = this.props.post;
     return (
       <Card>
         <CardItem>
@@ -23,11 +28,11 @@ export class PostCard extends Component<Props> {
             creator={post.creator}
             date={post.date}
             profileUrl={post.profileUrl}
-            showProfile={this.props.onProfilePress}
+            showProfile={this.navigateToProfile}
           />
         </CardItem>
         <CardItem cardBody={true}>
-          <Image imageUrl={post.image} onPress={this.props.onImagePress} />
+          <Image imageUrl={post.image} onPress={this.navigateToPost} />
         </CardItem>
         <CardItem>
           <Caption
@@ -41,6 +46,15 @@ export class PostCard extends Component<Props> {
       </Card>
     );
   }
+  private navigateToProfile = () => {
+    NavigationService.navigate('profile', { profileId: this.props.post.creator });
+  };
+  private navigateToPost = () => {
+    NavigationService.navigate('post', { postId: this.props.postId });
+  };
 }
 
-export default PostCard;
+const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
+  return { post: selectors.posts.getData(state, ownProps.postId) };
+};
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps)(PostCard);

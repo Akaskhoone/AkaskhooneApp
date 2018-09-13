@@ -17,6 +17,7 @@
     "jest": "node node_modules/jest/bin/jest.js"
   },
   "dependencies": {
+    "@types/react-redux": "^6.0.8",
     "axios": "^0.18.0",
     "immer": "^1.5.0",
     "lodash": "4.17.4",

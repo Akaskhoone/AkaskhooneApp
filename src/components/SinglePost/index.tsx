@@ -4,64 +4,67 @@ import { FlatList, View } from 'react-native';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import PostCard from 'src/components/PostCard';
+import Paginator from 'src/libs/Paginator';
 import Comment from './CommentCard';
 import CommentTextInput from './CommentTextInput';
 
-interface Props {
-  post: any;
+interface OwnProps {
+  postId: any;
+}
+interface StateProps {
   comments: [any];
   loading: boolean;
   hasNext: boolean;
+}
+interface DispatchProps {
   load: any;
   reset: any;
 }
+type Props = OwnProps & StateProps & DispatchProps;
 export class SinglePost extends Component<Props> {
   public render() {
-    const { comments } = this.props;
+    const { postId } = this.props;
     return (
-      <View style={{ flex: 1 }}>
-        <FlatList
-          data={comments}
+      <View style={{ height: '100%' }}>
+        <Paginator
+          defaultComponent={this.renderDefaultComponent}
+          name={`${postId}_comments`}
+          type="comments"
+          url={`/social/posts/${postId}/comments`}
           ListHeaderComponent={this.renderHeader}
           renderItem={this.renderItem}
-          ListFooterComponent={this.renderFooter}
-          onEndReachedThreshold={0.4}
         />
       </View>
     );
   }
+  private renderDefaultComponent = () => {
+    return <View />;
+  };
   private renderHeader = () => {
-    return (
-      <PostCard
-        onImagePress={this.handleImagePress}
-        onProfilePress={this.handleProfilePress}
-        data={this.props.post}
-      />
-    );
+    return <PostCard postId={this.props.postId} />;
   };
   private renderItem = ({ item }) => {
     return <Comment data={item} />;
   };
-  private renderFooter = () => {
-    return (
-      <View>
-        {this.props.loading && <Spinner />}
-        <CommentTextInput />
-      </View>
-    );
-  };
-  private handleImagePress = () => {
-    Reactotron.log('Image pressed');
-  };
-  private handleProfilePress = () => {
-    Reactotron.log('Profile pressed');
-  };
 }
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state, props: OwnProps): StateProps => ({
   loading: false,
-  comments: [],
+  comments: ['hi'],
   hasNext: false
 });
+const mapDispatchToProps = (dispatch): DispatchProps => ({
+  load: () => {
+    // return dispatch(loadAction(id)).catch(e => {
+    //   Toast.show({ text: I18n.t('unknownError') });
+    // }),
+  },
+  reset: id => {
+    // return dispatch(resetAction(id))
+  }
+});
 
-export default connect<{}, {}>(mapStateToProps)(SinglePost);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(SinglePost);

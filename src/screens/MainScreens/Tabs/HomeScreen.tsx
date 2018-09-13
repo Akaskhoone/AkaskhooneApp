@@ -14,7 +14,7 @@ interface Props {
 class HomeScreen extends Component<Props> {
   public render() {
     return (
-      <Container>
+      <Container style={{ flex: 1 }}>
         <Header>
           <Left>
             <Button transparent={true}>
@@ -46,15 +46,8 @@ class HomeScreen extends Component<Props> {
   }
 
   private renderItem = ({ item }) => {
-    return (
-      <PostCard
-        dataId={item}
-        onImagePress={this.navigateTo('post', { item })}
-        onProfilePress={this.navigateTo('othersProfile', { item })}
-      />
-    );
+    return <PostCard postId={item} />;
   };
-  private navigateTo = (name, params) => () => this.props.navigation.navigate(name, params);
 }
 
 export default HomeScreen;
