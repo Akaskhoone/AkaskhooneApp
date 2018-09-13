@@ -1,5 +1,7 @@
+import { normalize } from 'normalizr';
 import Reactotron from 'reactotron-react-native';
 import I18n from 'src/utils/i18n';
+import { board, comment, post, profile, tag } from 'src/utils/schemas';
 
 const is400Or401 = res => {
   return (
@@ -40,17 +42,56 @@ export const extractErrors = (res, errorNames: string[]) => {
 };
 
 export function generateSelector(childSelector, getChildState) {
-  return Object.keys(childSelector).reduce(
-    (prev, next) => ({
+  return Object.keys(childSelector).reduce((prev, next) => {
+    return {
       ...prev,
       [next]: (state, ...props) => childSelector[next](getChildState(state), ...props)
-    }),
-    {}
-  );
+    };
+  }, {});
 }
 
 export function getReduxAxiosPreviousAction(action) {
-  return action.meta.previousAction;
+  return action.meta && action.meta.previousAction;
+}
+
+export function applyNormalizeOnAction(action) {
+  let normalizrSchema;
+  const dataType = action.dataType;
+  Reactotron.log('Action in apply normalize', action);
+  switch (dataType) {
+    case 'posts':
+      Reactotron.log('Data type is ', dataType);
+      normalizrSchema = [post];
+      break;
+    case 'profiles':
+      normalizrSchema = [profile];
+      break;
+    case 'borads':
+      normalizrSchema = [board];
+      break;
+    case 'tags':
+      normalizrSchema = [tag];
+      break;
+    case 'comments':
+      normalizrSchema = [comment];
+      break;
+    default:
+      Reactotron.log('Data type is not supported');
+      return action;
+  }
+
+  const responseBody = action.payload && action.payload.data && action.payload.data;
+  const data = responseBody && responseBody.data;
+  const normalizedData = normalize(data || [], normalizrSchema);
+  Reactotron.log('NormalizedData', normalizedData);
+  const transformedAction = {
+    ...action,
+    payload: {
+      ...action.payload,
+      data: { ...responseBody, ...normalizedData }
+    }
+  };
+  return transformedAction;
 }
 
 const dateParser = dateString => {

@@ -21,6 +21,7 @@
       "@constants/*": ["./src/constants/*"],
       "@utils/*": ["./src/utils/*"],
       "@i18n/*": ["./src/utils/i18n/*"],
+      "@libs/*": ["./src/libs/*"],
       "@assets/*": ["./src/assets/*"]
     }
   },

@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 
 export const completeInfoCompleted = (
   email: string,
@@ -18,7 +18,7 @@ export const completeInfoCompleted = (
     formData.append('image', { uri: image.uri, name: 'image.jpg', type: 'multipart/form-data' });
   }
   return dispatch({
-    types: [auth.COMPLETEINFO, auth.COMPLETEINFO_SUCCESS, auth.COMPLETEINFO_FAIL],
+    types: [types.COMPLETEINFO, types.COMPLETEINFO_SUCCESS, types.COMPLETEINFO_FAIL],
     payload: {
       request: {
         url: '/accounts/signup/',

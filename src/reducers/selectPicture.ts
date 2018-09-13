@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 import { produce } from 'immer';
 
 export interface CreatePostState {
@@ -13,9 +13,9 @@ const initialState: CreatePostState = {
 
 export default produce((draftSatete: CreatePostState = initialState, action) => {
   switch (action.type) {
-    case auth.CREATEPOST_SUCCESS:
+    case types.CREATEPOST_SUCCESS:
       return initialState;
-    case auth.SET_POST_IMAGE:
+    case types.SET_POST_IMAGE:
       draftSatete.imageUri = action.payload.imageUri;
       draftSatete.selected = true;
       return draftSatete;

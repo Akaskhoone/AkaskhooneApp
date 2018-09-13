@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 
 export const changeInfoCompleted = (name: string, bio: string, image) => dispatch => {
   const formData: any = new FormData();
@@ -8,7 +8,7 @@ export const changeInfoCompleted = (name: string, bio: string, image) => dispatc
     formData.append('image', { uri: image.uri, name: 'image.jpg', type: 'multipart/form-data' });
   }
   return dispatch({
-    types: [auth.CHANGEINFO, auth.CHANGEINFO_SUCCESS, auth.CHANGEINFO_FAIL],
+    types: [types.CHANGEINFO, types.CHANGEINFO_SUCCESS, types.CHANGEINFO_FAIL],
     payload: {
       request: {
         url: '/accounts/profile/',

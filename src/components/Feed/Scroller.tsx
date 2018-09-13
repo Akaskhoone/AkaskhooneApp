@@ -1,6 +1,7 @@
 import { Spinner, Toast } from 'native-base';
 import React, { Component } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
+import Reactotron from 'reactotron-react-native';
 import I18n from 'src/utils/i18n';
 
 interface Props {
@@ -22,7 +23,7 @@ export default (props: Props) => {
     const Item = props.Item;
     return (
       <Item
-        data={item}
+        dataId={item}
         onImagePress={handleImagePress(item)}
         onProfilePress={handleProfilePress(item)}
       />
@@ -47,7 +48,7 @@ export default (props: Props) => {
       username: item.creator
     });
   };
-
+  Reactotron.log('Scroller props', this.props);
   return (
     <FlatList
       data={props.posts}

@@ -1,7 +1,7 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 
 export const changePassword = vals => ({
-  type: [auth.CHANGE_PASSWORD, auth.CHANGE_PASSWORD_SUCCESS, auth.CHANGE_PASSWORD_FAIL],
+  type: [types.CHANGE_PASSWORD, types.CHANGE_PASSWORD_SUCCESS, types.CHANGE_PASSWORD_FAIL],
   payload: {
     request: {
       url: '/accounts/profile/',

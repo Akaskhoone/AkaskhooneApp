@@ -1,4 +1,4 @@
-import { auth } from '@constants/actionTypes';
+import { types } from '@constants/actionTypes';
 import { produce } from 'immer';
 
 const initialState = {
@@ -8,14 +8,14 @@ const initialState = {
 
 export default produce((draftState = initialState, action) => {
   switch (action.type) {
-    case auth.LOGIN_SUCCESS:
+    case types.LOGIN_SUCCESS:
       draftState.access = action.payload.data.access;
       draftState.refresh = action.payload.data.refresh;
       return draftState;
-    case auth.REFRESH_TOKEN_SUCCESS:
+    case types.REFRESH_TOKEN_SUCCESS:
       draftState.access = action.payload.data.access;
       return draftState;
-    case auth.LOGOUT:
+    case types.LOGOUT:
       draftState.refresh = undefined;
       draftState.access = undefined;
       return draftState;
