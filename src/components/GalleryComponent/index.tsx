@@ -13,17 +13,6 @@ interface Props {
 export default class GalleryComponent extends Component<Props> {
   public gallery = undefined;
 
-  public constructor(props) {
-    super(props);
-    PermissionsAndroid.requestMultiple([
-      PermissionsAndroid.PERMISSIONS.CAMERA,
-      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-      PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
-    ]).then(() => {
-      this.forceUpdate();
-    });
-  }
-
   public render() {
     return (
       <View style={{ flex: 1, paddingTop: 10, justifyContent: 'center', alignItems: 'center' }}>

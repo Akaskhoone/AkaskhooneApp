@@ -1,10 +1,16 @@
 import { types } from '@constants/actionTypes';
 
-export const createPost = (image, caption: string) => dispatch => {
+export const createPost = (
+  des: string,
+  tags: string[],
+  location: string,
+  imageUri: string
+) => dispatch => {
   const formData: any = new FormData();
-  formData.append('caption', caption);
-  formData.append('image', { uri: image.uri, name: 'image.jpg', type: 'multipart/form-data' });
-
+  formData.append('des', des || '');
+  formData.append('tags', (tags && tags.join(' ')) || '');
+  formData.append('location', location || '');
+  formData.append('image', { uri: imageUri, name: 'image.jpg', type: 'multipart/form-data' });
   return dispatch({
     types: [types.CREATEPOST, types.CREATEPOST_SUCCESS],
     payload: {

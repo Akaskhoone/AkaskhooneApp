@@ -75,5 +75,8 @@ export default {
   answer: 'Answer',
   statusForNotFollowedUser: 'Follow',
   statusForFollowedUser: 'Following',
+  location: 'location',
+  tag: 'add tag',
+  sendPost: 'sent post',
   noPosts: 'No posts available!'
 };

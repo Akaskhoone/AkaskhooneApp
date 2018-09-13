@@ -30,6 +30,8 @@
     "react-native-image-progress": "^1.1.1",
     "react-native-progress": "^3.5.0",
     "react-native-size-matters": "^0.1.2",
+    "react-native-tag-input": "^0.0.21",
+    "react-native-tags": "^1.4.0",
     "react-native-typescript-transformer": "^1.2.10",
     "react-navigation": "^2.11.2",
     "react-redux": "5.0.6",

@@ -2,7 +2,6 @@ import images from '@assets/images/feed_images';
 import { Card, CardItem, Content, Left, Right, Thumbnail } from 'native-base';
 import React, { Component } from 'react';
 import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 import I18n from 'src/utils/i18n';
 
 const { width, height } = Dimensions.get('window');

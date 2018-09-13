@@ -75,5 +75,8 @@ export default {
   answer: 'پاسخ',
   statusForNotFollowedUser: 'دنبال کن',
   statusForFollowedUser: 'دنبال شده',
+  location: 'موقعیت',
+  tag: 'اضافه کردن تگ',
+  sendPost: 'ارسال پست',
   noPosts: 'پستی موجود نیست'
 };
