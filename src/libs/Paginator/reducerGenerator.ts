@@ -26,20 +26,25 @@ export default (name, actionExtractor = a => a) => {
     next: null,
     previous: null
   };
-  const paginationsReducer = (draftState, action) => {
+  const paginationsReducer = (state, action) => {
     if (action.dataType === name && action.pagination) {
       Reactotron.log('Pagination Action', action, ' In ', name);
       switch (action.type) {
         case types.DATA_LOAD:
           return {
-            ...draftState,
-            [action.pagination]: draftState[action.pagination] || paginationInitialState
+            ...state,
+            [action.pagination]: {
+              ...paginationInitialState,
+              data:
+                (state[action.pagination] && state[action.pagination].data) ||
+                paginationInitialState.data
+            }
           };
         case types.DATA_LOAD_SUCCESS:
           return {
-            ...draftState,
+            ...state,
             [action.pagination]: {
-              ...draftState[action.pagination],
+              ...state[action.pagination],
               data: action.payload.data.result,
               next: action.payload.data.next,
               loading: false
@@ -47,54 +52,54 @@ export default (name, actionExtractor = a => a) => {
           };
         case types.DATA_LOAD_FAIL:
           return {
-            ...draftState,
+            ...state,
             [action.pagination]: {
-              ...draftState[action.pagination],
+              ...state[action.pagination],
               loading: false
             }
           };
 
         case types.DATA_LOAD_MORE:
           return {
-            ...draftState,
+            ...state,
             [action.pagination]: {
-              ...draftState[action.pagination],
+              ...state[action.pagination],
               loadingMore: true
             }
           };
         case types.DATA_LOAD_MORE_SUCCESS:
           return {
-            ...draftState,
+            ...state,
             [action.pagination]: {
-              ...draftState[action.pagination],
-              data: [...draftState[action.pagination].data, ...action.payload.data.result],
+              ...state[action.pagination],
+              data: [...state[action.pagination].data, ...action.payload.data.result],
               next: action.payload.data.next,
               loadingMore: false
             }
           };
         case types.DATA_LOAD_MORE_FAIL:
           return {
-            ...draftState,
+            ...state,
             [action.pagination]: {
-              ...draftState[action.pagination],
+              ...state[action.pagination],
               loadingMore: false
             }
           };
       }
     }
-    return draftState;
+    return state;
   };
 
-  const dataReducer = (draftState, action) => {
+  const dataReducer = (state, action) => {
     switch (action.type) {
       case types.DATA_LOAD_SUCCESS:
       case types.DATA_LOAD_MORE_SUCCESS:
         Reactotron.log('Data Add Action', action, ' In ', name);
-        return deepmerge(draftState, action.payload.data.entities[name] || {}, {
+        return deepmerge(state, action.payload.data.entities[name] || {}, {
           arrayMerge: overwriteMerge
         });
       default:
-        return draftState;
+        return state;
     }
   };
 

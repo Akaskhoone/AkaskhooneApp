@@ -43,16 +43,6 @@ class ImageItem extends Component<Props> {
   public render() {
     const { item, selected, selectedMarker, imageMargin, index, imagesPerRow } = this.props;
 
-    const marker = selectedMarker ? (
-      selectedMarker
-    ) : (
-      <View style={{ width: 20, height: 20, position: 'absolute', top: 10, right: 10 }}>
-        <Text>
-          <Icon name="checkbox" />
-        </Text>
-      </View>
-    );
-
     const image = this.props.imageExtractor(item);
     const isMostLeft = index % imagesPerRow === 0;
     return (
@@ -64,7 +54,7 @@ class ImageItem extends Component<Props> {
         }}
         onPress={this.handleClick(item)}>
         <Image source={image} style={{ height: this.imageSize, width: this.imageSize }} />
-        {selected ? marker : null}
+        {selected ? selectedMarker : null}
       </TouchableOpacity>
     );
   }

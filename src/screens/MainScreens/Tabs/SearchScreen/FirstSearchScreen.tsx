@@ -1,14 +1,8 @@
-import TextField from '@elements/TextField';
-import { Container, Header, Input, Item, Text, View } from 'native-base';
+import { Container, Header, Item, Text, View } from 'native-base';
 import React, { Component } from 'react';
-import {
-  Dimensions,
-  ImageBackground,
-  TouchableNativeFeedback,
-  TouchableWithoutFeedback
-} from 'react-native';
-import { Field } from 'react-redux';
+import { Dimensions, TouchableNativeFeedback, TouchableWithoutFeedback } from 'react-native';
 import Paginator from 'src/libs/Paginator/Paginator';
+
 interface Props {
   navigation: any;
   [propName: string]: any;
@@ -26,7 +20,7 @@ export default class FirstSearchScreen extends Component<Props> {
             </TouchableWithoutFeedback>
           </Item>
         </Header>
-        <View>
+        <View style={{ alignItems: 'center' }}>
           <Paginator
             defaultComponent={this.defaultComponent}
             name="trendTags"

@@ -1,22 +1,24 @@
 import MyIcon from '@elements/Icon';
+import Paginator from '@libs/Paginator/Paginator';
+import { selectors } from '@reducers/index';
 import env from '@utils/env.json';
+import { PostDTO } from '@utils/interfaces';
 import { Body, Button, Container, Content, Header, Left, Right, Text, View } from 'native-base';
 import React, { Component } from 'react';
 import { Dimensions, Image, TouchableNativeFeedback } from 'react-native';
+import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
-import Paginator from 'src/libs/Paginator/Paginator';
-import { selectors } from 'src/reducers';
+import ImageItem from 'src/elements/ImageItem';
 
-const width = Dimensions.get('window').width;
 interface OwnProps {
-  navigation: any;
-  // name: string;
+  navigation: NavigationScreenProp<any, any>;
 }
 interface StateProps {
-  getPostFromId: any;
+  getPostFromId: (string) => PostDTO;
 }
 interface DispatchProps {}
 type Props = OwnProps & StateProps & DispatchProps;
+
 class TagScreen extends Component<Props> {
   public render() {
     const name = this.props.navigation.getParam('tagId');
@@ -36,16 +38,16 @@ class TagScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <Content>
+        <View style={{ alignItems: 'center' }}>
           <Paginator
             defaultComponent={this.defaultComponent}
-            name={`${name}_posts`}
+            name={`#${name}_posts`}
             type="posts"
             url={`/social/posts/?tag=${name}`}
             renderItem={this.renderItem}
             numColumns={2}
           />
-        </Content>
+        </View>
       </Container>
     );
   }
@@ -55,31 +57,21 @@ class TagScreen extends Component<Props> {
     return <View />;
   };
   private renderItem = ({ item, index }) => {
-    const imageMargin = 5;
-    const columnNum = 2;
-    const imageSize = (width - (columnNum + 1) * imageMargin) / columnNum;
-    const isMostRight = index % columnNum === columnNum - 1;
     const post = this.props.getPostFromId(item);
     return (
-      <TouchableNativeFeedback onPress={this.navigateTo('post', { postId: post.id })}>
-        <Image
-          style={{
-            width: imageSize,
-            height: imageSize,
-            marginRight: isMostRight ? 0 : 5,
-            marginBottom: 5,
-            backgroundColor: 'gray',
-            justifyContent: 'center',
-            alignItems: 'center'
-          }}
-          source={{ uri: `${env.ASSETS_URL}/${post.image}` }}
-        />
-      </TouchableNativeFeedback>
+      <ImageItem
+        imagesPerRow={2}
+        imageExtractor={this.imageExtractor}
+        index={index}
+        onPress={this.navigateTo('post', { postId: post.id })}
+        item={post}
+      />
     );
   };
+  private imageExtractor = post => ({ uri: post.image });
 }
 
 const mapStateToProps = (state): StateProps => ({
-  getPostFromId: imageId => selectors.posts.getData(state, imageId)
+  getPostFromId: postId => selectors.posts.getData(state, postId)
 });
 export default connect(mapStateToProps)(TagScreen);
