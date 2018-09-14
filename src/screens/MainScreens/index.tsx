@@ -1,14 +1,14 @@
 import { createStackNavigator } from 'react-navigation';
 import ProfileScreen from './OthersProfileScreen';
 import PostScreen from './PostScreen';
+import SingleTagScreen from './SingleTagScreen';
 import TabsScreen from './Tabs';
-import TagScreen from './TagScreen';
 
 export default createStackNavigator(
   {
     tabs: TabsScreen,
     post: PostScreen,
-    tag: TagScreen,
+    tag: SingleTagScreen,
     othersProfile: ProfileScreen
   },
   {

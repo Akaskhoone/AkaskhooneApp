@@ -1,4 +1,5 @@
 import ProfileComponent from '@components/ProfileComponent';
+import ProfileTabs from '@components/ProfileTabs';
 import MyIcon from '@elements/Icon';
 import { Body, Button, Container, Header, Icon, Left, Right } from 'native-base';
 import React, { Component } from 'react';
@@ -28,7 +29,7 @@ export default class OthersProfileScreen extends Component<Props> {
           </Right>
         </Header>
         <ProfileComponent username={username} isOthers={true} />
-        {/* <ProfileTabs /> */}
+        <ProfileTabs username={username} />
       </Container>
     );
   }
