@@ -5,7 +5,9 @@ import { produce } from 'immer';
 const initialState = {
   accessToken: undefined,
   refreshToken: undefined,
-  username: undefined
+  owner: {
+    username: undefined
+  }
 };
 
 const extractPayloadFromJWT = jwt => JSON.parse(jwt.split('.')[1]);
@@ -18,14 +20,16 @@ export default produce((draftState = initialState, action) => {
       draftState.accessToken = accessToken;
       // Extracting username from base64encoded access token
       // draftState.username = extractPayloadFromJWT(accessToken).username;
-      draftState.username = 'reza';
+      draftState.owner.username = 'reza';
+      draftState.owner.email = 'reza@admin.com';
       return draftState;
     case types.REFRESH_TOKEN_SUCCESS:
       accessToken = action.payload.data.access;
       draftState.accessToken = action.payload.data.access;
       // Extracting username from base64encoded access token
       // draftState.username = extractPayloadFromJWT(accessToken).username;
-      draftState.username = 'reza';
+      draftState.owner.username = 'reza';
+      draftState.owner.email = 'reza@admin.com';
       return draftState;
     case types.LOGOUT:
     default:
@@ -35,6 +39,6 @@ export default produce((draftState = initialState, action) => {
 
 export const selectors = {
   isLoggedIn: state => !!state.refreshToken,
-  getOwner: state => state.username,
-  isOwner: (state, username) => state.username === username
+  getOwner: state => state.owner,
+  isOwner: (state, username) => state.owner.username === username
 };

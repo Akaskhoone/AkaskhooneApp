@@ -6,6 +6,7 @@ import { Body, Button, Container, Header, Left, Right, Text, Title } from 'nativ
 import React, { Component } from 'react';
 import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
+import { selectors } from 'src/reducers';
 import I18n from 'src/utils/i18n';
 
 interface OwnProps {
@@ -45,11 +46,10 @@ class ProfileScreen extends Component<Props> {
     );
   }
   private navigateTo = name => () => this.props.navigation.navigate(name);
-  private navigateToWithParams = name => params => this.props.navigation.navigate(name, params);
 }
 
 const mapStateToProp = (state): StateProps => ({
-  username: state.auth.username
+  username: selectors.getOwner(state).username
 });
 const mapDispatchToProps = (dispatch): DispatchProps => ({
   loadOwnProfile: () => dispatch(loadOwnProfile())

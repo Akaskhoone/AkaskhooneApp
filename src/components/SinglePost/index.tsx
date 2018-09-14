@@ -1,6 +1,7 @@
 import PostCard from '@components/PostCard';
 import Paginator from '@libs/Paginator';
 import React, { Component } from 'react';
+import Reactotron from 'reactotron-react-native';
 import CommentTextInput from 'src/components/SinglePost/CommentTextInput';
 import Comment from './CommentCard';
 
@@ -9,6 +10,7 @@ interface Props {
 }
 class SinglePost extends Component<Props> {
   public render() {
+    Reactotron.log('Post Component opened with postID:', this.props.postId);
     const { postId } = this.props;
     return (
       <Paginator

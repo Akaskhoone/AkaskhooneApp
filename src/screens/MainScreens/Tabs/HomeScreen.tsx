@@ -9,7 +9,6 @@ import { View } from 'react-native';
 import { NavigationScreenProp } from 'react-navigation';
 
 interface Props {
-  hasFeedPosts: boolean;
   navigation: NavigationScreenProp<any, any>;
 }
 class HomeScreen extends Component<Props> {

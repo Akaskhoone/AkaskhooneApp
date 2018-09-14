@@ -39,7 +39,8 @@ const PostHeader = ({ location, date, creator, creatorUsername }: Props) => {
       ) : null}
       <TouchableOpacity
         style={{ flexDirection: 'row', alignItems: 'center' }}
-        onPress={handlePress}>
+        onPress={handlePress}
+      >
         <View style={{ marginRight: 10, marginLeft: 15, alignItems: 'flex-end' }}>
           <Text style={{ fontWeight: 'bold' }}>{creator.username}</Text>
           <Text note={true}>{humanify(date)}</Text>

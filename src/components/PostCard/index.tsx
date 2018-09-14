@@ -1,6 +1,7 @@
 import { Card, CardItem } from 'native-base';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { getActionsFor } from 'src/libs/Paginator';
 import { selectors } from 'src/reducers';
 import { PostDTO } from 'src/utils/interfaces';
 import NavigationService from 'src/utils/NavigationService';
@@ -15,10 +16,15 @@ interface OwnProps {
 interface StateProps {
   post: PostDTO;
 }
-interface DispatchProps {}
+interface DispatchProps {
+  loadPost: () => void;
+}
 type Props = OwnProps & StateProps & DispatchProps;
 
 export class PostCard extends Component<Props> {
+  public componentDidMount() {
+    this.props.loadPost();
+  }
   public render() {
     const post = this.props.post;
     return (
@@ -49,4 +55,11 @@ export class PostCard extends Component<Props> {
 const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
   return { post: selectors.posts.getData(state, ownProps.postId) };
 };
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps)(PostCard);
+const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
+  const postEndpoint = getActionsFor('posts').createEndpoint('/social/posts/');
+  return { loadPost: () => dispatch(postEndpoint.loadItem(ownProps.postId)) };
+};
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(PostCard);

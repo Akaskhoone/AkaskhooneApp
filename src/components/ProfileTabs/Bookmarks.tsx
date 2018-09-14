@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import Reactotron from 'reactotron-react-native';
 import Paginator from 'src/libs/Paginator';
 import Bookmark from './Bookmark';
 
@@ -13,12 +14,14 @@ export default class Bookmarks extends Component<Props> {
       <Paginator
         name={`${username}_boards`}
         type="boards"
-        url={`/social/boards/?username=${username}`}
+        url={`/social/boards/?username=${username}&limit=2`}
         defaultComponent={this.renderDefault}
         renderItem={this.renderItem}
       />
     );
   }
   private renderDefault = () => <View />;
-  private renderItem = ({ item, index }) => <Bookmark boardId={item} />;
+  private renderItem = ({ item, index }) => {
+    return <Bookmark boardId={item} username={this.props.username} />;
+  };
 }

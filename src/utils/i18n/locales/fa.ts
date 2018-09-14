@@ -78,5 +78,8 @@ export default {
   location: 'موقعیت',
   tag: 'اضافه کردن تگ',
   sendPost: 'ارسال پست',
-  noPosts: 'پستی موجود نیست'
+  noPosts: 'پستی موجود نیست',
+  yourSharedImages: 'عکس های اشتراکی شما',
+  addToBoard: 'اضافه کردن',
+  imageAddedSuccessfully: 'عکس با موفقیت اضافه شد'
 };

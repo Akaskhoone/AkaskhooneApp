@@ -78,5 +78,8 @@ export default {
   location: 'location',
   tag: 'add tag',
   sendPost: 'sent post',
-  noPosts: 'No posts available!'
+  noPosts: 'No posts available!',
+  yourSharedImages: 'Your shared images',
+  addToBoard: 'Add to board',
+  imageAddedSuccessfully: 'Image Added Successfully'
 };

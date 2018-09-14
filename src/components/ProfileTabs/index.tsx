@@ -6,8 +6,6 @@ import I18n from 'src/utils/i18n';
 import Bookmark from './Bookmark';
 import Posts from './Posts';
 
-const { width } = Dimensions.get('window');
-
 interface Props {
   username: string;
 }

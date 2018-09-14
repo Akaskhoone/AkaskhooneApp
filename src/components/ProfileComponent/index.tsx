@@ -36,7 +36,6 @@ class ProfileComponent extends Component<Props> {
     if (!profileLoaded) return <Spinner />;
 
     const { bio, image, followers, followings, is_followed, is_private, name } = profile;
-    Reactotron.log('Profile Image URI', image);
     return (
       <View style={styles.wholeView}>
         <View>

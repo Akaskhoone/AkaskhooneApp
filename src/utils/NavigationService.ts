@@ -39,9 +39,14 @@ function push(routeName, params?) {
   );
 }
 
+function goBack() {
+  _navigator.dispatch(NavigationActions.back());
+}
+
 function navigateToProfile(username) {
   const state = store.getState();
   const ownerUsername = selectors.getOwner(state);
+  if (!username) return;
   if (selectors.isOwner(state, username)) {
     navigateToOwnerProfile(ownerUsername);
   } else {
@@ -61,11 +66,11 @@ function navigateToPost(postId) {
   }
   push('post', { postId });
 }
-// add other navigation functions that you need and export them
 
 export default {
   navigate,
   push,
+  goBack,
   setTopLevelNavigator,
   navigateToPost,
   navigateToProfile

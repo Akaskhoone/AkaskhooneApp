@@ -64,7 +64,7 @@ export function applyNormalizeOnAction(action) {
     case 'profiles':
       normalizrSchema = profile;
       break;
-    case 'borads':
+    case 'boards':
       normalizrSchema = board;
       break;
     case 'tags':
@@ -123,9 +123,16 @@ const secondsInHour = 3600;
 const secondsInMinutes = 60;
 export const humanify = dateString => {
   const nowSeconds = new Date().getTime() / 1000;
-  const date = dateParser(dateString);
-  const dateSeconds = date.getTime() / 1000;
-  const secondsElapsed = Math.floor(nowSeconds - dateSeconds);
+  let secondsElapsed;
+  let date;
+  let dateSeconds;
+  try {
+    date = dateParser(dateString);
+    dateSeconds = date.getTime() / 1000;
+    secondsElapsed = Math.floor(nowSeconds - dateSeconds);
+  } catch (e) {
+    secondsElapsed = 0;
+  }
   if (secondsElapsed > secondsInYear) {
     return date.getFullYear();
   }

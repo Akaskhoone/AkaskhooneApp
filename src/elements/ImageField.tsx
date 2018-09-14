@@ -15,7 +15,6 @@ class ImageField extends Component<Props> {
     const { style, meta, ...otherProps } = this.props;
     const imageAddress = this.props.input.value.uri;
     const shouldShowError = meta.error && meta.submitFailed;
-    Reactotron.log('Image address is', imageAddress);
     const image = imageAddress
       ? { uri: imageAddress }
       : require('@assets/images/defaultProfile.jpg');

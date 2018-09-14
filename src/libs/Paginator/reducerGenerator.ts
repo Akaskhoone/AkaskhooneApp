@@ -130,8 +130,8 @@ export const selectors = {
       !!state.paginations[paginationName] && !!state.paginations[paginationName].loadingMore,
     isLoading: () =>
       !!state.paginations[paginationName] && !!state.paginations[paginationName].loading,
-    hasData: () => true
-    // !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
+    hasData: () =>
+      !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
   }),
   getData: (state, dataId) => state.data[dataId] || {},
   dataLoaded: (state, dataId) => !!state.data[dataId]

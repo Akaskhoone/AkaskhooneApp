@@ -55,12 +55,12 @@ export class Paginator extends Component<Props> {
         <FlatList
           {...otherProps}
           data={data}
-          renderItem={this.props.renderItem}
+          renderItem={this.renderItem}
           refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}
           onEndReached={this.loadMore}
-          onEndReachedThreshold={0.6}
           ListFooterComponent={this.renderFooter}
           keyExtractor={keyExtractor}
+          onEndReachedThreshold={0.1}
         />
       );
     } else {
@@ -75,6 +75,9 @@ export class Paginator extends Component<Props> {
     }
   }
 
+  private renderItem = input => {
+    return this.props.renderItem(input);
+  };
   private renderFooter = () => {
     const ListFooterComponent = this.props.ListFooterComponent as any;
     return (

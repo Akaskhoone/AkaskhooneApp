@@ -1,4 +1,4 @@
-import { changeInfoCompleted } from '@actions/changeInfoActions';
+import { changeInfoSubmitted } from '@actions/changeInfoActions';
 import ChangeInfoForm from '@components/forms/ChangeInfoForm';
 import I18n from '@utils/i18n';
 import {
@@ -19,19 +19,31 @@ import { NavigationScreenProp } from 'react-navigation';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import { SubmissionError } from 'redux-form';
+import { getActionsFor } from 'src/libs/Paginator';
+import { selectors } from 'src/reducers';
 import { extractErrors } from 'src/utils/helpers';
+import { ProfileDTO } from 'src/utils/interfaces';
 
-interface Props {
+interface OwnProps {
   navigation: NavigationScreenProp<any, any>;
-  changeInfo: Function;
-  username: string;
-  email: string;
-  bio: string;
-  name: string;
-  [propName: string]: any;
 }
+interface StateProps {
+  profile: ProfileDTO;
+  email: string;
+}
+interface DispatchProps {
+  loadProfile: any;
+  changeInfo: any;
+}
+type Props = OwnProps & StateProps & DispatchProps;
+
 class ChangeInfoScreen extends Component<Props> {
+  public componentDidMount() {
+    this.props.loadProfile();
+  }
+
   public render() {
+    const { profile } = this.props;
     return (
       <Container>
         <Header>
@@ -52,11 +64,11 @@ class ChangeInfoScreen extends Component<Props> {
         <Content contentContainerStyle={{ marginHorizontal: scale(20) }}>
           <ChangeInfoForm
             initialValues={{
-              image: { uri: this.props.image, new: true },
-              username: this.props.username,
+              image: { uri: profile.image, new: true },
+              username: profile.username,
               email: this.props.email,
-              name: this.props.name,
-              bio: this.props.bio
+              name: profile.name,
+              bio: profile.bio
             }}
             onSubmit={this.changeInfoSubmitHandler}
           />
@@ -65,7 +77,6 @@ class ChangeInfoScreen extends Component<Props> {
     );
   }
   private goBack = () => this.props.navigation.goBack();
-  private navigateTo = name => () => this.props.navigation.navigate(name);
   private changeInfoSubmitHandler = vals => {
     return this.props
       .changeInfo(vals)
@@ -83,21 +94,25 @@ class ChangeInfoScreen extends Component<Props> {
   };
 }
 
-const mapDispatchToProps = dispatch => ({
-  changeInfo: vals => dispatch(changeInfoCompleted(vals.name, vals.bio, vals.image))
+const mapDispatchToProps = (dispatch): DispatchProps => ({
+  changeInfo: vals => dispatch(changeInfoSubmitted(vals.name, vals.bio, vals.image)),
+  loadProfile: () =>
+    dispatch(
+      getActionsFor('profiles')
+        .createEndpoint('/accounts/profile/')
+        .loadItem('')
+    )
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state): StateProps => {
+  const ownUsername = selectors.getOwner(state).username;
   return {
-    username: state.profiles.own.username,
-    name: state.profiles.own.name,
-    email: state.profiles.own.email,
-    image: state.profiles.own.image,
-    bio: state.profiles.own.bio
+    profile: selectors.profiles.getData(state, ownUsername),
+    email: selectors.getOwner(state).email
   };
 };
 
-export default connect(
+export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps
 )(ChangeInfoScreen);
