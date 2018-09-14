@@ -23,3 +23,7 @@ export const post = new schema.Entity(
 );
 export const board = new schema.Entity('boards', { data: [post] });
 export const comment = new schema.Entity('comments', { creator: profile }, { idAttribute: 'id' });
+export const notification = new schema.Entity('notifications', {
+  post,
+  creator: profile
+});

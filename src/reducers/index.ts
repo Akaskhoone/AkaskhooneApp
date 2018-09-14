@@ -2,7 +2,14 @@ import { generateReducerFor, paginatorSelectors, SelectorInterface } from '@libs
 import { applyNormalizeOnAction, generateSelector } from '@utils/helpers';
 import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
-import { BoardDTO, CommentDTO, PostDTO, ProfileDTO, TagDTO } from 'src/utils/interfaces';
+import {
+  BoardDTO,
+  CommentDTO,
+  NotificationDTO,
+  PostDTO,
+  ProfileDTO,
+  TagDTO
+} from 'src/utils/interfaces';
 import authReducer, { selectors as authSelectors } from './auth';
 import selectPictureReducer from './selectPicture';
 
@@ -14,7 +21,8 @@ export default combineReducers({
   profiles: generateReducerFor('profiles', action => applyNormalizeOnAction(action)),
   comments: generateReducerFor('comments', action => applyNormalizeOnAction(action)),
   tags: generateReducerFor('tags', action => applyNormalizeOnAction(action)),
-  boards: generateReducerFor('boards', action => applyNormalizeOnAction(action))
+  boards: generateReducerFor('boards', action => applyNormalizeOnAction(action)),
+  notifications: generateReducerFor('notifications', action => applyNormalizeOnAction(action))
 });
 
 export const selectors = {
@@ -23,7 +31,8 @@ export const selectors = {
   comments: generateSelector(paginatorSelectors, state => state.comments),
   profiles: generateSelector(paginatorSelectors, state => state.profiles),
   tags: generateSelector(paginatorSelectors, state => state.tags),
-  boards: generateSelector(paginatorSelectors, state => state.boards)
+  boards: generateSelector(paginatorSelectors, state => state.boards),
+  notifications: generateSelector(paginatorSelectors, state => state.notifications)
 } as {
   isLoggedIn: any;
   getOwner: any;
@@ -33,4 +42,5 @@ export const selectors = {
   profiles: SelectorInterface<ProfileDTO>;
   tags: SelectorInterface<TagDTO>;
   boards: SelectorInterface<BoardDTO>;
+  notifications: SelectorInterface<NotificationDTO>;
 };

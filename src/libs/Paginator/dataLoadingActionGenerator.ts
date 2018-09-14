@@ -90,6 +90,12 @@ export default name => {
         },
         dataType: name
       })
+    }),
+    setMeta: (meta: {}) => ({
+      type: [types.SET_META],
+      payload: {
+        meta
+      }
     })
   };
 };

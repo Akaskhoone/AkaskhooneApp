@@ -78,5 +78,10 @@ export default {
   location: 'موقعیت',
   tag: 'اضافه کردن تگ',
   sendPost: 'ارسال پست',
-  noPosts: 'پستی موجود نیست'
+  noPosts: 'پستی موجود نیست',
+  likeNotification: '{{username}} پست شما را پسندید',
+  dislikeNotification: '{{username}} از پست شما بدش آمد',
+  followNotification: '{{username}} شما را دنبال کرد',
+  unfollowNotification: '{{username}} شما را از دنبال کنندگی درآود',
+  joinNotification: '{{username}} عکاسخونه ای شد'
 };
