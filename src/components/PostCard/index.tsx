@@ -1,6 +1,5 @@
 import { Card, CardItem } from 'native-base';
 import React, { Component } from 'react';
-import { Dimensions, TouchableWithoutFeedback } from 'react-native';
 import { connect } from 'react-redux';
 import { selectors } from 'src/reducers';
 import { PostDTO } from 'src/utils/interfaces';
@@ -9,8 +8,6 @@ import Caption from './PostCaption';
 import Footer from './PostFooter';
 import Header from './PostHeader';
 import Image from './PostImage';
-
-const windowWidth = Dimensions.get('window').width;
 
 interface OwnProps {
   postId: string;
@@ -31,9 +28,6 @@ export class PostCard extends Component<Props> {
         </CardItem>
         <CardItem cardBody={true}>
           <Image imageUrl={post.image} onPress={this.navigateToPost} />
-          {/* <TouchableWithoutFeedback onPress={this.navigateToPost}> */}
-          {/* <Image source={{ uri: post.image, width: windowWidth, height: windowWidth }} /> */}
-          {/* </TouchableWithoutFeedback> */}
         </CardItem>
         <CardItem>
           <Caption

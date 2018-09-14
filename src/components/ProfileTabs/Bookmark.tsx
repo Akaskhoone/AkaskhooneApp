@@ -1,16 +1,27 @@
-import images from '@assets/images/feed_images';
+import I18n from '@utils/i18n';
 import { Card, CardItem, Content, Left, Right, Thumbnail } from 'native-base';
 import React, { Component } from 'react';
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import I18n from 'src/utils/i18n';
+import { ScrollView, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
+import { selectors } from 'src/reducers';
+import { BoardDTO, PostDTO } from 'src/utils/interfaces';
 
-const { width, height } = Dimensions.get('window');
+interface OwnProps {
+  boardId: string;
+}
+interface StateProps {
+  board: BoardDTO;
+  getPost: (string) => PostDTO;
+}
+interface DispatchProps {}
+type Props = OwnProps & StateProps & DispatchProps;
 
-export default class Bookmarks extends Component {
+export class Bookmark extends Component<Props> {
   public render() {
-    const thumbnailComponents = images.map((image, index) => (
-      <Thumbnail key={index} style={styles.image} square={true} large={true} source={image} />
-    ));
+    const { board } = this.props;
+    const thumbnailComponents = board.data
+      .map(postId => this.props.getPost(postId))
+      .map(this.renderThumbnail);
     return (
       <Content>
         <Card transparent={true}>
@@ -19,7 +30,7 @@ export default class Bookmarks extends Component {
               <Text>{I18n.t('allBookmarks')}</Text>
             </Left>
             <Right>
-              <Text>{I18n.t('bookmarks')}</Text>
+              <Text>{board.name}</Text>
             </Right>
           </CardItem>
           <CardItem cardBody={true}>
@@ -31,6 +42,16 @@ export default class Bookmarks extends Component {
       </Content>
     );
   }
+
+  private renderThumbnail = (post, index) => (
+    <Thumbnail
+      key={index}
+      style={styles.image}
+      square={true}
+      large={true}
+      source={{ uri: post.image }}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
@@ -39,3 +60,9 @@ const styles = StyleSheet.create({
     margin: 10
   }
 });
+
+const mapStateToProps = (state, ownProps: OwnProps): StateProps => ({
+  board: selectors.boards.getData(state, ownProps.boardId),
+  getPost: postId => selectors.posts.getData(state, postId)
+});
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps)(Bookmark);
