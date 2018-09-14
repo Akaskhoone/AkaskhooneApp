@@ -27,6 +27,7 @@ export const selectors = {
 } as {
   isLoggedIn: any;
   getOwner: any;
+  isOwner: any;
   posts: SelectorInterface<PostDTO>;
   comments: SelectorInterface<CommentDTO>;
   profiles: SelectorInterface<ProfileDTO>;

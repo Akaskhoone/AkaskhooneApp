@@ -3,7 +3,7 @@ import { Form } from 'native-base';
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
-export class CommentTextInput extends Component {
+class CommentTextInput extends Component {
   public render() {
     return (
       <Form style={{ backgroundColor: 'white' }}>

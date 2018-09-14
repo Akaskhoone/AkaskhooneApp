@@ -2,6 +2,9 @@ import deepmerge from 'deepmerge';
 import Reactotron from 'reactotron-react-native';
 import types from './actionTypes';
 
+// This function is required for overwriting arrays in deepmerge
+const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray;
+
 /* action after returning from actionExtractor should be in the following format:
 //    {
         type: string,
@@ -87,7 +90,9 @@ export default (name, actionExtractor = a => a) => {
       case types.DATA_LOAD_SUCCESS:
       case types.DATA_LOAD_MORE_SUCCESS:
         Reactotron.log('Data Add Action', action, ' In ', name);
-        return deepmerge(draftState, action.payload.data.entities[name] || {});
+        return deepmerge(draftState, action.payload.data.entities[name] || {}, {
+          arrayMerge: overwriteMerge
+        });
       default:
         return draftState;
     }
@@ -107,7 +112,8 @@ export default (name, actionExtractor = a => a) => {
 
 export const selectors = {
   pagination: (state, paginationName) => ({
-    getData: () => state.paginations[paginationName] && state.paginations[paginationName].data,
+    getData: () =>
+      (state.paginations[paginationName] && state.paginations[paginationName].data) || [],
     getPreviousPageUrl: () =>
       !!state.paginations[paginationName] && state.paginations[paginationName].previous,
     hasPrevious: () =>
@@ -119,8 +125,8 @@ export const selectors = {
       !!state.paginations[paginationName] && !!state.paginations[paginationName].loadingMore,
     isLoading: () =>
       !!state.paginations[paginationName] && !!state.paginations[paginationName].loading,
-    hasData: () =>
-      !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
+    hasData: () => true
+    // !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
   }),
   getData: (state, dataId) => state.data[dataId] || {},
   dataLoaded: (state, dataId) => !!state.data[dataId]

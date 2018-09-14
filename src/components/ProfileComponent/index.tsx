@@ -11,11 +11,11 @@ import Reactotron from 'reactotron-react-native';
 
 interface OwnProps {
   username: string;
-  isOthers?: boolean;
 }
 interface StateProps {
   profile: ProfileDTO;
   profileLoaded: boolean;
+  isOwner: boolean;
 }
 interface DispatchProps {
   loadProfile: () => any;
@@ -32,7 +32,7 @@ class ProfileComponent extends Component<Props> {
   }
 
   public render() {
-    const { isOthers, profile, profileLoaded } = this.props;
+    const { isOwner, profile, profileLoaded } = this.props;
     if (!profileLoaded) return <Spinner />;
 
     const { bio, image, followers, followings, is_followed, is_private, name } = profile;
@@ -57,24 +57,25 @@ class ProfileComponent extends Component<Props> {
             <Text>{I18n.t('numOfFollowings', { num: followings || 0 })}</Text>
           </View>
           <View>
-            <Text numberOfLines={isOthers ? 5 : 2} style={styles.bio}>
+            <Text numberOfLines={isOwner ? 2 : 5} style={styles.bio}>
               {bio}
             </Text>
           </View>
-          {isOthers ? (
+          {isOwner ? null : (
             <View style={{ flexDirection: 'row' }}>
               <Button
                 primary={!is_followed}
                 transparent={is_followed}
                 bordered={is_followed}
                 block={true}
-                style={{ width: '50%', borderRadius: 10 }}>
+                style={{ width: '50%', borderRadius: 10 }}
+              >
                 <Text style={{ fontSize: 15 }}>
                   {is_followed ? I18n.t('followed') : I18n.t('notFollowed')}
                 </Text>
               </Button>
             </View>
-          ) : null}
+          )}
         </View>
       </View>
     );
@@ -113,7 +114,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state, ownProps: OwnProps): StateProps => ({
   profile: selectors.profiles.getData(state, ownProps.username),
-  profileLoaded: selectors.profiles.dataLoaded(state, ownProps.username)
+  profileLoaded: selectors.profiles.dataLoaded(state, ownProps.username),
+  isOwner: selectors.isOwner(state, ownProps.username)
 });
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
   const profileActions = getActionsFor('profiles');

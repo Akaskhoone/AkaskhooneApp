@@ -42,7 +42,8 @@ class Posts extends Component<Props> {
           color: 'gray',
           textAlign: 'center',
           marginHorizontal: scale(15)
-        }}>
+        }}
+      >
         {I18n.t('noPosts')}
       </Text>
     </View>
@@ -61,7 +62,7 @@ class Posts extends Component<Props> {
     );
   };
   private imageExtractor = post => ({ uri: post.image });
-  private handlePress = post => NavigationService.navigate('post', { postId: post.id });
+  private handlePress = post => NavigationService.navigateToPost(post.id);
 }
 
 const mapStateToProps = (state): StateProps => ({

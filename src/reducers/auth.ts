@@ -35,5 +35,6 @@ export default produce((draftState = initialState, action) => {
 
 export const selectors = {
   isLoggedIn: state => !!state.refreshToken,
-  getOwner: state => state.username
+  getOwner: state => state.username,
+  isOwner: (state, username) => state.username === username
 };

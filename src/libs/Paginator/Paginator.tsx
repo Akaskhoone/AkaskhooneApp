@@ -3,7 +3,7 @@ import { selectors } from '@reducers/index';
 import I18n from '@utils/i18n';
 import { Spinner, Toast } from 'native-base';
 import React, { Component, ReactElement } from 'react';
-import { FlatList, FlatListProperties, RefreshControl, ScrollView } from 'react-native';
+import { FlatList, FlatListProperties, RefreshControl, ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 
@@ -67,22 +67,22 @@ export class Paginator extends Component<Props> {
       return (
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
-          refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}>
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}
+        >
           <DefaultComponent />
         </ScrollView>
       );
     }
-    return (
-      <ScrollView
-        contentContainerStyle={{ flex: 1 }}
-        refreshControl={<RefreshControl onRefresh={load} refreshing={loading} />}>
-        <DefaultComponent />
-      </ScrollView>
-    );
   }
 
   private renderFooter = () => {
-    return this.props.loadingMore ? <Spinner /> : null;
+    const ListFooterComponent = this.props.ListFooterComponent as any;
+    return (
+      <View>
+        {this.props.loadingMore && <Spinner />}
+        {ListFooterComponent && <ListFooterComponent />}
+      </View>
+    );
   };
   private loadMore = () => {
     if (this.props.hasNext && !this.props.loadingMore) {

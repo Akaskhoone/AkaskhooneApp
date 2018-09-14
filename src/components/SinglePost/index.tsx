@@ -1,12 +1,13 @@
 import PostCard from '@components/PostCard';
 import Paginator from '@libs/Paginator';
 import React, { Component } from 'react';
+import CommentTextInput from 'src/components/SinglePost/CommentTextInput';
 import Comment from './CommentCard';
 
 interface Props {
   postId: any;
 }
-export class SinglePost extends Component<Props> {
+class SinglePost extends Component<Props> {
   public render() {
     const { postId } = this.props;
     return (
@@ -17,6 +18,7 @@ export class SinglePost extends Component<Props> {
         url={`/social/posts/${postId}/comments`}
         ListHeaderComponent={this.renderHeader}
         renderItem={this.renderItem}
+        ListFooterComponent={this.renderFooter}
       />
     );
   }
@@ -29,6 +31,7 @@ export class SinglePost extends Component<Props> {
   private renderItem = ({ item }) => {
     return <Comment data={item} />;
   };
+  private renderFooter = () => <CommentTextInput />;
 }
 
 export default SinglePost;
