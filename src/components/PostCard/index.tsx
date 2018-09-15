@@ -1,5 +1,7 @@
+import AddToBoardModal from '@components/modals/AddToBoardModal';
 import { Card, CardItem } from 'native-base';
 import React, { Component } from 'react';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 import { getActionsFor } from 'src/libs/Paginator';
 import { selectors } from 'src/reducers';
@@ -20,45 +22,62 @@ interface DispatchProps {
   loadPost: () => void;
   likePost: () => void;
 }
+interface State {
+  bookmarkModalVisible: boolean;
+}
 type Props = OwnProps & StateProps & DispatchProps;
 
-export class PostCard extends Component<Props> {
+export class PostCard extends Component<Props, State> {
+  public state = {
+    bookmarkModalVisible: false
+  };
   public componentDidMount() {
     this.props.loadPost();
   }
   public render() {
     const post = this.props.post;
     return (
-      <Card>
-        <CardItem>
-          <Header location={post.location} date={post.date} creatorUsername={post.creator} />
-        </CardItem>
-        <CardItem cardBody={true}>
-          <Image
-            imageUrl={post.image}
-            onPress={this.navigateToPost}
-            onDoubleTap={this.props.likePost}
-          />
-        </CardItem>
-        <CardItem>
-          <Caption
-            description={post.des}
-            tags={post.tags.reduce((p, t) => `${p} #${t}`, '').trim()}
-          />
-        </CardItem>
-        <CardItem>
-          <Footer
-            like={this.props.likePost}
-            likesCount={post.likes_count}
-            commentsCount={post.comments_count}
-          />
-        </CardItem>
-      </Card>
+      <View>
+        <Card>
+          <CardItem>
+            <Header location={post.location} date={post.date} creatorUsername={post.creator} />
+          </CardItem>
+          <CardItem cardBody={true}>
+            <Image
+              imageUrl={post.image}
+              onPress={this.navigateToPost}
+              onDoubleTap={this.props.likePost}
+            />
+          </CardItem>
+          <CardItem>
+            <Caption
+              description={post.des}
+              tags={post.tags.reduce((p, t) => `${p} #${t}`, '').trim()}
+            />
+          </CardItem>
+          <CardItem>
+            <Footer
+              like={this.props.likePost}
+              bookmark={this.onBookmarkPress}
+              likesCount={post.likes_count}
+              commentsCount={post.comments_count}
+            />
+          </CardItem>
+        </Card>
+        <AddToBoardModal
+          onRequestClose={this.closeBookmarkModal}
+          postId={this.props.postId}
+          visible={this.state.bookmarkModalVisible}
+        />
+      </View>
     );
   }
   private navigateToPost = () => {
     NavigationService.navigateToPost(this.props.postId);
   };
+  private openBookmarkModal = () => this.setState({ bookmarkModalVisible: true });
+  private closeBookmarkModal = () => this.setState({ bookmarkModalVisible: false });
+  private onBookmarkPress = () => this.openBookmarkModal();
 }
 
 const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
@@ -71,7 +90,7 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
     likePost: () => dispatch(postEndpoint.updateItem(`${ownProps.postId}/`, { like: true }))
   };
 };
-export default connect<StateProps, DispatchProps, OwnProps>(
+export default connect<StateProps, DispatchProps, OwnProps, State>(
   mapStateToProps,
   mapDispatchToProps
 )(PostCard);

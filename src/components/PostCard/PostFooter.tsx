@@ -3,7 +3,7 @@ import { Button, Left, Right, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default ({ likesCount, commentsCount, like }) => (
+export default ({ likesCount, commentsCount, like, bookmark }) => (
   <View style={{ flex: 1, flexDirection: 'row' }}>
     <Left>
       <TouchableOpacity style={styles.button} onPress={like}>
@@ -19,7 +19,7 @@ export default ({ likesCount, commentsCount, like }) => (
       </TouchableOpacity>
     </Left>
     <Right>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={bookmark}>
         <MyIcon name="bookmark" size={25} />
       </TouchableOpacity>
     </Right>

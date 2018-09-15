@@ -1,4 +1,4 @@
-import DeleteModal from '@components/Modals/DeleteBoardModal';
+import DeleteModal from '@components/modals/DeleteBoardModal';
 import MyIcon from '@elements/Icon';
 import Paginator from '@libs/Paginator/Paginator';
 import { selectors } from '@reducers/index';
@@ -43,15 +43,13 @@ class BoardScreen extends Component<Props, State> {
                 <Button
                   style={{ paddingHorizontal: 10 }}
                   transparent={true}
-                  onPress={this.navigateTo('addToBoard', { boardId: board.id })}
-                >
+                  onPress={this.navigateTo('addToBoard', { boardId: board.id })}>
                   <MyIcon name="add" size={24} color="#fff" />
                 </Button>
                 <Button
                   style={{ paddingHorizontal: 10 }}
                   transparent={true}
-                  onPress={this.onDeletePress}
-                >
+                  onPress={this.onDeletePress}>
                   <MyIcon name="delete" size={24} color="#fff" />
                 </Button>
               </View>
