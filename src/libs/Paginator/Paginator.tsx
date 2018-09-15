@@ -70,6 +70,7 @@ export class Paginator extends Component<Props> {
           refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}
         >
           <DefaultComponent />
+          {this.renderFooter()}
         </ScrollView>
       );
     }

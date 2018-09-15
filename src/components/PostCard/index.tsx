@@ -18,6 +18,7 @@ interface StateProps {
 }
 interface DispatchProps {
   loadPost: () => void;
+  likePost: () => void;
 }
 type Props = OwnProps & StateProps & DispatchProps;
 
@@ -33,7 +34,11 @@ export class PostCard extends Component<Props> {
           <Header location={post.location} date={post.date} creatorUsername={post.creator} />
         </CardItem>
         <CardItem cardBody={true}>
-          <Image imageUrl={post.image} onPress={this.navigateToPost} />
+          <Image
+            imageUrl={post.image}
+            onPress={this.navigateToPost}
+            onDoubleTap={this.props.likePost}
+          />
         </CardItem>
         <CardItem>
           <Caption
@@ -42,7 +47,11 @@ export class PostCard extends Component<Props> {
           />
         </CardItem>
         <CardItem>
-          <Footer likesCount={post.likes_count} commentsCount={post.comments_count} />
+          <Footer
+            like={this.props.likePost}
+            likesCount={post.likes_count}
+            commentsCount={post.comments_count}
+          />
         </CardItem>
       </Card>
     );
@@ -57,7 +66,10 @@ const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
 };
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
   const postEndpoint = getActionsFor('posts').createEndpoint('/social/posts/');
-  return { loadPost: () => dispatch(postEndpoint.loadItem(ownProps.postId)) };
+  return {
+    loadPost: () => dispatch(postEndpoint.loadItem(ownProps.postId)),
+    likePost: () => dispatch(postEndpoint.updateItem(`${ownProps.postId}/`, { like: true }))
+  };
 };
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,

@@ -1,8 +1,8 @@
 import { createStackNavigator } from 'react-navigation';
 import AddToBoard from './AddToBoard';
 import ProfileScreen from './OthersProfileScreen';
-import PostScreen from './PostScreen';
 import SingleBoardScreen from './SingleBoardScreen';
+import PostScreen from './SinglePostScreen';
 import SingleTagScreen from './SingleTagScreen';
 import TabsScreen from './Tabs';
 

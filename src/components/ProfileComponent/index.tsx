@@ -19,6 +19,8 @@ interface StateProps {
 }
 interface DispatchProps {
   loadProfile: () => any;
+  follow: () => Promise<void>;
+  unfollow: () => Promise<void>;
 }
 type Props = OwnProps & StateProps & DispatchProps;
 
@@ -60,25 +62,49 @@ class ProfileComponent extends Component<Props> {
               {bio}
             </Text>
           </View>
-          {isOwner ? null : (
-            <View style={{ flexDirection: 'row' }}>
-              <Button
-                primary={!is_followed}
-                transparent={is_followed}
-                bordered={is_followed}
-                block={true}
-                style={{ width: '50%', borderRadius: 10 }}
-              >
-                <Text style={{ fontSize: 15 }}>
-                  {is_followed ? I18n.t('followed') : I18n.t('notFollowed')}
-                </Text>
-              </Button>
-            </View>
-          )}
+          {this.renderFollowButton()}
         </View>
       </View>
     );
   }
+
+  private renderFollowButton = () => {
+    const {
+      isOwner,
+      profile: { is_followed, is_private }
+    } = this.props;
+    if (isOwner) return null;
+    let onPress;
+    if (is_followed) {
+      onPress = () => {
+        this.props.unfollow();
+      };
+    } else {
+      onPress = () => {
+        this.props.follow();
+      };
+    }
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <Button
+          primary={!is_followed}
+          transparent={is_followed}
+          bordered={is_followed}
+          block={true}
+          style={{ width: '50%', borderRadius: 10 }}
+          onPress={onPress}
+        >
+          <Text style={{ fontSize: 15 }}>
+            {is_followed
+              ? I18n.t('followed')
+              : is_private
+                ? I18n.t('request')
+                : I18n.t('notFollowed')}
+          </Text>
+        </Button>
+      </View>
+    );
+  };
 }
 
 const styles = StyleSheet.create({
@@ -121,7 +147,9 @@ const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
   const profileEndpoint = profileActions.createEndpoint('/accounts/profile/');
   const username = ownProps.username;
   return {
-    loadProfile: () => dispatch(profileEndpoint.loadItem(`?username=${username}`))
+    loadProfile: () => dispatch(profileEndpoint.loadItem(`?username=${username}`)),
+    follow: () => dispatch(profileEndpoint.updateItem(`${username}/`, { followed: true })),
+    unfollow: () => dispatch(profileEndpoint.updateItem(`${username}/`, { followed: false }))
   };
 };
 export default connect<StateProps, DispatchProps, OwnProps>(

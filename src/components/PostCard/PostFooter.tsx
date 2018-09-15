@@ -3,10 +3,10 @@ import { Button, Left, Right, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default ({ likesCount, commentsCount }) => (
+export default ({ likesCount, commentsCount, like }) => (
   <View style={{ flex: 1, flexDirection: 'row' }}>
     <Left>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button} onPress={like}>
         <MyIcon name="like" size={25} />
         <Text style={{ fontSize: 12 }}>{likesCount}</Text>
       </TouchableOpacity>

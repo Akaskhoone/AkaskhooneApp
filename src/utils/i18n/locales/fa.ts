@@ -86,5 +86,7 @@ export default {
   yes: 'بلی',
   delete: 'حذف',
   no: 'خیر',
-  boardDeletedSuccessfully: 'برد با موفقیت حذف شد'
+  boardDeletedSuccessfully: 'برد با موفقیت حذف شد',
+  commentText: 'متن کامنت',
+  request: 'درخواست'
 };

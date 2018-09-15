@@ -86,5 +86,7 @@ export default {
   yes: 'yes',
   delete: 'delete',
   no: 'no',
-  boardDeletedSuccessfully: 'Board Deleted Successfully'
+  boardDeletedSuccessfully: 'Board Deleted Successfully',
+  commentText: 'Comment Text',
+  request: 'Request'
 };
