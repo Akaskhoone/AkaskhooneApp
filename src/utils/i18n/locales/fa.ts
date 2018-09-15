@@ -78,5 +78,7 @@ export default {
   location: 'موقعیت',
   tag: 'اضافه کردن تگ',
   sendPost: 'ارسال پست',
-  noPosts: 'پستی موجود نیست'
+  noPosts: 'پستی موجود نیست',
+  users: 'کاربران',
+  hashtag: 'هشتگ'
 };

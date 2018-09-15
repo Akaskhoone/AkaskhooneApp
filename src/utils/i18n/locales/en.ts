@@ -78,5 +78,7 @@ export default {
   location: 'location',
   tag: 'add tag',
   sendPost: 'sent post',
-  noPosts: 'No posts available!'
+  noPosts: 'No posts available!',
+  users: 'users',
+  hashtag: 'hashtag'
 };
