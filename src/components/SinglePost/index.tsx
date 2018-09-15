@@ -25,7 +25,7 @@ class SinglePost extends Component<Props> {
         defaultComponent={this.renderDefaultComponent}
         name={`post${postId}_comments`}
         type="comments"
-        url={`/social/posts/${postId}/comments`}
+        url={`/social/posts/${postId}/comments/`}
         ListHeaderComponent={this.renderHeader}
         renderItem={this.renderItem}
         ListFooterComponent={this.renderFooter}

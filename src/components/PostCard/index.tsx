@@ -21,6 +21,7 @@ interface StateProps {
 interface DispatchProps {
   loadPost: () => void;
   likePost: () => void;
+  dislikePost: () => void;
 }
 interface State {
   bookmarkModalVisible: boolean;
@@ -86,8 +87,11 @@ const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
   const postEndpoint = getActionsFor('posts').createEndpoint('/social/posts/');
   return {
-    loadPost: () => dispatch(postEndpoint.loadItem(ownProps.postId)),
-    likePost: () => dispatch(postEndpoint.updateItem(`${ownProps.postId}/`, { like: true }))
+    loadPost: () => dispatch(postEndpoint.loadItem(`${ownProps.postId}/`)),
+    likePost: () =>
+      dispatch(postEndpoint.updateItem(`${ownProps.postId}/likes/`, { method: 'like' })),
+    dislikePost: () =>
+      dispatch(postEndpoint.updateItem(`${ownProps.postId}/likes/`, { method: 'dislike' }))
   };
 };
 export default connect<StateProps, DispatchProps, OwnProps, State>(

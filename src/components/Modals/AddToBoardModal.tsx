@@ -18,14 +18,16 @@ interface StateProps {
 }
 interface DispatchProps {}
 type Props = OwnProps & StateProps & DispatchProps;
-const AddToBoardModal = ({ visible, postId, onRequestClose, getBookmark }: Props) => {
+const AddToBoardModal = ({ visible, onRequestClose, getBookmark }: Props) => {
   const renderDefaultComponent = () => <View />;
   const renderItem = ({ item: bookmarkId }) => {
     const bookmark = getBookmark(bookmarkId);
     return (
-      <View style={{ width: '100%', borderBottomWidth: 1 }}>
-        <Text>{bookmark.name}</Text>
-      </View>
+      <TouchableNativeFeedback>
+        <View style={styles.itemContainer}>
+          <Text>{bookmark.name}</Text>
+        </View>
+      </TouchableNativeFeedback>
     );
   };
   return (
@@ -36,33 +38,27 @@ const AddToBoardModal = ({ visible, postId, onRequestClose, getBookmark }: Props
       onRequestClose={onRequestClose}>
       <View style={styles.modalBg}>
         <View style={styles.container}>
-          <View style={styles.desContainer}>
+          <View style={styles.itemContainer}>
             <Text style={{ fontSize: 10 }}>{I18n.t('addToBoard')}</Text>
             <Text note={true}>{I18n.t('chooseOneBoard')}</Text>
           </View>
           <TouchableNativeFeedback>
-            <View style={[styles.buttonContainer, { flexDirection: 'row' }]}>
-              <Text>{I18n.t('createNewBoard')}</Text>
+            <View
+              style={[
+                { flexDirection: 'row', backgroundColor: '#ccc', justifyContent: 'flex-end' }
+              ]}>
+              <Text style={{}}>{I18n.t('createNewBoard')}</Text>
               <MyIcon name="add" />
             </View>
           </TouchableNativeFeedback>
           <Paginator
             name="addToBoardMenu"
-            url="/social/board/"
-            type="bookmarks"
-            defaultComponent={this.renderDefaultComponent}
-            renderItem={this.renderItem}
+            url="/social/boards/"
+            type="boards"
+            defaultComponent={renderDefaultComponent}
+            renderItem={renderItem}
+            style={{ flexGrow: 1 }}
           />
-          <TouchableNativeFeedback>
-            <View style={[styles.buttonContainer]}>
-              <Text>{I18n.t('no')}</Text>
-            </View>
-          </TouchableNativeFeedback>
-          <TouchableNativeFeedback>
-            <View style={styles.buttonContainer}>
-              <Text>{I18n.t('delete')}</Text>
-            </View>
-          </TouchableNativeFeedback>
         </View>
       </View>
     </Modal>
@@ -78,31 +74,26 @@ const styles = StyleSheet.create({
   },
   container: {
     width: '100%',
-    height: 110,
+    height: '80%',
     borderRadius: 5,
     backgroundColor: '#fff'
   },
-  desContainer: {
-    flex: 1,
+  itemContainer: {
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  desText: {},
-  buttonsContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonContainer: {
-    flex: 1,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
+    paddingVertical: 15,
+    paddingHorizontal: 8,
     borderTopWidth: 1,
     borderColor: '#EFEFEF'
   },
-  buttonText: {}
+  buttonText: {},
+  title: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderTopWidth: 1,
+    borderColor: '#EFEFEF'
+  }
 });
 
 const mapStateToProps = (state, ownProps: OwnProps): StateProps => ({

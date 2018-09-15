@@ -92,8 +92,7 @@ class ProfileComponent extends Component<Props> {
           bordered={is_followed}
           block={true}
           style={{ width: '50%', borderRadius: 10 }}
-          onPress={onPress}
-        >
+          onPress={onPress}>
           <Text style={{ fontSize: 15 }}>
             {is_followed
               ? I18n.t('followed')
@@ -145,11 +144,12 @@ const mapStateToProps = (state, ownProps: OwnProps): StateProps => ({
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
   const profileActions = getActionsFor('profiles');
   const profileEndpoint = profileActions.createEndpoint('/accounts/profile/');
+  const followingsEndpoint = profileActions.createEndpoint('/accounts/profile/followings/');
   const username = ownProps.username;
   return {
     loadProfile: () => dispatch(profileEndpoint.loadItem(`?username=${username}`)),
-    follow: () => dispatch(profileEndpoint.updateItem(`${username}/`, { followed: true })),
-    unfollow: () => dispatch(profileEndpoint.updateItem(`${username}/`, { followed: false }))
+    follow: () => dispatch(followingsEndpoint.createItem({ follow: username })),
+    unfollow: () => dispatch(followingsEndpoint.createItem({ unfollow: username }))
   };
 };
 export default connect<StateProps, DispatchProps, OwnProps>(

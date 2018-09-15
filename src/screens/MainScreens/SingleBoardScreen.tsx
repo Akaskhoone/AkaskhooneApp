@@ -124,11 +124,11 @@ const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
   };
 };
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
-  const actions = getActionsFor('boards');
-  const endPoint = actions.createEndpoint(`/social/boards/`);
+  const boardActions = getActionsFor('boards');
+  const boardEndpoints = boardActions.createEndpoint(`/social/boards/`);
 
   return {
-    deleteBoard: id => dispatch(endPoint.deleteItem(`${id}/`))
+    deleteBoard: id => dispatch(boardEndpoints.deleteItem(`${id}/`))
   };
 };
 export default connect(

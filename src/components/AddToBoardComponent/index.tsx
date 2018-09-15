@@ -50,8 +50,7 @@ export class AddToBoard extends Component<Props, State> {
           large={true}
           disabled={buttonShouldDisable}
           style={{ marginHorizontal: 10, position: 'absolute', left: 0, right: 0, bottom: 10 }}
-          onPress={this.submit}
-        >
+          onPress={this.submit}>
           <Text>{I18n.t('addToBoard')}</Text>
         </Button>
       </View>
