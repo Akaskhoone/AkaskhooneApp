@@ -81,5 +81,10 @@ export default {
   noPosts: 'No posts available!',
   yourSharedImages: 'Your shared images',
   addToBoard: 'Add to board',
-  imageAddedSuccessfully: 'Image Added Successfully'
+  imageAddedSuccessfully: 'Image Added Successfully',
+  deleteBoard: 'Do you really want to delete board?',
+  yes: 'yes',
+  delete: 'delete',
+  no: 'no',
+  boardDeletedSuccessfully: 'Board Deleted Successfully'
 };

@@ -81,5 +81,10 @@ export default {
   noPosts: 'پستی موجود نیست',
   yourSharedImages: 'عکس های اشتراکی شما',
   addToBoard: 'اضافه کردن',
-  imageAddedSuccessfully: 'عکس با موفقیت اضافه شد'
+  imageAddedSuccessfully: 'عکس با موفقیت اضافه شد',
+  deleteBoard: 'از حذف این بورد مطمئن هستید؟',
+  yes: 'بلی',
+  delete: 'حذف',
+  no: 'خیر',
+  boardDeletedSuccessfully: 'برد با موفقیت حذف شد'
 };

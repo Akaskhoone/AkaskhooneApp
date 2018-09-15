@@ -106,7 +106,7 @@ export class AddToBoard extends Component<Props, State> {
 
 const mapStateToProps = (state): StateProps => {
   return {
-    username: selectors.getOwner(state),
+    username: selectors.getOwner(state).username,
     getPost: postId => selectors.posts.getData(state, postId)
   };
 };
