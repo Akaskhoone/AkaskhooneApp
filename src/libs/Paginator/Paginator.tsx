@@ -14,6 +14,8 @@ interface OwnProps extends Omit<FlatListProperties<string>, 'data'> {
   type: string;
   name: string;
   url: string;
+  dataIsReady?: boolean;
+  onDataLoad?: () => void;
 }
 interface StateProps {
   data: [string];
@@ -29,8 +31,18 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 export class Paginator extends Component<Props> {
+  public static defaultProps: Partial<Props> = {
+    dataIsReady: true,
+    onDataLoad: () => {
+      // Doing nothing
+    }
+  };
+
   public componentDidMount() {
-    this.props.load();
+    if (this.props.dataIsReady) this.props.load();
+  }
+  public componentWillReceiveProps(nextProps) {
+    if (nextProps.dataIsReady && !this.props.dataIsReady) this.load();
   }
   public render() {
     Reactotron.log('Paginator Props', this.props);
@@ -56,7 +68,7 @@ export class Paginator extends Component<Props> {
           {...otherProps}
           data={data}
           renderItem={this.props.renderItem}
-          refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={this.load} />}
           onEndReached={this.loadMore}
           onEndReachedThreshold={0.6}
           ListFooterComponent={this.renderFooter}
@@ -67,7 +79,7 @@ export class Paginator extends Component<Props> {
       return (
         <ScrollView
           contentContainerStyle={{ flexGrow: 1 }}
-          refreshControl={<RefreshControl refreshing={loading} onRefresh={load} />}>
+          refreshControl={<RefreshControl refreshing={loading} onRefresh={this.load} />}>
           <DefaultComponent />
         </ScrollView>
       );
@@ -83,6 +95,10 @@ export class Paginator extends Component<Props> {
 
   private renderFooter = () => {
     return this.props.loadingMore ? <Spinner /> : null;
+  };
+  private load = () => {
+    this.props.onDataLoad();
+    this.props.load();
   };
   private loadMore = () => {
     if (this.props.hasNext && !this.props.loadingMore) {

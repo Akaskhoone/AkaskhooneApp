@@ -28,6 +28,7 @@ export default class FirstSearchScreen extends Component<Props> {
             url="/social/tags/"
             renderItem={this.renderItem}
             numColumns={2}
+            dataIsReady={false}
           />
         </View>
       </Container>

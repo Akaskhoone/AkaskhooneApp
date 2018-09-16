@@ -1,8 +1,7 @@
 import ProfileListItem from '@components/ProfileListItem';
+import { debounce } from '@utils/decorators';
 import { Container, Header, Input, Item, Tab, Tabs, View } from 'native-base';
 import React, { Component } from 'react';
-import connect from 'react-redux';
-import { getActionsFor } from 'src/libs/Paginator';
 import Paginator from 'src/libs/Paginator/Paginator';
 import I18n from 'src/utils/i18n';
 
@@ -10,32 +9,34 @@ interface Props {
   [propName: string]: any;
 }
 interface State {
-  searchQuary: string;
+  shouldSearch: boolean;
   value: string;
 }
 export default class SecondeSearchScreen extends Component<Props, State> {
   public state = {
     value: '',
-    searchQuary: ''
+    shouldSearch: false
   };
   public render() {
     return (
       <Container>
-        <Header searchBar={true} rounded={true}>
+        <Header searchBar={true} rounded={true} hasTabs={true}>
           <Item>
             <Input autoFocus={true} value={this.state.value} onChangeText={this.onChange} />
           </Item>
         </Header>
-        <View style={{ flex: 1, marginTop: 5, backgroundColor: '#000' }}>
+        <View style={{ flex: 1 }}>
           <Tabs locked={true}>
             <Tab heading={I18n.t('users')}>
               <Paginator
-                name={`searchedUsers${this.state.searchQuary}`}
+                name={`${this.state.value}searchedUsers`}
                 url={`/accounts/profile/?search=${this.state.value}`}
                 type="profiles"
-                defaultComponent={this.defaultComp}
+                defaultComponent={this.defaultComponent}
                 renderItem={this.renderProfile}
                 extraData={this.state}
+                dataIsReady={this.state.shouldSearch}
+                onDataLoad={this.onLoad}
               />
             </Tab>
             <Tab heading={I18n.t('hashtag')}>
@@ -53,13 +54,16 @@ export default class SecondeSearchScreen extends Component<Props, State> {
     );
   }
   private onChange = text => {
-    this.setState({ value: text }, () => this.forceUpdate());
-    this.changeSearchQuary(text);
+    this.setState({ value: text });
+    this.shouldSearch();
   };
-  private changeSearchQuary = text => this.setState({ searchQuary: text });
+
+  @debounce(500)
+  private shouldSearch = () => this.setState({ shouldSearch: true });
+  private onLoad = () => this.setState({ shouldSearch: false });
 
   private renderProfile = ({ item: username }) => <ProfileListItem username={username} />;
-  private defaultComp = () => {
+  private defaultComponent = () => {
     return <View />;
   };
 }
