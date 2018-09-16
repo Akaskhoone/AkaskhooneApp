@@ -1,4 +1,3 @@
-import { loadOwnProfile } from '@actions/profileActions';
 import ProfileComponent from '@components/ProfileComponent';
 import ProfileTabs from '@components/ProfileTabs';
 import MyIcon from '@elements/Icon';
@@ -51,11 +50,5 @@ class ProfileScreen extends Component<Props> {
 const mapStateToProp = (state): StateProps => ({
   username: selectors.getOwner(state).username
 });
-const mapDispatchToProps = (dispatch): DispatchProps => ({
-  loadOwnProfile: () => dispatch(loadOwnProfile())
-});
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProp,
-  mapDispatchToProps
-)(ProfileScreen);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProp)(ProfileScreen);

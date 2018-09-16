@@ -14,11 +14,13 @@ export default class FirstSearchScreen extends Component<Props> {
     return (
       <Container>
         <Header searchBar={true} rounded={true}>
-          <Item>
+          <Item style={{ flex: 1 }}>
             <TouchableWithoutFeedback onPress={this.navigateTo('secondSearch')}>
-              <Text style={{ color: 'gray', direction: 'rtl', textAlign: 'right' }}>
-                جستجوی عکس یا کاربر{' '}
-              </Text>
+              <View style={{ alignItems: 'flex-start', flex: 1 }}>
+                <Text style={{ color: 'gray', direction: 'rtl', textAlign: 'right' }}>
+                  جستجوی عکس یا کاربر{' '}
+                </Text>
+              </View>
             </TouchableWithoutFeedback>
           </Item>
         </Header>

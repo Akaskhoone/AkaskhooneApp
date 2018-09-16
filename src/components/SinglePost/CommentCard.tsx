@@ -21,11 +21,8 @@ const CommentCard = ({ comment, creator }: Props) => (
     <View style={styles.infoContainer}>
       <View style={styles.headerInfoContainer}>
         <Text style={styles.userText}>{creator.username}</Text>
-        <Text note={true} style={{ textAlignVertical: 'center' }}>
-          {humanify(comment.date)}
-        </Text>
         <View style={{ flex: 1 }} />
-        <Text style={{ fontSize: 9 }}>{I18n.t('answer')}</Text>
+        <Text style={{ fontSize: 9, textAlignVertical: 'center' }}>{humanify(comment.date)}</Text>
       </View>
       <View style={styles.desContainer}>
         <Text style={{ textAlign: 'right' }}>{comment.text}</Text>

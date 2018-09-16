@@ -7,6 +7,7 @@ export interface ProfileDTO {
   followers: number;
   is_followed: boolean;
   is_private: boolean;
+  is_requested: boolean;
   posts_count: number;
   boards_count: number;
 }

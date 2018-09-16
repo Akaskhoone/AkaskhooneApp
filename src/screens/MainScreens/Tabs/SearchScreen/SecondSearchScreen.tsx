@@ -1,8 +1,10 @@
+import HashtagListItem from '@components/HashtagListItem';
 import ProfileListItem from '@components/ProfileListItem';
 import { Container, Header, Input, Item, Tab, Tabs, View } from 'native-base';
 import React, { Component } from 'react';
 import Paginator from 'src/libs/Paginator/Paginator';
 import I18n from 'src/utils/i18n';
+import { debounce } from 'typescript-debounce-decorator';
 
 interface Props {
   [propName: string]: any;
@@ -39,13 +41,13 @@ export default class SecondSearchScreen extends Component<Props, State> {
               />
             </Tab>
             <Tab heading={I18n.t('hashtag')}>
-              {/* <Paginator
+              <Paginator
                 name="searchHashtag"
                 url={`/social/tags/?search=${this.state.value}`}
-                type='tags'
-                defaultComponent={this.defaultComp}
-                {renderItem}
-              /> */}
+                type="tags"
+                defaultComponent={this.defaultComponent}
+                renderItem={this.renderHashtag}
+              />
             </Tab>
           </Tabs>
         </View>
@@ -53,15 +55,18 @@ export default class SecondSearchScreen extends Component<Props, State> {
     );
   }
   private onChange = text => {
-    this.setState({ value: text });
-    this.shouldSearch();
+    this.setState({ value: text }, () => this.shouldSearch());
   };
 
-  private shouldSearch = () => this.setState({ shouldSearch: true });
+  @debounce(500, { leading: false })
+  private shouldSearch = () => {
+    if (this.state.value) this.setState({ shouldSearch: true });
+  };
   private onLoad = () => this.setState({ shouldSearch: false });
 
   private renderProfile = ({ item: username }) => <ProfileListItem username={username} />;
   private defaultComponent = () => {
     return <View />;
   };
+  private renderHashtag = ({ item: tagName }) => <HashtagListItem tagName={tagName} />;
 }
