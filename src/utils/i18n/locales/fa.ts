@@ -88,5 +88,7 @@ export default {
   no: 'خیر',
   boardDeletedSuccessfully: 'برد با موفقیت حذف شد',
   commentText: 'متن کامنت',
-  request: 'درخواست'
+  request: 'درخواست',
+  users: 'کاربران',
+  hashtag: 'هشتگ'
 };

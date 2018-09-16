@@ -28,6 +28,7 @@ export default class FirstSearchScreen extends Component<Props> {
             url="/social/tags/"
             renderItem={this.renderItem}
             numColumns={2}
+            dataIsReady={false}
           />
         </View>
       </Container>
@@ -61,3 +62,24 @@ export default class FirstSearchScreen extends Component<Props> {
     );
   };
 }
+
+const getRandom = max => Math.ceil(Math.random() * max);
+const layout = num => {
+  const array = [];
+  let temp = 0;
+  let input = num;
+  while (input >= 1) {
+    if (input === 1) {
+      temp = 1;
+    } else if (input === 2) {
+      temp = getRandom(2);
+    } else if (input === 3) {
+      temp = getRandom(3);
+    } else {
+      temp = getRandom(4);
+    }
+    input = input - temp;
+    array.push(temp);
+  }
+  return array;
+};

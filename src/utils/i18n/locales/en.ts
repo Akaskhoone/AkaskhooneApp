@@ -88,5 +88,7 @@ export default {
   no: 'no',
   boardDeletedSuccessfully: 'Board Deleted Successfully',
   commentText: 'Comment Text',
-  request: 'Request'
+  request: 'Request',
+  users: 'users',
+  hashtag: 'hashtag'
 };
