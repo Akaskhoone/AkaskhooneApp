@@ -89,7 +89,9 @@ const mapStateToProps = (state, ownProps: OwnProps): StateProps => {
 const mapDispatchToProps = (dispatch, ownProps: OwnProps): DispatchProps => {
   const postEndpoint = getActionsFor('posts').createEndpoint('/social/posts/');
   return {
-    loadPost: () => dispatch(postEndpoint.loadItem(`${ownProps.postId}/`)),
+    loadPost: () => {
+      dispatch(postEndpoint.loadItem(`${ownProps.postId}/`));
+    },
     likePost: () =>
       dispatch(postEndpoint.updateItem(`${ownProps.postId}/likes/`, { method: 'like' })),
     dislikePost: () =>

@@ -5,8 +5,8 @@ import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default ({ likesCount, commentsCount, isLiked, like, dislike, bookmark }) => {
   const handlelike = () => {
-    if (this.props.isLiked) like();
-    else dislike();
+    if (this.props.isLiked) dislike();
+    else like();
   };
   return (
     <View style={{ flex: 1, flexDirection: 'row' }}>
