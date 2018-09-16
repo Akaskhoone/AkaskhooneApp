@@ -8,6 +8,7 @@ import { StyleSheet, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
+import FollowButton from 'src/components/ProfileComponent/FollowButton';
 
 interface OwnProps {
   username: string;
@@ -62,48 +63,11 @@ class ProfileComponent extends Component<Props> {
               {bio}
             </Text>
           </View>
-          {this.renderFollowButton()}
+          <FollowButton isFollowed={is_followed} isPrivate={is_private} isOwner={isOwner} />
         </View>
       </View>
     );
   }
-
-  private renderFollowButton = () => {
-    const {
-      isOwner,
-      profile: { is_followed, is_private }
-    } = this.props;
-    if (isOwner) return null;
-    let onPress;
-    if (is_followed) {
-      onPress = () => {
-        this.props.unfollow();
-      };
-    } else {
-      onPress = () => {
-        this.props.follow();
-      };
-    }
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <Button
-          primary={!is_followed}
-          transparent={is_followed}
-          bordered={is_followed}
-          block={true}
-          style={{ width: '50%', borderRadius: 10 }}
-          onPress={onPress}>
-          <Text style={{ fontSize: 15 }}>
-            {is_followed
-              ? I18n.t('followed')
-              : is_private
-                ? I18n.t('request')
-                : I18n.t('notFollowed')}
-          </Text>
-        </Button>
-      </View>
-    );
-  };
 }
 
 const styles = StyleSheet.create({
