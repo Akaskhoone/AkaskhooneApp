@@ -1,5 +1,4 @@
 import ProfileListItem from '@components/ProfileListItem';
-import { debounce } from '@utils/decorators';
 import { Container, Header, Input, Item, Tab, Tabs, View } from 'native-base';
 import React, { Component } from 'react';
 import Paginator from 'src/libs/Paginator/Paginator';
@@ -12,7 +11,7 @@ interface State {
   shouldSearch: boolean;
   value: string;
 }
-export default class SecondeSearchScreen extends Component<Props, State> {
+export default class SecondSearchScreen extends Component<Props, State> {
   public state = {
     value: '',
     shouldSearch: false
@@ -58,7 +57,6 @@ export default class SecondeSearchScreen extends Component<Props, State> {
     this.shouldSearch();
   };
 
-  @debounce(500)
   private shouldSearch = () => this.setState({ shouldSearch: true });
   private onLoad = () => this.setState({ shouldSearch: false });
 
