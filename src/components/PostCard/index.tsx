@@ -64,6 +64,7 @@ export class PostCard extends Component<Props, State> {
               likesCount={post.likes_count}
               commentsCount={post.comments_count}
               isLiked={post.is_liked}
+              navigateToPost={this.navigateToPost}
             />
           </CardItem>
         </Card>

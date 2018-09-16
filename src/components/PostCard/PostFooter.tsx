@@ -3,9 +3,17 @@ import { Button, Icon, Left, Right, Text } from 'native-base';
 import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
-export default ({ likesCount, commentsCount, isLiked, like, dislike, bookmark }) => {
+export default ({
+  likesCount,
+  commentsCount,
+  isLiked,
+  like,
+  dislike,
+  bookmark,
+  navigateToPost
+}) => {
   const handlelike = () => {
-    if (this.props.isLiked) dislike();
+    if (isLiked) dislike();
     else like();
   };
   return (
@@ -19,7 +27,7 @@ export default ({ likesCount, commentsCount, isLiked, like, dislike, bookmark })
           )}
           <Text style={{ fontSize: 12 }}>{likesCount}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={navigateToPost}>
           <MyIcon name="comment" size={25} />
           <Text style={{ fontSize: 12 }}>{commentsCount}</Text>
         </TouchableOpacity>

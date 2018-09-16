@@ -4,7 +4,7 @@ export const changeInfoSubmitted = (name: string, bio: string, image) => dispatc
   const formData: any = new FormData();
   formData.append('name', name);
   formData.append('bio', bio || '');
-  if (image && image.new) {
+  if (image) {
     formData.append('image', { uri: image.uri, name: 'image.jpg', type: 'multipart/form-data' });
   }
   const profileEndpoint = getActionsFor('profiles').createEndpoint('/accounts/profile/');
