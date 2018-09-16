@@ -39,7 +39,7 @@ export class AddToBoard extends Component<Props, State> {
           defaultComponent={this.defaultComponent}
           name={`${username}_posts`}
           type="posts"
-          url={`/social/posts/?username=${username}`}
+          url={`/social/posts/?username=${username}&limit=10`}
           renderItem={this.renderItem}
           numColumns={2}
           extraData={this.state}

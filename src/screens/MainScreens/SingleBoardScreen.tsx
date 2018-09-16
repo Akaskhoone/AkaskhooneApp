@@ -75,7 +75,7 @@ class BoardScreen extends Component<Props, State> {
             defaultComponent={this.defaultComponent}
             name={`${board.id}_board_posts`}
             type="posts"
-            url={`/social/boards/${board.id}/`}
+            url={`/social/boards/${board.id}/?limit=10`}
             renderItem={this.renderItem}
             numColumns={2}
           />

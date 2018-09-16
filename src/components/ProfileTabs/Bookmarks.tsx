@@ -14,7 +14,7 @@ export default class Bookmarks extends Component<Props> {
       <Paginator
         name={`${username}_boards`}
         type="boards"
-        url={`/social/boards/?username=${username}&limit=2`}
+        url={`/social/boards/?username=${username}&limit=10`}
         defaultComponent={this.renderDefault}
         renderItem={this.renderItem}
       />

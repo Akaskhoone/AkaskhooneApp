@@ -38,12 +38,12 @@ class TagScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center', flex: 1 }}>
           <Paginator
             defaultComponent={this.defaultComponent}
             name={`#${name}_posts`}
             type="posts"
-            url={`/social/posts/?tag=${name}`}
+            url={`/social/posts/?tag=${name}&limit=10`}
             renderItem={this.renderItem}
             numColumns={2}
           />

@@ -16,7 +16,9 @@ export default class FirstSearchScreen extends Component<Props> {
         <Header searchBar={true} rounded={true}>
           <Item>
             <TouchableWithoutFeedback onPress={this.navigateTo('secondSearch')}>
-              <Text style={{ color: 'gray' }}>جستجوی عکس یا کاربر </Text>
+              <Text style={{ color: 'gray', direction: 'rtl', textAlign: 'right' }}>
+                جستجوی عکس یا کاربر{' '}
+              </Text>
             </TouchableWithoutFeedback>
           </Item>
         </Header>
@@ -25,10 +27,9 @@ export default class FirstSearchScreen extends Component<Props> {
             defaultComponent={this.defaultComponent}
             name="trendTags"
             type="tags"
-            url="/social/tags/"
+            url="/social/tags/?limit=10"
             renderItem={this.renderItem}
             numColumns={2}
-            dataIsReady={false}
           />
         </View>
       </Container>

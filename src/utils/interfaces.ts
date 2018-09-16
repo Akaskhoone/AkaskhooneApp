@@ -21,6 +21,7 @@ export interface PostDTO {
   date: string;
   likes_count: number;
   comments_count: number;
+  is_liked: boolean;
 }
 
 export interface CommentDTO {

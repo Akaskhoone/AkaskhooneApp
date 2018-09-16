@@ -25,7 +25,7 @@ class Posts extends Component<Props> {
         <Paginator
           type="posts"
           name={`${username}_posts`}
-          url={`/social/posts/?username=${username}`}
+          url={`/social/posts/?username=${username}&limit=10`}
           renderItem={this.renderItem}
           defaultComponent={this.renderDefaultComponent}
           numColumns={2}
@@ -42,8 +42,7 @@ class Posts extends Component<Props> {
           color: 'gray',
           textAlign: 'center',
           marginHorizontal: scale(15)
-        }}
-      >
+        }}>
         {I18n.t('noPosts')}
       </Text>
     </View>

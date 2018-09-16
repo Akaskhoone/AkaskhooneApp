@@ -53,7 +53,7 @@ const AddToBoardModal = ({ visible, onRequestClose, getBookmark }: Props) => {
           </TouchableNativeFeedback>
           <Paginator
             name="addToBoardMenu"
-            url="/social/boards/"
+            url="/social/boards/?limit=10"
             type="boards"
             defaultComponent={renderDefaultComponent}
             renderItem={renderItem}

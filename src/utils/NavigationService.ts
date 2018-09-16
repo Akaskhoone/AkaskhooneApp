@@ -45,7 +45,7 @@ function goBack() {
 
 function navigateToProfile(username) {
   const state = store.getState();
-  const ownerUsername = selectors.getOwner(state);
+  const ownerUsername = selectors.getOwner(state).username;
   if (!username) return;
   if (selectors.isOwner(state, username)) {
     navigateToOwnerProfile(ownerUsername);

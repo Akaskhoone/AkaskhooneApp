@@ -59,9 +59,11 @@ export class PostCard extends Component<Props, State> {
           <CardItem>
             <Footer
               like={this.props.likePost}
+              dislike={this.props.dislikePost}
               bookmark={this.onBookmarkPress}
               likesCount={post.likes_count}
               commentsCount={post.comments_count}
+              isLiked={post.is_liked}
             />
           </CardItem>
         </Card>

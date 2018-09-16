@@ -33,7 +33,7 @@ class HomeScreen extends Component<Props> {
           defaultComponent={DefaultHomeComponent}
           name="feed"
           type="posts"
-          url="/social/home/"
+          url="/social/home/?limit=10"
           renderItem={this.renderItem}
         />
       </Container>

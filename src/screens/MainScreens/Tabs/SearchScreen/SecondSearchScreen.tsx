@@ -29,7 +29,7 @@ export default class SecondSearchScreen extends Component<Props, State> {
             <Tab heading={I18n.t('users')}>
               <Paginator
                 name={`${this.state.value}searchedUsers`}
-                url={`/accounts/profile/?search=${this.state.value}`}
+                url={`/accounts/profile/?search=${this.state.value}&limit=10`}
                 type="profiles"
                 defaultComponent={this.defaultComponent}
                 renderItem={this.renderProfile}
