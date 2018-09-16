@@ -30,7 +30,7 @@ export default class SecondSearchScreen extends Component<Props, State> {
           <Tabs locked={true}>
             <Tab heading={I18n.t('users')}>
               <Paginator
-                name={`${this.state.value}searchedUsers`}
+                name={`${this.state.value}_searchedUsers`}
                 url={`/accounts/profile/?search=${this.state.value}&limit=10`}
                 type="profiles"
                 defaultComponent={this.defaultComponent}
@@ -42,11 +42,14 @@ export default class SecondSearchScreen extends Component<Props, State> {
             </Tab>
             <Tab heading={I18n.t('hashtag')}>
               <Paginator
-                name="searchHashtag"
+                name={`${this.state.value}_searchHashtag`}
                 url={`/social/tags/?search=${this.state.value}&limit=10`}
                 type="tags"
                 defaultComponent={this.defaultComponent}
                 renderItem={this.renderHashtag}
+                extraData={this.state}
+                dataIsReady={this.state.shouldSearch}
+                onDataLoad={this.onLoad}
               />
             </Tab>
           </Tabs>
