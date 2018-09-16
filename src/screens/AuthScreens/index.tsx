@@ -2,6 +2,7 @@ import { createStackNavigator, createSwitchNavigator } from 'react-navigation';
 import CompleteInfoScreen from './CompleteInfoScreen';
 import LoginScreen from './LoginScreen';
 import SignupScreen from './SignupScreen';
+import ForgetPasswordScreen from './ForgetPasswordScreen';
 
 const SignupStackNavigator = createStackNavigator(
   {
@@ -17,5 +18,6 @@ const SignupStackNavigator = createStackNavigator(
 
 export default createSwitchNavigator({
   login: LoginScreen,
-  signup: SignupStackNavigator
+  signup: SignupStackNavigator,
+  forgetPassword: ForgetPasswordScreen
 });

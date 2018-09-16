@@ -95,5 +95,9 @@ export default {
   dislikeNotification: '{{username}} از پست شما بدش آمد',
   followNotification: '{{username}} شما را دنبال کرد',
   unfollowNotification: '{{username}} شما را از دنبال کنندگی درآود',
-  joinNotification: '{{username}} عکاسخونه ای شد'
+  joinNotification: '{{username}} عکاسخونه ای شد',
+  statusForNotFollowedUser: 'دنبال کن',
+  statusForFollowedUser: 'دنبال شده',
+  submit: 'ثبت',
+  return: 'بازگشت'
 };
