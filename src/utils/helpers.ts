@@ -1,7 +1,7 @@
 import { normalize } from 'normalizr';
 import Reactotron from 'reactotron-react-native';
 import I18n from 'src/utils/i18n';
-import { board, comment, post, profile, tag } from 'src/utils/schemas';
+import { board, comment, notification, post, profile, tag } from 'src/utils/schemas';
 
 const is400Or401 = res => {
   return (
@@ -72,6 +72,9 @@ export function applyNormalizeOnAction(action) {
       break;
     case 'comments':
       normalizrSchema = comment;
+      break;
+    case 'notifications':
+      normalizrSchema = notification;
       break;
     default:
       Reactotron.log('Data type is not supported');

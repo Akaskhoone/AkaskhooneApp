@@ -42,6 +42,24 @@ export interface TagDTO {
   name: string;
 }
 
+export enum NotificationTypes {
+  'like' = 'like',
+  'dislike' = 'dislike',
+  'follow' = 'follow',
+  'unfollow' = 'unfollow',
+  'join' = 'join'
+}
+export type NotificationDTO = { id: string; date: string } & (
+  | {
+      type: NotificationTypes.like | NotificationTypes.dislike;
+      creator: string; // ProfileDTO
+      post: string; // PostDTO
+    }
+  | {
+      type: NotificationTypes.follow | NotificationTypes.unfollow | NotificationTypes.join;
+      creator: string; // ProfileDTO
+    });
+
 export interface PaginationableDTO<T> {
   data: [T];
   next: string;

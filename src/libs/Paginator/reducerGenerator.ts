@@ -16,6 +16,7 @@ const overwriteMerge = (destinationArray, sourceArray, options) => sourceArray;
 */
 export default (name, actionExtractor = a => a) => {
   const initialState = {
+    meta: {},
     data: {},
     paginations: {}
   };
@@ -103,9 +104,26 @@ export default (name, actionExtractor = a => a) => {
     }
   };
 
+  const metaReducer = (state, action) => {
+    if (action.dataType === name) {
+      switch (action.type) {
+        case types.SET_META:
+          return {
+            ...state,
+            meta: {
+              ...state.meta,
+              ...action.payload.meta
+            }
+          };
+      }
+    }
+    return state;
+  };
+
   return (state = initialState, action) => {
     if (action.dataType) {
       return {
+        meta: metaReducer(state.meta, actionExtractor(action)),
         paginations: paginationsReducer(state.paginations, actionExtractor(action)),
         data: dataReducer(state.data, actionExtractor(action))
       };
@@ -134,7 +152,8 @@ export const selectors = {
       !!state.paginations[paginationName] && !!(state.paginations[paginationName].data.length > 0)
   }),
   getData: (state, dataId) => state.data[dataId] || {},
-  dataLoaded: (state, dataId) => !!state.data[dataId]
+  dataLoaded: (state, dataId) => !!state.data[dataId],
+  getMeta: (state, metaName) => state.meta[metaName]
 };
 
 export type Selector<T> = typeof selectors & {

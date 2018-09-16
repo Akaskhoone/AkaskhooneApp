@@ -81,3 +81,7 @@ const commentInitialState: CommentDTO = {
   text: ''
 };
 export const comment = new schema.Entity('comments', { creator: profile }, { idAttribute: 'id' });
+export const notification = new schema.Entity('notifications', {
+  post,
+  creator: profile
+});

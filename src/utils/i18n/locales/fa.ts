@@ -90,5 +90,10 @@ export default {
   commentText: 'متن کامنت',
   request: 'درخواست',
   users: 'کاربران',
-  hashtag: 'هشتگ'
+  hashtag: 'هشتگ',
+  likeNotification: '{{username}} پست شما را پسندید',
+  dislikeNotification: '{{username}} از پست شما بدش آمد',
+  followNotification: '{{username}} شما را دنبال کرد',
+  unfollowNotification: '{{username}} شما را از دنبال کنندگی درآود',
+  joinNotification: '{{username}} عکاسخونه ای شد'
 };
