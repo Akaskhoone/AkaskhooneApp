@@ -77,6 +77,8 @@ class ProfileComponent extends Component<Props> {
             isPrivate={is_private}
             isOwner={isOwner}
             isRequested={is_requested}
+            follow={this.props.follow}
+            unfollow={this.props.unfollow}
           />
         </View>
       </View>
