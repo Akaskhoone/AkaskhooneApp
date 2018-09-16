@@ -4,6 +4,7 @@ import { Container, Header, Input, Item, Tab, Tabs, View } from 'native-base';
 import React, { Component } from 'react';
 import Paginator from 'src/libs/Paginator/Paginator';
 import I18n from 'src/utils/i18n';
+import { debounce } from 'typescript-debounce-decorator';
 
 interface Props {
   [propName: string]: any;
@@ -54,11 +55,13 @@ export default class SecondSearchScreen extends Component<Props, State> {
     );
   }
   private onChange = text => {
-    this.setState({ value: text });
-    this.shouldSearch();
+    this.setState({ value: text }, () => this.shouldSearch());
   };
 
-  private shouldSearch = () => this.setState({ shouldSearch: true });
+  @debounce(500, { leading: false })
+  private shouldSearch = () => {
+    if (this.state.value) this.setState({ shouldSearch: true });
+  };
   private onLoad = () => this.setState({ shouldSearch: false });
 
   private renderProfile = ({ item: username }) => <ProfileListItem username={username} />;
