@@ -1,11 +1,12 @@
 import { CardItem, Text, Thumbnail } from 'native-base';
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { connect } from 'react-redux';
 import { selectors } from 'src/reducers';
 import { humanify } from 'src/utils/helpers';
 import I18n from 'src/utils/i18n';
 import { CommentDTO, ProfileDTO } from 'src/utils/interfaces';
+import NavigationService from 'src/utils/NavigationService';
 
 interface OwnProps {
   commentId: string;
@@ -16,23 +17,30 @@ interface StateProps {
 }
 interface DispatchProps {}
 type Props = OwnProps & StateProps & DispatchProps;
-const CommentCard = ({ comment, creator }: Props) => (
-  <CardItem style={styles.mainContainer}>
-    <View style={styles.infoContainer}>
-      <View style={styles.headerInfoContainer}>
-        <Text style={styles.userText}>{creator.username}</Text>
-        <View style={{ flex: 1 }} />
-        <Text style={{ fontSize: 9, textAlignVertical: 'center' }}>{humanify(comment.date)}</Text>
+const CommentCard = ({ comment, creator }: Props) => {
+  const navigateToProfile = () => NavigationService.navigateToProfile(creator.username);
+  return (
+    <CardItem style={styles.mainContainer}>
+      <View style={styles.infoContainer}>
+        <View style={styles.headerInfoContainer}>
+          <TouchableOpacity onPress={navigateToProfile}>
+            <Text style={styles.userText}>{creator.username}</Text>
+          </TouchableOpacity>
+          <View style={{ flex: 1 }} />
+          <Text style={{ fontSize: 9, textAlignVertical: 'center' }}>{humanify(comment.date)}</Text>
+        </View>
+        <View style={styles.desContainer}>
+          <Text style={{ textAlign: 'right' }}>{comment.text}</Text>
+        </View>
       </View>
-      <View style={styles.desContainer}>
-        <Text style={{ textAlign: 'right' }}>{comment.text}</Text>
-      </View>
-    </View>
-    <View style={{ paddingLeft: 10 }}>
-      <Thumbnail small={true} source={{ uri: creator.image }} />
-    </View>
-  </CardItem>
-);
+      <TouchableOpacity onPress={navigateToProfile}>
+        <View style={{ paddingLeft: 10 }}>
+          <Thumbnail small={true} source={{ uri: creator.image }} />
+        </View>
+      </TouchableOpacity>
+    </CardItem>
+  );
+};
 
 const styles = StyleSheet.create({
   mainContainer: {

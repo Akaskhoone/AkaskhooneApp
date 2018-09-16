@@ -38,7 +38,7 @@ class ImageItem extends Component<Props> {
 
   public componentWillMount() {
     const { imageMargin, imagesPerRow, containerWidth } = this.props;
-    this.imageSize = (containerWidth - (imagesPerRow + 1) * imageMargin) / imagesPerRow;
+    this.imageSize = (containerWidth - (imagesPerRow - 1) * imageMargin) / imagesPerRow;
   }
   public render() {
     const { item, selected, selectedMarker, imageMargin, index, imagesPerRow } = this.props;

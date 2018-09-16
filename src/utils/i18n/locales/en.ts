@@ -53,6 +53,7 @@ export default {
   profile: 'Profile',
   image: 'Image',
   Size: '{{name}} size is too large',
+  Similar: '{{name}} is same as username/email',
   timeAgo: '{{value}} {{unit}} ago',
   month: 'Month',
   week: 'Week',
@@ -91,5 +92,6 @@ export default {
   request: 'Request',
   users: 'users',
   hashtag: 'hashtag',
-  createNewBoard: 'Create New Board'
+  createNewBoard: 'Create New Board',
+  chooseOneBoard: 'Choose one board'
 };

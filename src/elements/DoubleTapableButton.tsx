@@ -6,7 +6,7 @@ export const DoubleTappableButton = ({
   children,
   onPress = null,
   onDoubleTap = null,
-  doublePressDelay = 200,
+  doublePressDelay = 500,
   ...restProps
 }) => {
   let timeout;

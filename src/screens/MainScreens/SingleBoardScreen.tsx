@@ -64,7 +64,7 @@ class BoardScreen extends Component<Props, State> {
             </Button>
           </Right>
         </Header>
-        <View style={{ alignItems: 'center', flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <DeleteModal
             visible={this.state.visible}
             onNoPress={this.onNoDeletePress}

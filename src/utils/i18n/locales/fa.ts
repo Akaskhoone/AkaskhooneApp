@@ -53,6 +53,7 @@ export default {
   profile: 'پروفایل',
   image: 'تصویر',
   Size: 'اندازه {{name}} بیش از اندازه بزرگ است',
+  Similar: '{{name}} مشابه نام کاربری یا رمز عبور است',
   timeAgo: '{{value}} {{unit}} پیش',
   month: 'ماه',
   week: 'هفته',
@@ -100,5 +101,6 @@ export default {
   statusForFollowedUser: 'دنبال شده',
   submit: 'ثبت',
   return: 'بازگشت',
-  createNewBoard: 'ساخت برد جدید'
+  createNewBoard: 'ساخت برد جدید',
+  chooseOneBoard: 'یک برد را انتخاب کنید'
 };

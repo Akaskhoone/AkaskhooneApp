@@ -24,7 +24,7 @@ export default class FirstSearchScreen extends Component<Props> {
             </TouchableWithoutFeedback>
           </Item>
         </Header>
-        <View style={{ alignItems: 'center' }}>
+        <View>
           <Paginator
             defaultComponent={this.defaultComponent}
             name="trendTags"

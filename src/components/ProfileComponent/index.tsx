@@ -95,11 +95,15 @@ class ProfileComponent extends Component<Props> {
   }
 
   private handleFollowersPress = () => {
-    if (this.props.profile.is_private) return;
+    if (this.props.profile.is_private && !this.props.profile.is_followed && !this.props.isOwner) {
+      return;
+    }
     NavigationService.push('followersList', { username: this.props.profile.username });
   };
   private handleFollowingsPress = () => {
-    if (this.props.profile.is_private) return;
+    if (this.props.profile.is_private && !this.props.profile.is_followed && !this.props.isOwner) {
+      return;
+    }
     NavigationService.push('followingsList', { username: this.props.profile.username });
   };
 }

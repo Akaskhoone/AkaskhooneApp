@@ -21,7 +21,7 @@ class Posts extends Component<Props> {
   public render() {
     const username = this.props.username;
     return (
-      <View style={{ flexGrow: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View>
         <Paginator
           type="posts"
           name={`${username}_posts`}
@@ -29,7 +29,6 @@ class Posts extends Component<Props> {
           renderItem={this.renderItem}
           defaultComponent={this.renderDefaultComponent}
           numColumns={2}
-          style={{ flex: 1 }}
         />
       </View>
     );

@@ -38,7 +38,7 @@ class TagScreen extends Component<Props> {
             </Button>
           </Right>
         </Header>
-        <View style={{ alignItems: 'center', flex: 1 }}>
+        <View style={{ flex: 1 }}>
           <Paginator
             defaultComponent={this.defaultComponent}
             name={`#${name}_posts`}
