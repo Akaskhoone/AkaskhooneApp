@@ -43,7 +43,7 @@ export default class SecondSearchScreen extends Component<Props, State> {
             <Tab heading={I18n.t('hashtag')}>
               <Paginator
                 name="searchHashtag"
-                url={`/social/tags/?search=${this.state.value}`}
+                url={`/social/tags/?search=${this.state.value}&limit=10`}
                 type="tags"
                 defaultComponent={this.defaultComponent}
                 renderItem={this.renderHashtag}
@@ -58,6 +58,7 @@ export default class SecondSearchScreen extends Component<Props, State> {
     this.setState({ value: text }, () => this.shouldSearch());
   };
 
+  // const shouldSearch2 = debounce(this.shouldSearch, 500, {leading:false})
   @debounce(500, { leading: false })
   private shouldSearch = () => {
     if (this.state.value) this.setState({ shouldSearch: true });
