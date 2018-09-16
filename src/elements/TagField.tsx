@@ -25,6 +25,9 @@ class TagField extends Component<Props> {
       inputStyle,
       ...otherProps
     } = this.props;
+    const isInvalidAndDirty = meta.invalid && meta.dirty;
+    const isValidAndDirty = meta.valid && meta.dirty;
+    const shouldShowError = meta.error && meta.submitFailed;
     return (
       <View style={{ flex: 1 }}>
         <Text style={{ marginRight: 8, color: 'gray' }}>تگ ها</Text>

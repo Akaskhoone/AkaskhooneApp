@@ -1,3 +1,4 @@
+import HashtagListItem from '@components/HashtagListItem';
 import ProfileListItem from '@components/ProfileListItem';
 import { Container, Header, Input, Item, Tab, Tabs, View } from 'native-base';
 import React, { Component } from 'react';
@@ -39,13 +40,13 @@ export default class SecondSearchScreen extends Component<Props, State> {
               />
             </Tab>
             <Tab heading={I18n.t('hashtag')}>
-              {/* <Paginator
+              <Paginator
                 name="searchHashtag"
                 url={`/social/tags/?search=${this.state.value}`}
-                type='tags'
-                defaultComponent={this.defaultComp}
-                {renderItem}
-              /> */}
+                type="tags"
+                defaultComponent={this.defaultComponent}
+                renderItem={this.renderHashtag}
+              />
             </Tab>
           </Tabs>
         </View>
@@ -64,4 +65,5 @@ export default class SecondSearchScreen extends Component<Props, State> {
   private defaultComponent = () => {
     return <View />;
   };
+  private renderHashtag = ({ item: tagName }) => <HashtagListItem tagName={tagName} />;
 }

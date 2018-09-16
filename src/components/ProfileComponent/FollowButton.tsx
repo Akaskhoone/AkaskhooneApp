@@ -3,16 +3,16 @@ import { Button, Text } from 'native-base';
 import React from 'react';
 import { View } from 'react-native';
 
-export default ({ isOwner, isFollowed, isPrivate, isRequested }) => {
+export default ({ isOwner, isFollowed, isPrivate, isRequested, follow, unfollow }) => {
   if (isOwner) return null;
   let onPress;
   if (isFollowed) {
     onPress = () => {
-      this.props.unfollow();
+      unfollow();
     };
   } else {
     onPress = () => {
-      this.props.follow();
+      follow();
     };
   }
   return (

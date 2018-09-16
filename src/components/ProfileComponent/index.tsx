@@ -38,7 +38,16 @@ class ProfileComponent extends Component<Props> {
     const { isOwner, profile, profileLoaded } = this.props;
     if (!profileLoaded) return <Spinner />;
 
-    const { bio, image, followers, followings, is_followed, is_private, name } = profile;
+    const {
+      bio,
+      image,
+      followers,
+      followings,
+      is_followed,
+      is_private,
+      is_requested,
+      name
+    } = profile;
     return (
       <View style={styles.wholeView}>
         <View>
@@ -63,7 +72,12 @@ class ProfileComponent extends Component<Props> {
               {bio}
             </Text>
           </View>
-          <FollowButton isFollowed={is_followed} isPrivate={is_private} isOwner={isOwner} />
+          <FollowButton
+            isFollowed={is_followed}
+            isPrivate={is_private}
+            isOwner={isOwner}
+            isRequested={is_requested}
+          />
         </View>
       </View>
     );
