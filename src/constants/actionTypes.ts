@@ -1,5 +1,6 @@
 export enum types {
   LOGIN = 'LOGIN',
+  LOGOUT = 'LOGOUT',
   LOGIN_SUCCESS = 'LOGIN_SUCCESS',
   LOGIN_FAIL = 'LOGIN_FAIL',
   SIGNUP = 'SIGNUP',

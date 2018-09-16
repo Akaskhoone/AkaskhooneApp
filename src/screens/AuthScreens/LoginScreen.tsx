@@ -26,7 +26,11 @@ export class LoginScreen extends Component<Props> {
           </View>
           <View style={styles.bodyView}>
             <LoginForm onSubmit={this.loginSubmit} />
-            <Button block={true} transparent={true} dark={true} onPress={this.navigateTo('forgetPassword')}>
+            <Button
+              block={true}
+              transparent={true}
+              dark={true}
+              onPress={this.navigateTo('forgetPassword')}>
               <Text>{I18n.t('forgetPasswordLink')}</Text>
             </Button>
           </View>
