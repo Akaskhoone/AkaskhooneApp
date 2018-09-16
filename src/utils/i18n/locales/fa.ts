@@ -99,5 +99,6 @@ export default {
   statusForNotFollowedUser: 'دنبال کن',
   statusForFollowedUser: 'دنبال شده',
   submit: 'ثبت',
-  return: 'بازگشت'
+  return: 'بازگشت',
+  createNewBoard: 'ساخت برد جدید'
 };

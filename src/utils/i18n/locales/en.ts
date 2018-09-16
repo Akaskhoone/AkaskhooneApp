@@ -90,5 +90,6 @@ export default {
   commentText: 'Comment Text',
   request: 'Request',
   users: 'users',
-  hashtag: 'hashtag'
+  hashtag: 'hashtag',
+  createNewBoard: 'Create New Board'
 };
