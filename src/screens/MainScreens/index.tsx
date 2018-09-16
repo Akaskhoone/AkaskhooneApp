@@ -1,5 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
 import AddToBoard from './AddToBoard';
+import FollowersLsit from './FollowersList';
+import FollowingsList from './FollowingsList';
 import ProfileScreen from './OthersProfileScreen';
 import SingleBoardScreen from './SingleBoardScreen';
 import PostScreen from './SinglePostScreen';
@@ -13,6 +15,8 @@ export default createStackNavigator(
     tag: SingleTagScreen,
     board: SingleBoardScreen,
     addToBoard: AddToBoard,
+    followersList: FollowersLsit,
+    followingsList: FollowingsList,
     othersProfile: ProfileScreen
   },
   {

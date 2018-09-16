@@ -4,11 +4,12 @@ import I18n from '@utils/i18n';
 import { ProfileDTO } from '@utils/interfaces';
 import { Button, Spinner, Text, Thumbnail } from 'native-base';
 import React, { Component } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { scale } from 'react-native-size-matters';
 import { connect } from 'react-redux';
 import Reactotron from 'reactotron-react-native';
 import FollowButton from 'src/components/ProfileComponent/FollowButton';
+import NavigationService from 'src/utils/NavigationService';
 
 interface OwnProps {
   username: string;
@@ -62,10 +63,18 @@ class ProfileComponent extends Component<Props> {
           {/*props functional 'this nmikhad*/}
           <Text style={styles.nameText}>{name}</Text>
           <View style={styles.numOfFriends}>
-            <Text style={styles.following}>
-              {I18n.t('numOfFollowers', { num: followers || 0 })}
-            </Text>
-            <Text>{I18n.t('numOfFollowings', { num: followings || 0 })}</Text>
+            <TouchableWithoutFeedback onPress={this.handleFollowersPress}>
+              <View>
+                <Text style={styles.following}>
+                  {I18n.t('numOfFollowers', { num: followers || 0 })}
+                </Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={this.handleFollowingsPress}>
+              <View>
+                <Text>{I18n.t('numOfFollowings', { num: followings || 0 })}</Text>
+              </View>
+            </TouchableWithoutFeedback>
           </View>
           <View>
             <Text numberOfLines={isOwner ? 2 : 5} style={styles.bio}>
@@ -84,6 +93,15 @@ class ProfileComponent extends Component<Props> {
       </View>
     );
   }
+
+  private handleFollowersPress = () => {
+    if (this.props.profile.is_private) return;
+    NavigationService.push('followersList', { username: this.props.profile.username });
+  };
+  private handleFollowingsPress = () => {
+    if (this.props.profile.is_private) return;
+    NavigationService.push('followingsList', { username: this.props.profile.username });
+  };
 }
 
 const styles = StyleSheet.create({
