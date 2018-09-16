@@ -1,4 +1,3 @@
-import { types } from '@constants/actionTypes';
 import { getActionsFor } from 'src/libs/Paginator';
 
 export const changeInfoSubmitted = (name: string, bio: string, image) => dispatch => {

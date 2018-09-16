@@ -14,9 +14,10 @@ export const loginUser = (email: string, password: string) => ({
   }
 });
 
-export const logout = () => ({
-  type: types.LOGOUT
-});
+export const logout = () => dispatch => {
+  dispatch({ type: types.LOGOUT });
+  dispatch({ type: types.RESET_APP });
+};
 export const refreshToken = () => (dispatch, getState) => {
   return dispatch({
     types: [types.REFRESH_TOKEN, types.REFRESH_TOKEN_SUCCESS],
